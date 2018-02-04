@@ -70,6 +70,7 @@ void Aliases::removeAlias (QString alias)
 	{
 
 	}
+
 }
 
 

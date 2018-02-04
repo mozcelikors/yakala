@@ -147,7 +147,7 @@ void MainWindow::yakalaUiManipulations(void)
 	/* Timer event for system information update */
 	QTimer *timer_systeminfoupdate = new QTimer(this);
 	connect(timer_systeminfoupdate, SIGNAL(timeout()), this, SLOT(timerSystemInfoUpdate()));
-	timer_systeminfoupdate->start(500); // 2 second timer
+	timer_systeminfoupdate->start(1000);
 
 	/* Signal-slot for searchButton in File Search*/
 	connect(ui->searchButton, SIGNAL(released()), this, SLOT (handleSearchButton()));
@@ -204,16 +204,20 @@ void MainWindow::handleAddAliasButtonClicked (void)
 {
 	/* Add alias and update alias table */
 	a.addAlias(ui->lineEdit_alias->text(), ui->lineEdit_command->text());
+
 	a.readAliasesList();
 	this->yakalaUpdateAliasTable();
+
 }
 
 void MainWindow::handleRemoveAliasButtonClicked (void)
 {
 	/* Remove alias and update alias table */
 	a.removeAlias(ui->lineEdit_alias->text());
+
 	a.readAliasesList();
 	this->yakalaUpdateAliasTable();
+
 }
 
 void MainWindow::handleAliasTableClicked (int row, int col)
@@ -342,6 +346,9 @@ void MainWindow::timerSystemInfoUpdate(void)
 	this->ui->label_totaldisk->setText(QString::number(s.getDiskSpaceTotal())+" GB");
 	this->ui->label_useddisk->setText(QString::number(s.getDiskSpaceUsed())+" GB");
 	this->ui->progressBar_diskUsage->setValue((int) s.getDiskPercentage());
+
+	a.readAliasesList();
+	this->yakalaUpdateAliasTable();
 
 	if (this->ui->loading_progressBar->isHidden() == false && this->load_ctr >2)
 	{
