@@ -35,3 +35,7 @@ Here are some of the screenshots:
 
 ![alt text](https://raw.githubusercontent.com/mozcelikors/yakala/master/docs/img/image2575.png)
 
+
+## Contributions
+
+Contributions are more than welcome. Please create a descriptive pull request.
