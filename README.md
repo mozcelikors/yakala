@@ -3,7 +3,8 @@ A visual helper tool for Linux: Show system statistics, search for files, search
 
 ## Prerequisites
 
-You need to have Qt installed on your system
+You need to have Qt, nmap and GNU sed installed on your system.
+Script to handle prerequisites automatically will be added soon.
 
 ## Compiling
 
