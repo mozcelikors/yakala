@@ -39,7 +39,7 @@
      <enum>QTabWidget::West</enum>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>3</number>
     </property>
     <widget class="QWidget" name="tab">
      <property name="styleSheet">
@@ -930,16 +930,27 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <tabstops>
+  <tabstop>tabWidget</tabstop>
+  <tabstop>lineEdit_networkstart</tabstop>
+  <tabstop>comboBox_searchnetwork</tabstop>
+  <tabstop>lineEdit_networksearch</tabstop>
+  <tabstop>pushButton_networksearch</tabstop>
   <tabstop>lineEdit_filesearch</tabstop>
   <tabstop>lineEdit_librarysearch</tabstop>
   <tabstop>searchButton</tabstop>
+  <tabstop>lineEdit_alias</tabstop>
+  <tabstop>lineEdit_command</tabstop>
+  <tabstop>pushButton_addalias</tabstop>
+  <tabstop>pushButton_removealias</tabstop>
   <tabstop>textEdit_filesearch</tabstop>
   <tabstop>graphicsView_4</tabstop>
-  <tabstop>graphicsView_5</tabstop>
-  <tabstop>graphicsView_6</tabstop>
-  <tabstop>tabWidget</tabstop>
+  <tabstop>tableWidget_network</tabstop>
+  <tabstop>tableWidget_alias</tabstop>
   <tabstop>graphicsView_2</tabstop>
   <tabstop>graphicsView</tabstop>
+  <tabstop>graphicsView_6</tabstop>
+  <tabstop>graphicsView_5</tabstop>
+  <tabstop>graphicsView_madewithlove</tabstop>
  </tabstops>
  <resources/>
  <connections/>

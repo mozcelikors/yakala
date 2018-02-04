@@ -269,6 +269,9 @@ void MainWindow::tabSelected()
 		ui->graphicsView_4->setVisible(true);
 
 		this->yakalaUpdateNetworkTable ();
+
+		/* Set focus */
+		this->ui->lineEdit_networkstart->setFocus();
 	}
 	else
 	{
@@ -302,6 +305,9 @@ void MainWindow::tabSelected()
 
 		/* Update AliasTable */
 		this->yakalaUpdateAliasTable();
+
+		/* Set focus */
+		this->ui->lineEdit_alias->setFocus();
 
 	}
 	else
