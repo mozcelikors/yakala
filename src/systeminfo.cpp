@@ -26,7 +26,7 @@ void SystemInfo::readMemoryTotal (void)
 	FILE *fp;
 	int tmp_mem_total;
 
-	fp = popen ("cat /proc/meminfo | grep MemTotal | sed 's/[^0-9]*//g' 2>/dev/null ","r");
+	fp = popen ("timeout 5 cat /proc/meminfo | grep MemTotal | sed 's/[^0-9]*//g' 2>/dev/null ","r");
 
 	if (fp != NULL)
 	{
@@ -52,7 +52,7 @@ void SystemInfo::readMemoryFree (void)
 	FILE *fp;
 	int tmp_mem_free;
 
-	fp = popen ("cat /proc/meminfo | grep MemFree | sed 's/[^0-9]*//g' 2>/dev/null ","r");
+	fp = popen ("timeout 5 cat /proc/meminfo | grep MemFree | sed 's/[^0-9]*//g' 2>/dev/null ","r");
 
 	if (fp != NULL)
 	{
@@ -78,7 +78,7 @@ void SystemInfo::readCpuUsage (void)
 	FILE *fp;
 	int tmp_cpu_usage;
 
-	fp = popen ("awk -v a=\"$(awk '/cpu /{print $2+$4,$2+$4+$5}' /proc/stat; sleep 0.5)\" '/cpu /{split(a,b,\" \"); print 100*($2+$4-b[1])/($2+$4+$5-b[2])}'  /proc/stat 2>/dev/null ","r");
+	fp = popen ("timeout 5 awk -v a=\"$(awk '/cpu /{print $2+$4,$2+$4+$5}' /proc/stat; sleep 0.5)\" '/cpu /{split(a,b,\" \"); print 100*($2+$4-b[1])/($2+$4+$5-b[2])}'  /proc/stat 2>/dev/null ","r");
 
 	if (fp != NULL)
 	{
@@ -103,7 +103,7 @@ void SystemInfo::readCpuModel (void)
 {
 	FILE *fp;
 
-	fp = popen ("cat /proc/cpuinfo | grep -m1 'model name' | sed 's/.*: //' 2>/dev/null","r");
+	fp = popen ("timeout 5 cat /proc/cpuinfo | grep -m1 'model name' | sed 's/.*: //' 2>/dev/null","r");
 
 	if (fp != NULL)
 	{
@@ -132,7 +132,7 @@ void SystemInfo::readCpuCount (void)
 	FILE *fp;
 	int tmp_cpu_count;
 
-	fp = popen ("cat /proc/cpuinfo | grep 'processor' | tail -1 | sed 's/[^0-9]*//g'","r");
+	fp = popen ("timeout 5 cat /proc/cpuinfo | grep 'processor' | tail -1 | sed 's/[^0-9]*//g'","r");
 
 	if (fp != NULL)
 	{
@@ -159,7 +159,7 @@ void SystemInfo::readDistro (void)
 {
 	FILE *fp;
 
-	fp = popen ("cat /etc/os-release | grep PRETTY_NAME | sed -e 's#.*=\\(\\)#\1#' | sed 's/\\\"//g' ","r");
+	fp = popen ("timeout 5 cat /etc/os-release | grep PRETTY_NAME | sed -e 's#.*=\\(\\)#\1#' | sed 's/\\\"//g' ","r");
 
 	if (fp != NULL)
 	{
@@ -186,7 +186,7 @@ void SystemInfo::readKernelRelease (void)
 {
 	FILE *fp;
 
-	fp = popen ("uname -r","r");
+	fp = popen ("timeout 5 uname -r","r");
 
 	if (fp != NULL)
 	{
@@ -213,7 +213,7 @@ void SystemInfo::readArchitecture (void)
 {
 	FILE *fp;
 
-	fp = popen ("uname -i","r");
+	fp = popen ("timeout 5 uname -i","r");
 
 	if (fp != NULL)
 	{
@@ -240,7 +240,7 @@ void SystemInfo::readHostname (void)
 {
 	FILE *fp;
 
-	fp = popen ("hostname","r");
+	fp = popen ("timeout 5 hostname","r");
 
 	if (fp != NULL)
 	{
@@ -267,7 +267,7 @@ void SystemInfo::readIP (void)
 {
 	FILE *fp;
 
-	fp = popen ("ifconfig | grep 'inet addr:' | grep '192.168' | cut -d: -f2 | awk '{ print $1}'","r");
+	fp = popen ("timeout 5 ifconfig | grep 'inet addr:' | grep '192.168' | cut -d: -f2 | awk '{ print $1}'","r");
 
 	if (fp != NULL)
 	{
@@ -295,7 +295,7 @@ void SystemInfo::readDiskTotal (void)
 	FILE *fp;
 	int tmp_disk_space_total;
 
-	fp = popen ("df -k / -l --output=size | tail -1","r");
+	fp = popen ("timeout 5 df -k / -l --output=size | tail -1","r");
 
 	if (fp != NULL)
 	{
@@ -323,7 +323,7 @@ void SystemInfo::readDiskUsed (void)
 	FILE *fp;
 	int tmp_disk_space_used;
 
-	fp = popen ("df -k / -l --output=used | tail -1","r");
+	fp = popen ("timeout 5 df -k / -l --output=used | tail -1","r");
 
 	if (fp != NULL)
 	{

@@ -36,7 +36,7 @@ void NetworkSearch::readNetworkAll (QString networkstart)
 	FILE *fp;
 
 	/* Open and filter networks using NMAP tool*/
-	fp = popen ((QString("nmap -sn ")+networkstart+QString("/24 | grep 'Nmap scan' | sed -e ':1' -e 's/^Nmap scan report for //;t1' | sed 's|[(),]||g' | sed 's/ /=/g'  > /tmp/yakala.network ")).toLocal8Bit(),"r");
+	fp = popen ((QString("timeout 60 nmap -sn ")+networkstart+QString("/24 | grep 'Nmap scan' | sed -e ':1' -e 's/^Nmap scan report for //;t1' | sed 's|[(),]||g' | sed 's/ /=/g'  > /tmp/yakala.network ")).toLocal8Bit(),"r");
 
 	if (fp != NULL)
 	{
@@ -85,7 +85,7 @@ void NetworkSearch::readNetworkFilterHostname (QString networkstart, QString hos
 	FILE *fp;
 
 	/* Open and filter networks using NMAP tool*/
-	fp = popen ((QString("nmap -sn ")+networkstart+QString("/24 | grep 'Nmap scan' | grep '")+hostname+QString("' | sed -e ':1' -e 's/^Nmap scan report for //;t1' | sed 's|[(),]||g' | sed 's/ /=/g'  > /tmp/yakala.network ")).toLocal8Bit(),"r");
+	fp = popen ((QString("timeout 60 nmap -sn ")+networkstart+QString("/24 | grep 'Nmap scan' | grep '")+hostname+QString("' | sed -e ':1' -e 's/^Nmap scan report for //;t1' | sed 's|[(),]||g' | sed 's/ /=/g'  > /tmp/yakala.network ")).toLocal8Bit(),"r");
 
 	if (fp != NULL)
 	{
