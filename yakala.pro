@@ -33,3 +33,9 @@ FORMS    += forms/mainwindow.ui
 
 RESOURCES += \
     resources/resources.qrc
+
+DESTDIR = build
+OBJECTS_DIR = build
+MOC_DIR = build
+RCC_DIR = build
+UI_DIR = build

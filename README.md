@@ -1,12 +1,14 @@
 # yakala
 A visual helper tool for Linux: Show system statistics, search for files, search for networks, and modify your aliases.
 
-## Prerequisites
-
-You need to have Qt, nmap and GNU sed installed on your system.
-Script to handle prerequisites automatically will be added soon.
-
 ## Compiling
+
+```bash
+git clone https://github.com/mozcelikors/yakala
+cd yakala && ./install.sh
+```
+
+or Manually install:
 
 ```bash
 git clone https://github.com/mozcelikors/yakala
@@ -16,6 +18,7 @@ mkdir -p build
 cd build
 make
 ```
+
 
 ## Running
 
