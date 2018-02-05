@@ -21,6 +21,8 @@ make
 
 ## Running
 
+Installation script (first method) will automatically create a desktop icon for you. You can use that icon or execute the following to run Yakala:
+
 ```bash
 cd <yakala-dir>/build
 sudo ./yakala
