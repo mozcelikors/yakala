@@ -22,6 +22,7 @@
 #include <iostream>
 #include <cstdio>
 #include <QSettings>
+#include <QFile>
 
 NetworkSearch::NetworkSearch()
 {
@@ -63,18 +64,53 @@ void NetworkSearch::readNetworkAll (QString networkstart)
 	}
 	fclose(fp);
 
-	/* Read from filtered temporary document using QSettings ini format */
-	QSettings settings("/tmp/yakala.network", QSettings::IniFormat);
+	/* Check if file contains '=' ,which is ini format */
+	QFile MyFile("/tmp/yakala.network");
+	MyFile.open(QIODevice::ReadWrite);
+	QString searchString("=");
+	bool ini_format = false;
 
-	foreach (const QString &key, settings.childKeys())
+	QTextStream in (&MyFile);
+	QString line;
+	do {
+		line = in.readLine();
+		if (line.contains(searchString, Qt::CaseSensitive)) {
+			ini_format = true;
+			break;
+		}
+	} while (!line.isNull());
+	MyFile.close();
+
+	/* Two different ways of parsing information */
+	if (ini_format) /* Ini format */
 	{
-			//std::cout << key.toStdString() << std::endl;
-			//std::cout << settings.value(key).toString().toUtf8().constData() << std::endl;
+		/* Read from filtered temporary document using QSettings ini format */
+		QSettings settings("/tmp/yakala.network", QSettings::IniFormat);
 
-			// Add to out command and alias list
-			this->hostnames.append(key);
-			this->ips.append(settings.value(key).toString());
+		foreach (const QString &key, settings.childKeys())
+		{
+				//std::cout << key.toStdString() << std::endl;
+				//std::cout << settings.value(key).toString().toUtf8().constData() << std::endl;
+
+				// Add to out command and alias list
+				this->hostnames.append(key);
+				this->ips.append(settings.value(key).toString());
+		}
 	}
+	else /* Just a column of hosts */
+	{
+		QFile MyFile2("/tmp/yakala.network");
+		MyFile2.open(QIODevice::ReadWrite);
+		QTextStream in (&MyFile2);
+		QString line;
+		do {
+			line = in.readLine();
+			this->hostnames.append("<Not Found>");
+			this->ips.append(line);
+		} while (!line.isNull());
+		MyFile2.close();
+	}
+
 }
 
 
