@@ -22,6 +22,7 @@
 #include <iostream>
 #include <cstdio>
 #include <QSettings>
+#include <unistd.h>
 
 Aliases::Aliases()
 {
@@ -49,6 +50,7 @@ void Aliases::addAlias (QString alias, QString command)
 	{
 
 	}
+	fclose(fp);
 }
 
 void Aliases::removeAlias (QString alias)
@@ -70,6 +72,7 @@ void Aliases::removeAlias (QString alias)
 	{
 
 	}
+	fclose(fp);
 
 }
 
@@ -108,6 +111,7 @@ void Aliases::readAliasesList (void)
 	{
 
 	}
+	fclose(fp);
 
 	/* Read from filtered temporary document using QSettings ini format */
 	QSettings settings("/tmp/yakala.alias", QSettings::IniFormat);

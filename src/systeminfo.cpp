@@ -17,6 +17,12 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <unistd.h>
+
+// To debug, uncomment below, and run 'valgrind -v ./yakala'
+//#define DEBUG 1
+
+// TODO: Debug the process killing.
 
 SystemInfo::SystemInfo()
 {}
@@ -35,8 +41,9 @@ void SystemInfo::readMemoryTotal (void)
 			if (fgets(this->buffer, MAX_BUFSIZE, fp) == NULL) break;
 			//puts(this->buffer);
 		}
-		//printf ("%s\n", this->buffer);
-
+#ifdef DEBUG
+		printf ("memtotal=%s\n", this->buffer);
+#endif
 		sscanf(buffer, "%d", &tmp_mem_total);
 
 		this->memory_total = (tmp_mem_total/1024.0)/1024.0;
@@ -45,6 +52,7 @@ void SystemInfo::readMemoryTotal (void)
 	{
 		this->memory_total = 0;
 	}
+	fclose(fp);
 }
 
 void SystemInfo::readMemoryFree (void)
@@ -61,8 +69,9 @@ void SystemInfo::readMemoryFree (void)
 			if (fgets(this->buffer, MAX_BUFSIZE, fp) == NULL) break;
 			//puts(this->buffer);
 		}
-		//printf ("%s\n", this->buffer);
-
+#ifdef DEBUG
+		printf ("memfree=%s\n", this->buffer);
+#endif
 		sscanf(buffer, "%d", &tmp_mem_free);
 
 		this->memory_free = (tmp_mem_free/1024.0)/1024.0;
@@ -71,6 +80,7 @@ void SystemInfo::readMemoryFree (void)
 	{
 		this->memory_free = 0;
 	}
+	fclose(fp);
 }
 
 void SystemInfo::readCpuUsage (void)
@@ -87,8 +97,9 @@ void SystemInfo::readCpuUsage (void)
 			if (fgets(this->buffer, MAX_BUFSIZE, fp) == NULL) break;
 			//puts(this->buffer);
 		}
-		//printf ("%s\n", this->buffer);
-
+#ifdef DEBUG
+		printf ("cpuusage=%s\n", this->buffer);
+#endif
 		sscanf(buffer, "%d", &tmp_cpu_usage);
 
 		this->cpu_usage = (tmp_cpu_usage);
@@ -97,6 +108,7 @@ void SystemInfo::readCpuUsage (void)
 	{
 		this->cpu_usage = 0;
 	}
+	fclose(fp);
 }
 
 void SystemInfo::readCpuModel (void)
@@ -112,8 +124,9 @@ void SystemInfo::readCpuModel (void)
 			if (fgets(this->buffer, MAX_BUFSIZE, fp) == NULL) break;
 			//puts(this->buffer);
 		}
-		//printf ("%s\n", this->buffer);
-
+#ifdef DEBUG
+		printf ("cpumodel=%s\n", this->buffer);
+#endif
 		//sscanf(buffer, "%s", &tmp_cpu_usage);
 
 		strncpy (this->cpu_model, buffer, strlen(buffer));
@@ -124,6 +137,7 @@ void SystemInfo::readCpuModel (void)
 	{
 
 	}
+	fclose(fp);
 }
 
 
@@ -141,7 +155,9 @@ void SystemInfo::readCpuCount (void)
 			if (fgets(this->buffer, MAX_BUFSIZE, fp) == NULL) break;
 			//puts(this->buffer);
 		}
-		//printf ("%s\n", this->buffer);
+#ifdef DEBUG
+		printf ("cpucount=%s\n", this->buffer);
+#endif
 
 		sscanf(buffer, "%d", &tmp_cpu_count);
 
@@ -153,6 +169,7 @@ void SystemInfo::readCpuCount (void)
 	{
 		this->cpu_count = 0;
 	}
+	fclose(fp);
 }
 
 void SystemInfo::readDistro (void)
@@ -168,8 +185,9 @@ void SystemInfo::readDistro (void)
 			if (fgets(this->buffer, MAX_BUFSIZE, fp) == NULL) break;
 			//puts(this->buffer);
 		}
-		//printf ("%s\n", this->buffer);
-
+#ifdef DEBUG
+		printf ("distro=%s\n", this->buffer);
+#endif
 		//sscanf(buffer, "%s", &tmp_cpu_usage);
 
 		strncpy (this->distro, buffer, strlen(buffer));
@@ -180,6 +198,7 @@ void SystemInfo::readDistro (void)
 	{
 
 	}
+	fclose(fp);
 }
 
 void SystemInfo::readKernelRelease (void)
@@ -195,8 +214,9 @@ void SystemInfo::readKernelRelease (void)
 			if (fgets(this->buffer, MAX_BUFSIZE, fp) == NULL) break;
 			//puts(this->buffer);
 		}
-		//printf ("%s\n", this->buffer);
-
+#ifdef DEBUG
+		printf ("kernel=%s\n", this->buffer);
+#endif
 		//sscanf(buffer, "%s", &tmp_cpu_usage);
 
 		strncpy (this->kernel_release, buffer, strlen(buffer));
@@ -207,6 +227,7 @@ void SystemInfo::readKernelRelease (void)
 	{
 
 	}
+	fclose(fp);
 }
 
 void SystemInfo::readArchitecture (void)
@@ -222,7 +243,9 @@ void SystemInfo::readArchitecture (void)
 			if (fgets(this->buffer, MAX_BUFSIZE, fp) == NULL) break;
 			//puts(this->buffer);
 		}
-		//printf ("%s\n", this->buffer);
+#ifdef DEBUG
+		printf ("arch=%s\n", this->buffer);
+#endif
 
 		//sscanf(buffer, "%s", &tmp_cpu_usage);
 
@@ -234,6 +257,7 @@ void SystemInfo::readArchitecture (void)
 	{
 
 	}
+	fclose(fp);
 }
 
 void SystemInfo::readHostname (void)
@@ -249,8 +273,9 @@ void SystemInfo::readHostname (void)
 			if (fgets(this->buffer, MAX_BUFSIZE, fp) == NULL) break;
 			//puts(this->buffer);
 		}
-		//printf ("%s\n", this->buffer);
-
+#ifdef DEBUG
+		printf ("hostname=%s\n", this->buffer);
+#endif
 		//sscanf(buffer, "%s", &tmp_cpu_usage);
 
 		strncpy (this->hostname, buffer, strlen(buffer));
@@ -261,6 +286,7 @@ void SystemInfo::readHostname (void)
 	{
 
 	}
+	fclose(fp);
 }
 
 void SystemInfo::readIP (void)
@@ -276,8 +302,9 @@ void SystemInfo::readIP (void)
 			if (fgets(this->buffer, MAX_BUFSIZE, fp) == NULL) break;
 			//puts(this->buffer);
 		}
-		//printf ("%s\n", this->buffer);
-
+#ifdef DEBUG
+		printf ("ip=%s\n", this->buffer);
+#endif
 		//sscanf(buffer, "%s", &tmp_cpu_usage);
 
 		strncpy (this->ip, buffer, strlen(buffer));
@@ -288,6 +315,7 @@ void SystemInfo::readIP (void)
 	{
 
 	}
+	fclose(fp);
 }
 
 void SystemInfo::readDiskTotal (void)
@@ -304,7 +332,9 @@ void SystemInfo::readDiskTotal (void)
 			if (fgets(this->buffer, MAX_BUFSIZE, fp) == NULL) break;
 			//puts(this->buffer);
 		}
-		//printf ("%s\n", this->buffer);
+#ifdef DEBUG
+		printf ("disktotal=%s\n", this->buffer);
+#endif
 
 		sscanf(buffer, "%d", &tmp_disk_space_total);
 
@@ -316,6 +346,7 @@ void SystemInfo::readDiskTotal (void)
 	{
 		this->disk_space_total = 0;
 	}
+	fclose(fp);
 }
 
 void SystemInfo::readDiskUsed (void)
@@ -332,8 +363,9 @@ void SystemInfo::readDiskUsed (void)
 			if (fgets(this->buffer, MAX_BUFSIZE, fp) == NULL) break;
 			//puts(this->buffer);
 		}
-		//printf ("%s\n", this->buffer);
-
+#ifdef DEBUG
+		printf ("diskused=%s\n", this->buffer);
+#endif
 		sscanf(buffer, "%d", &tmp_disk_space_used);
 
 		buffer[0] = 0; //Clear array
@@ -344,6 +376,7 @@ void SystemInfo::readDiskUsed (void)
 	{
 		this->disk_space_used = 0;
 	}
+	fclose(fp);
 }
 
 float SystemInfo::getMemoryTotal (void)

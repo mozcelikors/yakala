@@ -32,7 +32,6 @@ void *Thread_SystemInfo (void *arg)
 	s.readKernelRelease();
 	s.readArchitecture();
 	s.readHostname();
-
 	a.readAliasesList();
 	s.readDiskTotal();
 
@@ -41,11 +40,16 @@ void *Thread_SystemInfo (void *arg)
 	{
 		/* Get Periodic System Details*/
 		s.readCpuUsage();
-		s.readMemoryFree();
-		s.readDiskUsed();
-		s.readIP();
-		usleep(1* 1000000);
+		usleep(1* 250000);
 
+		s.readMemoryFree();
+		usleep(1* 250000);
+
+		s.readDiskUsed();
+		usleep(1* 250000);
+
+		s.readIP();
+		usleep(1* 250000);
 	}
 
 	return NULL;

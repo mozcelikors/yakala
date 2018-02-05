@@ -61,6 +61,7 @@ void NetworkSearch::readNetworkAll (QString networkstart)
 	{
 
 	}
+	fclose(fp);
 
 	/* Read from filtered temporary document using QSettings ini format */
 	QSettings settings("/tmp/yakala.network", QSettings::IniFormat);
@@ -110,6 +111,7 @@ void NetworkSearch::readNetworkFilterHostname (QString networkstart, QString hos
 	{
 
 	}
+	fclose(fp);
 
 	/* Read from filtered temporary document using QSettings ini format */
 	QSettings settings("/tmp/yakala.network", QSettings::IniFormat);
