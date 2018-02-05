@@ -27,15 +27,14 @@ Installation script (first method) will automatically create a desktop icon for 
 cd <yakala-dir>/build
 sudo ./yakala
 ```
-(Dont forget to run as root)
 
 ## Screenshots
 
 Here are some of the screenshots:
 
-![alt text](https://raw.githubusercontent.com/mozcelikors/yakala/master/docs/img/image916.png)
+![alt text](https://raw.githubusercontent.com/mozcelikors/yakala/master/docs/img/Selection_004.png)
 
-![alt text](https://raw.githubusercontent.com/mozcelikors/yakala/master/docs/img/image1469.png)
+![alt text](https://raw.githubusercontent.com/mozcelikors/yakala/master/docs/img/image916.png)
 
 ![alt text](https://raw.githubusercontent.com/mozcelikors/yakala/master/docs/img/image2022.png)
 
