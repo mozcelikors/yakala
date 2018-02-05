@@ -34,16 +34,22 @@
 void MainWindow::yakalaUpdateNetworkTable (void)
 {
 	/* Load table widget for Network section */
-	ui->tableWidget_network->setColumnCount(2);
+	ui->tableWidget_network->setColumnCount(4);
 	ui->tableWidget_network->setRowCount(n.getHostnames().size());
 	QStringList  TableHeader;
-	TableHeader<<"Hostname"<<"IP Address";
+	TableHeader<<"Hostname"<<"IP Address"<<"MAC"<<"Company";
 	ui->tableWidget_network->setHorizontalHeaderLabels(TableHeader);
 
-	ui->tableWidget_network->setColumnWidth(0, 200);
+	ui->tableWidget_network->setColumnWidth(0, 150);
+	ui->tableWidget_network->setColumnWidth(1, 120);
+	ui->tableWidget_network->setColumnWidth(2, 150);
 
 	ui->tableWidget_network->horizontalHeader()->setStretchLastSection(true);
 
+	//printf ("a%d\n", n.getHostnames().size());
+	//printf ("b%d\n", n.getIPs().size());
+	//printf ("c%d\n", n.getMACs().size());
+	//printf ("d%d\n", n.getCompanies().size());
 	for (int i = 0; i < n.getHostnames().size(); i++)
 	{
 		QTableWidgetItem *item = new QTableWidgetItem(n.getHostnames().at(i));
@@ -53,6 +59,17 @@ void MainWindow::yakalaUpdateNetworkTable (void)
 		QTableWidgetItem *item2 = new QTableWidgetItem(n.getIPs().at(i));
 		item2->setFlags(item2->flags() ^ Qt::ItemIsEditable);
 		ui->tableWidget_network->setItem(i, 1, item2);
+
+		if (n.getMACs().size()>0)
+		{
+			QTableWidgetItem *item3 = new QTableWidgetItem(n.getMACs().at(i));
+			item3->setFlags(item3->flags() ^ Qt::ItemIsEditable);
+			ui->tableWidget_network->setItem(i, 2, item3);
+
+			QTableWidgetItem *item4 = new QTableWidgetItem(n.getCompanies().at(i));
+			item4->setFlags(item4->flags() ^ Qt::ItemIsEditable);
+			ui->tableWidget_network->setItem(i, 3, item4);
+		}
 	}
 }
 

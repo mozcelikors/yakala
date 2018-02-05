@@ -51,12 +51,11 @@ if [ "" == "$PKG_OK" ]; then
   sudo apt-get --force-yes --yes install nmap
 fi
 
-
-## Make 
+## Make
 echo "Compiling yakala..."
 qmake yakala.pro -r -spec linux-g++-64 CONFIG+=debug
 rm -rf build && mkdir -p build
-make 
+make
 make install
 
 echo "Done. Run the executable in build/yakala."

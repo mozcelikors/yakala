@@ -252,6 +252,7 @@ QTextEdit, QLineEdit, QTableWidget, QComboBox{
         background-color:#3a3a3a;
         border: 1px solid #555;
         padding:5px;
+
 }
 
 QTextEdit::hover, QLineEdit::hover {
@@ -301,10 +302,18 @@ QComboBox::drop-down {
 }
 
 
-QComboBox::down-arrow {
+QComboBox QAbstractItemView {
 	width: 3px;
 	height: 3px;
 	border: 1px solid #5A5A5A;
+        color:black;
+        background-color:#353535;
+}
+
+QComboBox::down-arrow {
+        width: 3px;
+        height: 3px;
+        border: 1px solid #5A5A5A;
 }
 
 QLineEdit:disabled {

@@ -24,8 +24,45 @@
 
 // TODO: Debug the process killing.
 
+// TODO: Read own MAC address correctly.
+
 SystemInfo::SystemInfo()
 {}
+
+void SystemInfo::readMACAddress(QString ip_addr)
+{
+	FILE *fp;
+
+	fp = popen ((QString("ifconfig | grep -B ")+ip_addr+QString(" | head -1 | grep -o -E '([[:xdigit:]]{1,2}:){5}[[:xdigit:]]{1,2}' | head -1 2>/dev/null")).toLocal8Bit(),"r");
+
+	if (fp != NULL)
+	{
+		while (1)
+		{
+			if (fgets(this->buffer, MAX_BUFSIZE, fp) == NULL) break;
+			//puts(this->buffer);
+		}
+#ifdef DEBUG
+		printf ("mac=%s\n", this->buffer);
+#endif
+		//sscanf(buffer, "%s", &tmp_cpu_usage);
+
+		strncpy (this->mac_addr, buffer, strlen(buffer));
+
+		buffer[0] = 0; //Clear array
+	}
+	else
+	{
+
+	}
+	fclose(fp);
+
+}
+
+QString SystemInfo::getMACAddress(void)
+{
+	return this->mac_addr;
+}
 
 void SystemInfo::readMemoryTotal (void)
 {

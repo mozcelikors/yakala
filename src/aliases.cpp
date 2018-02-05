@@ -40,7 +40,7 @@ void Aliases::addAlias (QString alias, QString command)
 	command_buf.remove(QRegExp("[\\n\\t\\r]"));
 
 	/* Add alias */
-	fp = popen ((QString("timeout 5 echo \"alias ")+alias_buf+QString("=")+command_buf+QString("\" >> /home/$(whoami)/.bashrc")).toLocal8Bit(),"w");
+	fp = popen ((QString("timeout 5 echo \"alias ")+alias_buf+QString("=")+command_buf+QString("\" >> /home/$SUDO_USER/.bashrc")).toLocal8Bit(),"w");
 
 	if (fp != NULL)
 	{
@@ -62,7 +62,7 @@ void Aliases::removeAlias (QString alias)
 	alias_buf.remove(QRegExp("[\\n\\t\\r]"));
 
 	/* Remove alias */
-	fp = popen ((QString("timeout 5 sed -i '/")+alias_buf+QString("/d' ~/.bashrc")).toLocal8Bit(),"w");
+	fp = popen ((QString("timeout 5 sed -i '/")+alias_buf+QString("/d' /home/$SUDO_USER/.bashrc")).toLocal8Bit(),"w");
 
 	if (fp != NULL)
 	{
@@ -86,7 +86,7 @@ void Aliases::readAliasesList (void)
 	FILE *fp;
 
 	/* Open and filter alias file */
-	fp = popen ("timeout 60 cat /home/$(whoami)/.bashrc | grep alias | sed 's/^ *//' | sed '/^#/d' | sed -n '/^alias/p' | sed -e ':1' -e 's/^alias //;t1' > /tmp/yakala.alias ","w");
+	fp = popen ("timeout 60 cat /home/$SUDO_USER/.bashrc | grep alias | sed 's/^ *//' | sed '/^#/d' | sed -n '/^alias/p' | sed -e ':1' -e 's/^alias //;t1' > /tmp/yakala.alias ","w");
 
 	if (fp != NULL)
 	{

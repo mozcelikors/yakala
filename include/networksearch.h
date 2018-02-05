@@ -27,6 +27,8 @@ private:
 	char buffer[MAX_NETWORKSEARCH_BUFSIZE];
 	QStringList hostnames;
 	QStringList ips;
+	QStringList macs;
+	QStringList companies;
 public:
 	NetworkSearch();
 	void readNetworkAll (QString networkstart);
@@ -34,6 +36,8 @@ public:
 
 	QStringList getHostnames(void);
 	QStringList getIPs (void);
+	QStringList getCompanies (void);
+	QStringList getMACs (void);
 
 };
 

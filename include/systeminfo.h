@@ -16,6 +16,8 @@
 #ifndef SYSTEMINFO_H
 #define SYSTEMINFO_H
 
+#include <QString>
+
 #define MAX_BUFSIZE 1024
 
 class SystemInfo
@@ -43,6 +45,8 @@ private:
 	char hostname[MAX_BUFSIZE];
 
 	char ip[MAX_BUFSIZE];
+
+	char mac_addr[MAX_BUFSIZE];
 
 public:
 	SystemInfo();
@@ -84,6 +88,9 @@ public:
 	float getDiskSpaceUsed(void);
 	float getDiskSpaceTotal(void);
 	int getDiskPercentage (void);
+
+	void readMACAddress(QString ip_addr);
+	QString getMACAddress (void);
 };
 
 #endif // SYSTEMINFO_H

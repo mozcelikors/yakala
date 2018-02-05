@@ -23,8 +23,9 @@ make
 
 ```bash
 cd <yakala-dir>/build
-./yakala
+sudo ./yakala
 ```
+(Dont forget to run as root)
 
 ## Screenshots
 
