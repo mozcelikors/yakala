@@ -62,6 +62,15 @@ if [ "" == "$PKG_OK" ]; then
   sudo apt-get --force-yes --yes install nmap
 fi
 
+
+## Check for gksu
+PKG_OK=$(dpkg-query -W --showformat='${Status}\n' 'gksu' | grep "install ok installed")
+echo "Checking for gksu: $PKG_OK"
+if [ "" == "$PKG_OK" ]; then
+  echo "No gksu. Setting up gksu."
+  sudo apt-get --force-yes --yes install gksu
+fi
+
 ## Make
 echo "Compiling yakala..."
 qmake yakala.pro -r -spec linux-g++-64 CONFIG+=debug
