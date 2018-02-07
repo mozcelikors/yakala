@@ -136,8 +136,8 @@ void NetworkSearch::readNetworkAll (QString networkstart)
 				this->macs.append(splittext.at(0));
 				this->companies.append(splittext.at(1));
 			}
-			this->macs.append(" ");
-			this->companies.append(" ");
+			this->macs.append("YOUR NETWORK");
+			this->companies.append("YOUR NETWORK");
 			MyFile3.close();
 		}
 	}
@@ -150,52 +150,65 @@ void NetworkSearch::readNetworkAll (QString networkstart)
 
 void NetworkSearch::readNetworkFilterHostname (QString networkstart, QString hostname)
 {
-	this->hostnames.clear();
-	this->ips.clear();
-	this->macs.clear();
-	this->companies.clear();
+	this->readNetworkAll(networkstart);
 
-	FILE *fp;
-
-	/* Open and filter networks using NMAP tool*/
-	fp = popen ((QString("sudo timeout 60 nmap -T5 -sP ")+networkstart+QString("/24 | grep 'Nmap scan' | grep '")+hostname+QString("' | sed -e ':1' -e 's/^Nmap scan report for //;t1' | sed 's|[(),]||g' | sed 's/ /=/g'  > /tmp/yakala.network ")).toLocal8Bit(),"r");
-
-	if (fp != NULL)
+	for (int i = 0; i< this->hostnames.size(); i++)
 	{
-		while (1)
+		if (this->hostnames.at(i).contains(hostname, Qt::CaseInsensitive) == false)
 		{
-			if (fgets(this->buffer, MAX_NETWORKSEARCH_BUFSIZE, fp) == NULL) break;
-			//puts(this->buffer);
-
-			//Delete last character
-			this->buffer[strlen(buffer)-1] = 0;
-
+			this->hostnames.removeAt(i);
+			this->ips.removeAt(i);
+			this->macs.removeAt(i);
+			this->companies.removeAt(i);
 		}
-		//printf ("%s", this->buffer);
-
-		//sscanf(buffer, "%s", &tmp_cpu_usage);
-
-		//strncpy (this->aliases, buffer, strlen(buffer));
-
-		buffer[0] = 0; //Clear array
 	}
-	else
-	{
+}
 
+void NetworkSearch::readNetworkFilterIP (QString networkstart, QString ip)
+{
+	this->readNetworkAll(networkstart);
+
+	for (int i = 0; i< this->ips.size(); i++)
+	{
+		if (this->ips.at(i).contains(ip, Qt::CaseInsensitive) == false)
+		{
+			this->hostnames.removeAt(i);
+			this->ips.removeAt(i);
+			this->macs.removeAt(i);
+			this->companies.removeAt(i);
+		}
 	}
-	fclose(fp);
+}
 
-	/* Read from filtered temporary document using QSettings ini format */
-	QSettings settings("/tmp/yakala.network", QSettings::IniFormat);
+void NetworkSearch::readNetworkFilterMAC (QString networkstart, QString mac)
+{
+	this->readNetworkAll(networkstart);
 
-	foreach (const QString &key, settings.childKeys())
+	for (int i = 0; i< this->macs.size(); i++)
 	{
-			//std::cout << key.toStdString() << std::endl;
-			//std::cout << settings.value(key).toString().toUtf8().constData() << std::endl;
+		if (this->macs.at(i).contains(mac, Qt::CaseInsensitive) == false)
+		{
+			this->hostnames.removeAt(i);
+			this->ips.removeAt(i);
+			this->macs.removeAt(i);
+			this->companies.removeAt(i);
+		}
+	}
+}
 
-			// Add to out command and alias list
-			this->hostnames.append(key);
-			this->ips.append(settings.value(key).toString());
+void NetworkSearch::readNetworkFilterCompany (QString networkstart, QString company)
+{
+	this->readNetworkAll(networkstart);
+
+	for (int i = 0; i< this->companies.size(); i++)
+	{
+		if (this->companies.at(i).contains(company, Qt::CaseInsensitive) == false)
+		{
+			this->hostnames.removeAt(i);
+			this->ips.removeAt(i);
+			this->macs.removeAt(i);
+			this->companies.removeAt(i);
+		}
 	}
 }
 

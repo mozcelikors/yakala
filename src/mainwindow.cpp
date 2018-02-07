@@ -154,6 +154,9 @@ void MainWindow::yakalaUiManipulations(void)
 	/* Network part UI manipulations */
 	this->ui->comboBox_searchnetwork->addItem("Show All");
 	this->ui->comboBox_searchnetwork->addItem("Search Hostname");
+	this->ui->comboBox_searchnetwork->addItem("Search IP Address");
+	this->ui->comboBox_searchnetwork->addItem("Search MAC Address");
+	this->ui->comboBox_searchnetwork->addItem("Search Company");
 	this->ui->lineEdit_networksearch->setEnabled(false);
 
 	/*********** CONNECT and TIMERs ***************/
@@ -419,6 +422,51 @@ void MainWindow::handleNetworkSearchButton (void)
 
 			/* Do the search-update */
 			n.readNetworkFilterHostname(ui->lineEdit_networkstart->text(), ui->lineEdit_networksearch->text());
+			this->yakalaUpdateNetworkTable();
+
+			/* Loading finished */
+			this->ui->label_loadingText->hide();
+			this->ui->label_loadingText->repaint();
+			break;
+
+		case 2: /* Filter IP */
+			/* Loading */
+			this->ui->label_loadingText->move(280,20);
+			this->ui->label_loadingText->show();
+			this->ui->label_loadingText->repaint();
+
+			/* Do the search-update */
+			n.readNetworkFilterIP(ui->lineEdit_networkstart->text(), ui->lineEdit_networksearch->text());
+			this->yakalaUpdateNetworkTable();
+
+			/* Loading finished */
+			this->ui->label_loadingText->hide();
+			this->ui->label_loadingText->repaint();
+			break;
+
+		case 3: /* Filter MAC */
+			/* Loading */
+			this->ui->label_loadingText->move(280,20);
+			this->ui->label_loadingText->show();
+			this->ui->label_loadingText->repaint();
+
+			/* Do the search-update */
+			n.readNetworkFilterMAC(ui->lineEdit_networkstart->text(), ui->lineEdit_networksearch->text());
+			this->yakalaUpdateNetworkTable();
+
+			/* Loading finished */
+			this->ui->label_loadingText->hide();
+			this->ui->label_loadingText->repaint();
+			break;
+
+		case 4: /* Filter Company */
+			/* Loading */
+			this->ui->label_loadingText->move(280,20);
+			this->ui->label_loadingText->show();
+			this->ui->label_loadingText->repaint();
+
+			/* Do the search-update */
+			n.readNetworkFilterCompany(ui->lineEdit_networkstart->text(), ui->lineEdit_networksearch->text());
 			this->yakalaUpdateNetworkTable();
 
 			/* Loading finished */

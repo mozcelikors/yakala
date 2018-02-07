@@ -33,6 +33,9 @@ public:
 	NetworkSearch();
 	void readNetworkAll (QString networkstart);
 	void readNetworkFilterHostname (QString networkstart, QString hostname);
+	void readNetworkFilterIP (QString networkstart, QString ip);
+	void readNetworkFilterMAC (QString networkstart, QString mac);
+	void readNetworkFilterCompany (QString networkstart, QString company);
 
 	QStringList getHostnames(void);
 	QStringList getIPs (void);
