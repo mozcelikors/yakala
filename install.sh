@@ -62,18 +62,27 @@ if [ "" == "$PKG_OK" ]; then
   sudo apt-get --force-yes --yes install nmap
 fi
 
+
+## Check for gksu
+PKG_OK=$(dpkg-query -W --showformat='${Status}\n' 'gksu' | grep "install ok installed")
+echo "Checking for gksu: $PKG_OK"
+if [ "" == "$PKG_OK" ]; then
+  echo "No gksu. Setting up gksu."
+  sudo apt-get --force-yes --yes install gksu
+fi
+
 ## Make
 echo "Compiling yakala..."
-qmake yakala.pro -r -spec linux-g++-64 CONFIG+=debug
+qmake yakala.pro 
 rm -rf build && mkdir -p build
 make
 make install
 
 ## Create desktop shortcut
-printf "[Desktop Entry]\nEncoding=UTF-8\nVersion=1.0\nType=Application\nName=Yakala\nIcon=$DIR/gui/icon2.ico\nExec=gksudo -k -u root $DIR/build/yakala\nCategories=Application;Network;Security;" > $HOME/.local/share/applications/yakala.desktop
-sudo chmod +x $HOME/.local/share/applications/yakala.desktop
-cp $HOME/.local/share/applications/yakala.desktop $HOME/Desktop/yakala.desktop
-sudo chmod +x $HOME/Desktop/yakala.desktop
+printf "[Desktop Entry]\nEncoding=UTF-8\nVersion=1.0\nType=Application\nName=Yakala\nIcon=$DIR/gui/icon2.ico\nExec=gksudo -k -u root $DIR/build/yakala\nCategories=Application;Network;Security;" > /home/$SUDO_USER/.local/share/applications/yakala.desktop
+sudo chmod +x /home/$SUDO_USER/.local/share/applications/yakala.desktop
+cp /home/$SUDO_USER/.local/share/applications/yakala.desktop /home/$SUDO_USER/Desktop/yakala.desktop
+sudo chmod +x /home/$SUDO_USER/Desktop/yakala.desktop
 
 echo "Done. Run the executable in build/yakala."
 echo "If you like it, set up an alias for it ;)"

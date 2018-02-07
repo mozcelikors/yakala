@@ -11,6 +11,7 @@ cd yakala && ./install.sh
 or Manually install:
 
 ```bash
+sudo apt-get update
 git clone https://github.com/mozcelikors/yakala
 cd yakala
 qmake yakala.pro -r -spec linux-g++-64 CONFIG+=debug
