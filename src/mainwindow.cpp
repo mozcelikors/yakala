@@ -60,7 +60,7 @@ void MainWindow::yakalaUpdateNetworkTable (void)
 		item2->setFlags(item2->flags() ^ Qt::ItemIsEditable);
 		ui->tableWidget_network->setItem(i, 1, item2);
 
-		if (n.getMACs().size()>0)
+		if (n.getMACs().size() == n.getHostnames().size())
 		{
 			QTableWidgetItem *item3 = new QTableWidgetItem(n.getMACs().at(i));
 			item3->setFlags(item3->flags() ^ Qt::ItemIsEditable);
