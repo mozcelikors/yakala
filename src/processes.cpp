@@ -69,7 +69,7 @@ void Processes::readProcessesList (void)
 	this->pids.removeFirst();
 	this->processes.removeFirst();
 
-	printf ("%d\n", this->pids.count());
+	//printf ("%d\n", this->pids.count());
 }
 
 void Processes::searchProcess (QString process_name)
@@ -79,7 +79,7 @@ void Processes::searchProcess (QString process_name)
 	QStringList pids_new;
 	QStringList processes_new;
 
-	printf ("%d\n", this->processes.count());
+	//printf ("%d\n", this->processes.count());
 	for (int i = 0; i< this->processes.count(); i++)
 	{
 		if (this->processes.at(i).contains(process_name, Qt::CaseInsensitive) == true)

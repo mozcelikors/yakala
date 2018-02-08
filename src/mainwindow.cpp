@@ -30,6 +30,31 @@
 
 #include <filesearch.h>
 
+
+MainWindow::MainWindow(QWidget *parent) :
+	QMainWindow(parent),
+	ui(new Ui::MainWindow)
+{
+	/* UI */
+	ui->setupUi(this);
+	this->yakalaUiManipulations();
+
+	/* Threads */
+	pthread_t systeminfo_thread;
+	pthread_attr_t attrs;
+	pthread_attr_init(&attrs);
+	pthread_attr_setdetachstate(&attrs, PTHREAD_CREATE_JOINABLE);
+
+	if(pthread_create(&systeminfo_thread, &attrs, Thread_SystemInfo, NULL))
+	{
+		fprintf(stderr, "Error creating thread\n");
+	}
+
+	// HIDE THE ENVIRONMENT ADD/RM/SEARCH FEATURE FOR NOW
+	this->ui->groupBox_11->hide();
+}
+
+
 void MainWindow::yakalaUpdateProcessTable (void)
 {
 	/* Load table widget for Aliases section */
@@ -264,26 +289,7 @@ void MainWindow::yakalaUiManipulations(void)
 
 
 
-MainWindow::MainWindow(QWidget *parent) :
-	QMainWindow(parent),
-	ui(new Ui::MainWindow)
-{
-	/* UI */
-	ui->setupUi(this);
-	this->yakalaUiManipulations();
 
-	/* Threads */
-	pthread_t systeminfo_thread;
-	pthread_attr_t attrs;
-	pthread_attr_init(&attrs);
-	pthread_attr_setdetachstate(&attrs, PTHREAD_CREATE_JOINABLE);
-
-	if(pthread_create(&systeminfo_thread, &attrs, Thread_SystemInfo, NULL))
-	{
-		fprintf(stderr, "Error creating thread\n");
-	}
-
-}
 
 MainWindow::~MainWindow()
 {
