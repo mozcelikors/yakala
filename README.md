@@ -1,5 +1,5 @@
 # yakala
-A visual helper tool for Linux: Show system statistics, search for files, search for networks, and modify your aliases.
+A visual helper tool for GNU/Linux: Show system statistics, search for files, search for networks, modify your aliases, search and kill processes, edit environment variables...
 
 ## Compiling
 
@@ -11,7 +11,6 @@ cd yakala && ./install.sh
 or Manually install:
 
 ```bash
-sudo apt-get update
 git clone https://github.com/mozcelikors/yakala
 cd yakala
 qmake yakala.pro -r -spec linux-g++-64 CONFIG+=debug
@@ -32,6 +31,8 @@ sudo ./yakala
 ## Screenshots
 
 Here are some of the screenshots:
+
+![alt text](https://raw.githubusercontent.com/mozcelikors/yakala/master/docs/img/Selection_005.png)
 
 ![alt text](https://raw.githubusercontent.com/mozcelikors/yakala/master/docs/img/Selection_004.png)
 
