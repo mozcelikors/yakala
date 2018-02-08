@@ -24,6 +24,8 @@ class Processes
 private:
 	QStringList pids;
 	QStringList processes;
+	QStringList cpus;
+	QStringList mems;
 	QString kill_pid;
 public:
 	Processes();
@@ -31,6 +33,8 @@ public:
 	void readProcessesList (void);
 	QStringList getProcesses (void);
 	QStringList getPIDs (void);
+	QStringList getCPUs (void);
+	QStringList getMEMs (void);
 	void killProcess (void);
 	void searchProcess (QString process_name);
 	void setKillPID (QString kpid);

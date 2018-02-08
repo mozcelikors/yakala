@@ -35,11 +35,13 @@ void Processes::readProcessesList (void)
 {
 	this->pids.clear();
 	this->processes.clear();
+	this->cpus.clear();
+	this->mems.clear();
 
 	FILE *fp;
 
 	/* Process retrieval */
-	fp = popen ("timeout 5 ps -A | awk '{print $1\"=\"$4}' > /tmp/yakala.procs ","w");
+	fp = popen ("timeout 5 ps -aux | awk '{print $2\"=\"$11\"=\"$3\"=\"$4}' > /tmp/yakala.procs ","w");
 
 	if (fp != NULL)
 	{
@@ -62,12 +64,16 @@ void Processes::readProcessesList (void)
 			QStringList splittext = line3.split("=");
 			this->pids.append(splittext.at(0));
 			this->processes.append(splittext.at(1));
+			this->cpus.append(splittext.at(2));
+			this->mems.append(splittext.at(3));
 		}
 		MyFile3.close();
 	}
 
 	this->pids.removeFirst();
 	this->processes.removeFirst();
+	this->cpus.removeFirst();
+	this->mems.removeFirst();
 
 	//printf ("%d\n", this->pids.count());
 }
@@ -78,6 +84,8 @@ void Processes::searchProcess (QString process_name)
 
 	QStringList pids_new;
 	QStringList processes_new;
+	QStringList cpus_new;
+	QStringList mems_new;
 
 	//printf ("%d\n", this->processes.count());
 	for (int i = 0; i< this->processes.count(); i++)
@@ -87,15 +95,15 @@ void Processes::searchProcess (QString process_name)
 
 			pids_new.append(this->pids.at(i));
 			processes_new.append(this->processes.at(i));
-
+			cpus_new.append(this->cpus.at(i));
+			mems_new.append(this->mems.at(i));
 		}
 	}
 
-	//this->pids.clear();
-	//this->processes.clear();
-
 	this->pids = pids_new;
 	this->processes = processes_new;
+	this->cpus = cpus_new;
+	this->mems = mems_new;
 	//qDebug() << this->pids.count() << "\n";
 }
 
@@ -107,6 +115,16 @@ QStringList Processes::getProcesses (void)
 QStringList Processes::getPIDs (void)
 {
 	return this->pids;
+}
+
+QStringList Processes::getCPUs (void)
+{
+	return this->cpus;
+}
+
+QStringList Processes::getMEMs (void)
+{
+	return this->mems;
 }
 
 QString Processes::getKillPID (void)

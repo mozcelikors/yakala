@@ -58,11 +58,14 @@ MainWindow::MainWindow(QWidget *parent) :
 void MainWindow::yakalaUpdateProcessTable (void)
 {
 	/* Load table widget for Aliases section */
-	ui->tableWidget_proc->setColumnCount(2);
+	ui->tableWidget_proc->setColumnCount(4);
 	ui->tableWidget_proc->setRowCount(p.getPIDs().count());
 	QStringList  TableHeader;
-	TableHeader<<"PID"<<"Process Name";
-	ui->tableWidget_proc->setColumnWidth(0, 200);
+	TableHeader<<"PID"<< "Process Name" << "CPU%" << "MEM%";
+	ui->tableWidget_proc->setColumnWidth(0, 75);
+	ui->tableWidget_proc->setColumnWidth(1, 380);
+	ui->tableWidget_proc->setColumnWidth(2, 50);
+	ui->tableWidget_proc->setColumnWidth(3, 50);
 	ui->tableWidget_proc->setHorizontalHeaderLabels(TableHeader);
 	ui->tableWidget_proc->horizontalHeader()->setStretchLastSection(true);
 
@@ -78,6 +81,14 @@ void MainWindow::yakalaUpdateProcessTable (void)
 		QTableWidgetItem *item2 = new QTableWidgetItem(p.getProcesses().at(i));
 		item2->setFlags(item2->flags() ^ Qt::ItemIsEditable);
 		ui->tableWidget_proc->setItem(i, 1, item2);
+
+		QTableWidgetItem *item3 = new QTableWidgetItem(p.getCPUs().at(i));
+		item3->setFlags(item3->flags() ^ Qt::ItemIsEditable);
+		ui->tableWidget_proc->setItem(i, 2, item3);
+
+		QTableWidgetItem *item4 = new QTableWidgetItem(p.getMEMs().at(i));
+		item4->setFlags(item4->flags() ^ Qt::ItemIsEditable);
+		ui->tableWidget_proc->setItem(i, 3, item4);
 	}
 }
 

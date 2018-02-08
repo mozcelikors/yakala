@@ -32,7 +32,7 @@ sudo ./yakala
 
 Here are some of the screenshots:
 
-![alt text](https://raw.githubusercontent.com/mozcelikors/yakala/master/docs/img/Selection_005.png)
+![alt text](https://raw.githubusercontent.com/mozcelikors/yakala/master/docs/img/Selection_006.png)
 
 ![alt text](https://raw.githubusercontent.com/mozcelikors/yakala/master/docs/img/Selection_004.png)
 
