@@ -5,7 +5,8 @@ A visual helper tool for GNU/Linux: Show system statistics, search for files, se
 
 ```bash
 git clone https://github.com/mozcelikors/yakala
-cd yakala && ./install.sh
+cd yakala
+sudo ./install.sh
 ```
 
 ## Running
