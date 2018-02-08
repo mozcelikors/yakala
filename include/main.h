@@ -19,10 +19,14 @@
 #include <systeminfo.h>
 #include <aliases.h>
 #include <networksearch.h>
+#include <environment.h>
+#include <processes.h>
 
+extern Processes p;
 extern SystemInfo s;
 extern Aliases a;
 extern NetworkSearch n;
+extern Environment e;
 
 #endif // MAIN_H
 

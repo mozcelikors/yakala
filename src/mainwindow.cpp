@@ -30,6 +30,54 @@
 
 #include <filesearch.h>
 
+void MainWindow::yakalaUpdateProcessTable (void)
+{
+	/* Load table widget for Aliases section */
+	ui->tableWidget_proc->setColumnCount(2);
+	ui->tableWidget_proc->setRowCount(p.getPIDs().count());
+	QStringList  TableHeader;
+	TableHeader<<"PID"<<"Process Name";
+	ui->tableWidget_proc->setColumnWidth(0, 200);
+	ui->tableWidget_proc->setHorizontalHeaderLabels(TableHeader);
+	ui->tableWidget_proc->horizontalHeader()->setStretchLastSection(true);
+
+	//printf ("%d\n", p.getPIDs().count());
+
+	for (int i = 0; i < p.getPIDs().count(); i++)
+	{
+		//printf ("%d",i);
+		QTableWidgetItem *item = new QTableWidgetItem(p.getPIDs().at(i));
+		item->setFlags(item->flags() ^ Qt::ItemIsEditable);
+		ui->tableWidget_proc->setItem(i, 0, item);
+
+		QTableWidgetItem *item2 = new QTableWidgetItem(p.getProcesses().at(i));
+		item2->setFlags(item2->flags() ^ Qt::ItemIsEditable);
+		ui->tableWidget_proc->setItem(i, 1, item2);
+	}
+}
+
+void MainWindow::yakalaUpdateEnvironmentTable (void)
+{
+	/* Load table widget for Aliases section */
+	ui->tableWidget_env->setColumnCount(2);
+	ui->tableWidget_env->setRowCount(e.getEnvs().size());
+	QStringList  TableHeader;
+	TableHeader<<"Environment Variable"<<"Value";
+	ui->tableWidget_env->setColumnWidth(0, 200);
+	ui->tableWidget_env->setHorizontalHeaderLabels(TableHeader);
+	ui->tableWidget_env->horizontalHeader()->setStretchLastSection(true);
+
+	for (int i = 0; i < e.getEnvs().size(); i++)
+	{
+		QTableWidgetItem *item = new QTableWidgetItem(e.getEnvs().at(i));
+		item->setFlags(item->flags() ^ Qt::ItemIsEditable);
+		ui->tableWidget_env->setItem(i, 0, item);
+
+		QTableWidgetItem *item2 = new QTableWidgetItem(e.getValues().at(i));
+		item2->setFlags(item2->flags() ^ Qt::ItemIsEditable);
+		ui->tableWidget_env->setItem(i, 1, item2);
+	}
+}
 
 void MainWindow::yakalaUpdateNetworkTable (void)
 {
@@ -127,7 +175,7 @@ void MainWindow::yakalaUiManipulations(void)
 	ui->graphicsView_5->setStyleSheet("background-image: url(:/gui/menu4.png)");
 	ui->graphicsView_5->setVisible(false);
 
-	ui->graphicsView_6->setGeometry(47, 385, 34,34);
+	ui->graphicsView_6->setGeometry(47, 450, 34,34);
 	ui->graphicsView_6->setStyleSheet("background-image: url(:/gui/menu5.png)");
 	ui->graphicsView_6->setVisible(false);
 
@@ -146,6 +194,7 @@ void MainWindow::yakalaUiManipulations(void)
 
 	/* Alias part UI manipulations */
 	this->ui->pushButton_removealias->setStyleSheet("QPushButton::hover, QPushButton::focus{color:white; background-color:red;}");
+	this->ui->pushButton_removeenv->setStyleSheet("QPushButton::hover, QPushButton::focus{color:white; background-color:red;}");
 
 	/* FileSearch part UI manipulations */
 	this->ui->textEdit_filesearch->setText("Please enter file or library name to search..");
@@ -158,6 +207,13 @@ void MainWindow::yakalaUiManipulations(void)
 	this->ui->comboBox_searchnetwork->addItem("Search MAC Address");
 	this->ui->comboBox_searchnetwork->addItem("Search Company");
 	this->ui->lineEdit_networksearch->setEnabled(false);
+
+	/* Set cursor at the tabwidget commands tab bar */
+	ui->tabWidget_commands->tabBar()->setCursor(Qt::PointingHandCursor);
+	ui->tabWidget_commands->tabBar()->setStyleSheet("QTabBar::tab {border-top-left-radius:5px; border-top-right-radius:5px; border-bottom-left-radius:0px; } QTabBar::tab:selected, QTabBar::tab:selected::hover { background: #93C83E; border-bottom-right-radius:0px; color:black; }");
+
+	/* Process part UI manipulations */
+	this->ui->pushButton_killproc->setStyleSheet("QPushButton { color:white; background-color:red;} QPushButton::hover{color:black; background-color:white;}");
 
 	/*********** CONNECT and TIMERs ***************/
 
@@ -187,10 +243,26 @@ void MainWindow::yakalaUiManipulations(void)
 	/* Network search button signal-slot */
 	connect(ui->pushButton_networksearch, SIGNAL(released()), this, SLOT (handleNetworkSearchButton()));
 
+	/* Environment var tableWidget cell clicked signal-slot */
+	connect(ui->tableWidget_env, SIGNAL(cellClicked(int,int)), this, SLOT(handleEnvTableClicked(int,int)));
+
 	/* On MainWindow close */
 	connect(qApp, SIGNAL(aboutToQuit()), this, SLOT(yakalaCloseEvent()));
 
+	/* Process search signal-slot */
+	connect(ui->lineEdit_filterproc, SIGNAL(textChanged(const QString &)), this, SLOT(inputProcessChanged()));
+
+	/* Process kill button signal-slot */
+	connect(ui->pushButton_killproc, SIGNAL(released()), this, SLOT (handleProcessKillButton()));
+
+	/* Process table clicked */
+	connect(ui->tableWidget_proc, SIGNAL(cellClicked(int,int)), this, SLOT(handleProcessTableClicked(int,int)));
+
+
+
 }
+
+
 
 MainWindow::MainWindow(QWidget *parent) :
 	QMainWindow(parent),
@@ -220,6 +292,17 @@ MainWindow::~MainWindow()
 
 /**************** SLOTS *******************/
 
+void MainWindow::handleProcessTableClicked (int row, int col)
+{
+	p.setKillPID(this->ui->tableWidget_proc->item(row, 0)->text());
+}
+
+void MainWindow::handleProcessKillButton (void)
+{
+	if (QString::compare(p.getKillPID(),QString("0")) != 0)
+		p.killProcess();
+}
+
 void MainWindow::handleAddAliasButtonClicked (void)
 {
 	/* Add alias and update alias table */
@@ -240,12 +323,23 @@ void MainWindow::handleRemoveAliasButtonClicked (void)
 
 }
 
+void MainWindow::inputProcessChanged(void)
+{
+	p.searchProcess(this->ui->lineEdit_filterproc->text());
+	this->yakalaUpdateProcessTable();
+}
+
 void MainWindow::handleAliasTableClicked (int row, int col)
 {
 	this->ui->lineEdit_alias->setText(a.getAliases().at(row));
 	this->ui->lineEdit_command->setText(a.getCommands().at(row));
+}
 
 
+void MainWindow::handleEnvTableClicked (int row, int col)
+{
+	this->ui->lineEdit_envvar->setText(e.getEnvs().at(row));
+	this->ui->lineEdit_envvalue->setText(e.getValues().at(row));
 }
 
 void MainWindow::handleSearchButton()
@@ -367,8 +461,15 @@ void MainWindow::timerSystemInfoUpdate(void)
 	this->ui->label_useddisk->setText(QString::number(s.getDiskSpaceUsed())+" GB");
 	this->ui->progressBar_diskUsage->setValue((int) s.getDiskPercentage());
 
+	// Real-time process display
+	p.searchProcess(this->ui->lineEdit_filterproc->text());
+	this->yakalaUpdateProcessTable();
+
 	a.readAliasesList();
 	this->yakalaUpdateAliasTable();
+
+	e.readEnvList();
+	this->yakalaUpdateEnvironmentTable();
 
 	if (this->ui->loading_progressBar->isHidden() == false && this->load_ctr >2)
 	{

@@ -23,10 +23,14 @@
 #include <systeminfo.h>
 #include <aliases.h>
 #include <networksearch.h>
+#include <environment.h>
+#include <processes.h>
 
 SystemInfo s;
 Aliases a;
 NetworkSearch n;
+Environment e;
+Processes p;
 
 int main(int argc, char *argv[])
 {

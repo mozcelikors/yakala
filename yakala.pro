@@ -19,7 +19,9 @@ SOURCES +=  src/aliases.cpp \
             src/mainwindow.cpp \
             src/networksearch.cpp \
             src/systeminfo.cpp \
-            src/thread_systeminfo.cpp
+            src/thread_systeminfo.cpp \
+            src/environment.cpp \
+            src/processes.cpp
 
 HEADERS  += include/aliases.h \
             include/filesearch.h \
@@ -27,7 +29,9 @@ HEADERS  += include/aliases.h \
             include/mainwindow.h \
             include/networksearch.h \
             include/systeminfo.h \
-            include/thread_systeminfo.h
+            include/thread_systeminfo.h \
+            include/environment.h \
+            include/processes.h
 
 FORMS    += forms/mainwindow.ui
 

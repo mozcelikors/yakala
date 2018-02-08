@@ -32,6 +32,8 @@ public:
 
 	void yakalaUpdateAliasTable (void);
 	void yakalaUpdateNetworkTable (void);
+	void yakalaUpdateEnvironmentTable (void);
+	void yakalaUpdateProcessTable (void);
 
 
 	~MainWindow();
@@ -45,15 +47,19 @@ private:
 signals:
 
 private slots:
+	void handleProcessTableClicked (int row, int col);
+	void handleProcessKillButton();
 	void handleSearchButton();
 	void tabSelected();
 	void timerSystemInfoUpdate(void);
 	void handleAliasTableClicked (int row, int col);
+	void handleEnvTableClicked (int row, int col);
 	void handleAddAliasButtonClicked (void);
 	void handleRemoveAliasButtonClicked (void);
 	void handleNetworkComboBox (int idx);
 	void handleNetworkSearchButton (void);
 	void yakalaCloseEvent (void);
+	void inputProcessChanged (void);
 
 };
 

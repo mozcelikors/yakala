@@ -60,6 +60,7 @@ void Aliases::removeAlias (QString alias)
 	/* Delete accidental newlines */
 	QString alias_buf = alias;
 	alias_buf.remove(QRegExp("[\\n\\t\\r]"));
+	alias_buf = "alias "+alias_buf;
 
 	/* Remove alias */
 	fp = popen ((QString("timeout 5 sed -i '/")+alias_buf+QString("/d' /home/$SUDO_USER/.bashrc")).toLocal8Bit(),"w");

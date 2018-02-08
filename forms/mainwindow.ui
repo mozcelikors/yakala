@@ -672,120 +672,324 @@
     </widget>
     <widget class="QWidget" name="tab_5">
      <attribute name="title">
-      <string>Aliases</string>
+      <string>Commands and Processes</string>
      </attribute>
-     <widget class="QGroupBox" name="groupBox_6">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>170</y>
-        <width>681</width>
-        <height>311</height>
-       </rect>
-      </property>
-      <property name="title">
-       <string>List Aliases</string>
-      </property>
-      <widget class="QTableWidget" name="tableWidget_alias">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>20</y>
-         <width>661</width>
-         <height>281</height>
-        </rect>
-       </property>
-      </widget>
-     </widget>
-     <widget class="QGroupBox" name="groupBox_7">
+     <widget class="QTabWidget" name="tabWidget_commands">
       <property name="geometry">
        <rect>
         <x>10</x>
         <y>10</y>
         <width>681</width>
-        <height>151</height>
+        <height>471</height>
        </rect>
       </property>
-      <property name="title">
-       <string>Add/Remove Alias</string>
+      <property name="currentIndex">
+       <number>0</number>
       </property>
-      <widget class="QLineEdit" name="lineEdit_alias">
-       <property name="geometry">
-        <rect>
-         <x>100</x>
-         <y>30</y>
-         <width>291</width>
-         <height>51</height>
-        </rect>
-       </property>
+      <widget class="QWidget" name="tab_7">
+       <attribute name="title">
+        <string>Processes</string>
+       </attribute>
+       <widget class="QGroupBox" name="groupBox_12">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>10</y>
+          <width>651</width>
+          <height>411</height>
+         </rect>
+        </property>
+        <property name="title">
+         <string>List / Kill Running Processes</string>
+        </property>
+        <widget class="QLabel" name="label_21">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>40</y>
+           <width>41</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Filter</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="pushButton_killproc">
+         <property name="geometry">
+          <rect>
+           <x>510</x>
+           <y>30</y>
+           <width>131</width>
+           <height>51</height>
+          </rect>
+         </property>
+         <property name="cursor">
+          <cursorShape>PointingHandCursor</cursorShape>
+         </property>
+         <property name="text">
+          <string>Kill Selected</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEdit_filterproc">
+         <property name="geometry">
+          <rect>
+           <x>60</x>
+           <y>30</y>
+           <width>441</width>
+           <height>51</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QTableWidget" name="tableWidget_proc">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>90</y>
+           <width>631</width>
+           <height>311</height>
+          </rect>
+         </property>
+        </widget>
+       </widget>
       </widget>
-      <widget class="QLineEdit" name="lineEdit_command">
-       <property name="geometry">
-        <rect>
-         <x>100</x>
-         <y>90</y>
-         <width>561</width>
-         <height>51</height>
-        </rect>
-       </property>
+      <widget class="QWidget" name="tab_2">
+       <attribute name="title">
+        <string>Aliases</string>
+       </attribute>
+       <widget class="QGroupBox" name="groupBox_6">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>150</y>
+          <width>661</width>
+          <height>271</height>
+         </rect>
+        </property>
+        <property name="title">
+         <string>List Aliases</string>
+        </property>
+        <widget class="QTableWidget" name="tableWidget_alias">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>20</y>
+           <width>641</width>
+           <height>241</height>
+          </rect>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QGroupBox" name="groupBox_7">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>10</y>
+          <width>661</width>
+          <height>131</height>
+         </rect>
+        </property>
+        <property name="title">
+         <string>Add/Remove Alias</string>
+        </property>
+        <widget class="QLineEdit" name="lineEdit_alias">
+         <property name="geometry">
+          <rect>
+           <x>100</x>
+           <y>30</y>
+           <width>291</width>
+           <height>41</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEdit_command">
+         <property name="geometry">
+          <rect>
+           <x>100</x>
+           <y>80</y>
+           <width>551</width>
+           <height>41</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="pushButton_addalias">
+         <property name="geometry">
+          <rect>
+           <x>400</x>
+           <y>30</y>
+           <width>121</width>
+           <height>41</height>
+          </rect>
+         </property>
+         <property name="cursor">
+          <cursorShape>PointingHandCursor</cursorShape>
+         </property>
+         <property name="text">
+          <string>Add Alias</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="pushButton_removealias">
+         <property name="geometry">
+          <rect>
+           <x>530</x>
+           <y>30</y>
+           <width>121</width>
+           <height>41</height>
+          </rect>
+         </property>
+         <property name="cursor">
+          <cursorShape>PointingHandCursor</cursorShape>
+         </property>
+         <property name="text">
+          <string>Remove Alias</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_11">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>30</y>
+           <width>71</width>
+           <height>41</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Alias</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_13">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>80</y>
+           <width>81</width>
+           <height>41</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Command</string>
+         </property>
+        </widget>
+       </widget>
       </widget>
-      <widget class="QPushButton" name="pushButton_addalias">
-       <property name="geometry">
-        <rect>
-         <x>400</x>
-         <y>30</y>
-         <width>121</width>
-         <height>51</height>
-        </rect>
-       </property>
-       <property name="cursor">
-        <cursorShape>PointingHandCursor</cursorShape>
-       </property>
-       <property name="text">
-        <string>Add Alias</string>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="pushButton_removealias">
-       <property name="geometry">
-        <rect>
-         <x>530</x>
-         <y>30</y>
-         <width>131</width>
-         <height>51</height>
-        </rect>
-       </property>
-       <property name="cursor">
-        <cursorShape>PointingHandCursor</cursorShape>
-       </property>
-       <property name="text">
-        <string>Remove Alias</string>
-       </property>
-      </widget>
-      <widget class="QLabel" name="label_11">
-       <property name="geometry">
-        <rect>
-         <x>20</x>
-         <y>30</y>
-         <width>71</width>
-         <height>41</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Alias</string>
-       </property>
-      </widget>
-      <widget class="QLabel" name="label_13">
-       <property name="geometry">
-        <rect>
-         <x>20</x>
-         <y>90</y>
-         <width>81</width>
-         <height>41</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Command</string>
-       </property>
+      <widget class="QWidget" name="tab_6">
+       <attribute name="title">
+        <string>Environment Variables</string>
+       </attribute>
+       <widget class="QGroupBox" name="groupBox_10">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>150</y>
+          <width>661</width>
+          <height>271</height>
+         </rect>
+        </property>
+        <property name="title">
+         <string>List Environment Variables</string>
+        </property>
+        <widget class="QTableWidget" name="tableWidget_env">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>20</y>
+           <width>641</width>
+           <height>241</height>
+          </rect>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QGroupBox" name="groupBox_11">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>10</y>
+          <width>661</width>
+          <height>131</height>
+         </rect>
+        </property>
+        <property name="title">
+         <string>Add/Remove Environment Variable</string>
+        </property>
+        <widget class="QLineEdit" name="lineEdit_envvar">
+         <property name="geometry">
+          <rect>
+           <x>120</x>
+           <y>30</y>
+           <width>271</width>
+           <height>41</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEdit_envvalue">
+         <property name="geometry">
+          <rect>
+           <x>120</x>
+           <y>80</y>
+           <width>531</width>
+           <height>41</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="pushButton_addenv">
+         <property name="geometry">
+          <rect>
+           <x>400</x>
+           <y>30</y>
+           <width>111</width>
+           <height>41</height>
+          </rect>
+         </property>
+         <property name="cursor">
+          <cursorShape>PointingHandCursor</cursorShape>
+         </property>
+         <property name="text">
+          <string>Add Variable</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="pushButton_removeenv">
+         <property name="geometry">
+          <rect>
+           <x>520</x>
+           <y>30</y>
+           <width>131</width>
+           <height>41</height>
+          </rect>
+         </property>
+         <property name="cursor">
+          <cursorShape>PointingHandCursor</cursorShape>
+         </property>
+         <property name="text">
+          <string>Remove Variable</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_19">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>30</y>
+           <width>91</width>
+           <height>41</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Env. Variable</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_20">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>80</y>
+           <width>81</width>
+           <height>41</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Value</string>
+         </property>
+        </widget>
+       </widget>
       </widget>
      </widget>
     </widget>
@@ -938,19 +1142,28 @@
   <tabstop>lineEdit_filesearch</tabstop>
   <tabstop>lineEdit_librarysearch</tabstop>
   <tabstop>searchButton</tabstop>
+  <tabstop>tabWidget_commands</tabstop>
+  <tabstop>lineEdit_filterproc</tabstop>
+  <tabstop>pushButton_killproc</tabstop>
   <tabstop>lineEdit_alias</tabstop>
-  <tabstop>lineEdit_command</tabstop>
   <tabstop>pushButton_addalias</tabstop>
   <tabstop>pushButton_removealias</tabstop>
-  <tabstop>textEdit_filesearch</tabstop>
+  <tabstop>lineEdit_command</tabstop>
+  <tabstop>lineEdit_envvar</tabstop>
+  <tabstop>lineEdit_envvalue</tabstop>
+  <tabstop>pushButton_addenv</tabstop>
+  <tabstop>pushButton_removeenv</tabstop>
+  <tabstop>graphicsView_5</tabstop>
+  <tabstop>graphicsView_madewithlove</tabstop>
   <tabstop>graphicsView_4</tabstop>
+  <tabstop>textEdit_filesearch</tabstop>
   <tabstop>tableWidget_network</tabstop>
+  <tabstop>tableWidget_proc</tabstop>
+  <tabstop>tableWidget_env</tabstop>
   <tabstop>tableWidget_alias</tabstop>
   <tabstop>graphicsView_2</tabstop>
   <tabstop>graphicsView</tabstop>
   <tabstop>graphicsView_6</tabstop>
-  <tabstop>graphicsView_5</tabstop>
-  <tabstop>graphicsView_madewithlove</tabstop>
  </tabstops>
  <resources/>
  <connections/>
