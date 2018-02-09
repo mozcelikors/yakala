@@ -600,5 +600,5 @@ void MainWindow::handleNetworkSearchButton (void)
 
 void MainWindow::yakalaCloseEvent (void)
 {
-	printf ("yakala is closing...\n");
+	//printf ("yakala is closing...\n");
 }
