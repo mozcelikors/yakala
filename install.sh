@@ -78,6 +78,12 @@ rm -rf build && mkdir -p build
 make
 make install
 
+## Install Ubuntu font
+sudo mkdir -p ~/.fonts
+sudo cp $DIR/gui/Ubuntu-R.ttf /usr/local/share/fonts/
+sudo cp $DIR/gui/Ubuntu-R.ttf ~/.fonts
+fc-cache
+
 ## Create desktop shortcut
 printf "[Desktop Entry]\nEncoding=UTF-8\nVersion=1.0\nType=Application\nName=Yakala\nIcon=$DIR/gui/icon2.ico\nExec=gksudo -k -u root $DIR/build/yakala\nCategories=Application;Network;Security;" > /home/$SUDO_USER/.local/share/applications/yakala.desktop
 sudo chmod +x /home/$SUDO_USER/.local/share/applications/yakala.desktop
