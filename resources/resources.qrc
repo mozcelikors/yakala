@@ -28,6 +28,9 @@
         <file>../gui/anim.gif</file>
      </qresource>
      <qresource>
+        <file>../gui/anim2.gif</file>
+     </qresource>
+     <qresource>
         <file>../gui/Ubuntu-R.ttf</file>
      </qresource>
      <qresource>

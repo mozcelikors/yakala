@@ -66,7 +66,7 @@ void Environment::readEnvList (void)
 	FILE *fp;
 
 	/* Open and filter env */
-	fp = popen ("sudo -i -u $SUDO_USER sh -c '. /home/$SUDO_USER/.bashrc && printenv > /tmp/yakala.env' ","w");
+	fp = popen ("sudo -i -u $SUDO_USER sh -c '. /home/$USER/.bashrc && printenv > /tmp/yakala.env' ","w");
 
 	if (fp != NULL)
 	{

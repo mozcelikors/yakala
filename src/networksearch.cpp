@@ -41,7 +41,7 @@ void NetworkSearch::readNetworkAll (QString networkstart)
 	FILE *fp, *fp2;
 
 	/* Open and filter networks using NMAP tool*/
-	fp = popen ((QString("sudo timeout 60 nmap -T5 -sP ")+networkstart+QString("-255 >/tmp/yakala.network.cache && cat /tmp/yakala.network.cache | grep 'Nmap scan report' | sed -e ':1' -e 's/^Nmap scan report for //;t1' | sed 's|[(),]||g' | sed 's/ /=/g'  > /tmp/yakala.network ")+(QString("&& cat /tmp/yakala.network.cache | grep 'MAC Address' | sed -e ':1' -e 's/^MAC Address: //;t1' | sed 's|[(),]||g' | sed 's/ /=/'  > /tmp/yakala.network2 "))).toLocal8Bit(),"r");
+	fp = popen ((QString("sudo timeout 60 nmap -T5 -sP ")+networkstart+QString("-255 >/tmp/yakala.network.cache && cat /tmp/yakala.network.cache | grep 'Nmap scan report' | sed -e ':1' -e 's/^Nmap scan report for //;t1' | sed 's|[(),]||g' | sed 's/ /=/g'  > /tmp/yakala.network.1 ")+(QString("&& cat /tmp/yakala.network.cache | grep 'MAC Address' | sed -e ':1' -e 's/^MAC Address: //;t1' | sed 's|[(),]||g' | sed 's/ /=/'  > /tmp/yakala.network.2 "))).toLocal8Bit(),"r");
 
 	if (fp != NULL)
 	{
@@ -54,7 +54,7 @@ void NetworkSearch::readNetworkAll (QString networkstart)
 	fclose(fp);
 
 	/* Check if file contains '=' ,which is ini format */
-	QFile MyFile("/tmp/yakala.network");
+	QFile MyFile("/tmp/yakala.network.1");
 	MyFile.open(QIODevice::ReadWrite);
 	QString searchString("=");
 	bool ini_format = false;
@@ -90,7 +90,7 @@ void NetworkSearch::readNetworkAll (QString networkstart)
 	{
 		if (ini_format) /* Ini format */
 		{
-			QFile MyFile2("/tmp/yakala.network");
+			QFile MyFile2("/tmp/yakala.network.1");
 			if (MyFile2.open(QIODevice::ReadWrite))
 			{
 				QTextStream in2 (&MyFile2);
@@ -107,7 +107,7 @@ void NetworkSearch::readNetworkAll (QString networkstart)
 		}
 		else
 		{
-			QFile MyFile2("/tmp/yakala.network");
+			QFile MyFile2("/tmp/yakala.network.1");
 			if (MyFile2.open(QIODevice::ReadWrite))
 			{
 				QTextStream in2 (&MyFile2);
@@ -124,7 +124,7 @@ void NetworkSearch::readNetworkAll (QString networkstart)
 			}
 		}
 
-		QFile MyFile3("/tmp/yakala.network2");
+		QFile MyFile3("/tmp/yakala.network.2");
 		if (MyFile3.open(QIODevice::ReadWrite))
 		{
 			QTextStream in3 (&MyFile3);

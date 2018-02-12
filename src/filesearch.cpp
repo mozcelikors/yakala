@@ -73,21 +73,31 @@ void FileSearch::librarySearch (QString needle)
 	while (dirIt.hasNext()) {
 		dirIt.next();
 		if (QFileInfo(dirIt.filePath()).isFile())
-			if(dirIt.filePath().contains(needle+".a", Qt::CaseInsensitive))
+		{
+			if(dirIt.filePath().contains(needle), Qt::CaseInsensitive)
 			{
-				//qDebug()<<dirIt.filePath();
-				this->result.append(dirIt.filePath()+"\n");
+				if(dirIt.filePath().contains(needle+".a", Qt::CaseInsensitive))
+				{
+					//qDebug()<<dirIt.filePath();
+					this->result.append(dirIt.filePath()+"\n");
+				}
+				if(dirIt.filePath().contains(needle+".so", Qt::CaseInsensitive))
+				{
+					//qDebug()<<dirIt.filePath();
+					this->result.append(dirIt.filePath()+"\n");
+				}
+				if(dirIt.filePath().contains(needle+".ko", Qt::CaseInsensitive))
+				{
+					//qDebug()<<dirIt.filePath();
+					this->result.append(dirIt.filePath()+"\n");
+				}
+				if(dirIt.filePath().contains(needle+".o", Qt::CaseInsensitive))
+				{
+					//qDebug()<<dirIt.filePath();
+					this->result.append(dirIt.filePath()+"\n");
+				}
 			}
-			if(dirIt.filePath().contains(needle+".so", Qt::CaseInsensitive))
-			{
-				//qDebug()<<dirIt.filePath();
-				this->result.append(dirIt.filePath()+"\n");
-			}
-			if(dirIt.filePath().contains(needle+".o", Qt::CaseInsensitive))
-			{
-				//qDebug()<<dirIt.filePath();
-				this->result.append(dirIt.filePath()+"\n");
-			}
+		}
 	}
 }
 
