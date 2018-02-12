@@ -1,19 +1,27 @@
 # yakala
 A visual helper tool for GNU/Linux: Show system statistics, search for files, search for networks, modify your aliases, search and kill processes, edit environment variables...
 
-## Installing
+## Compiling
+
+```bash
+git clone https://github.com/mozcelikors/yakala
+cd yakala && ./install.sh
+```
+
+or Manually install:
 
 ```bash
 git clone https://github.com/mozcelikors/yakala
 cd yakala
-sudo ./install.sh
+qmake yakala.pro -r -spec linux-g++-64 CONFIG+=debug
+mkdir -p build
+make
 ```
+
 
 ## Running
 
-Installation script will automatically create a desktop icon for you. 
-
-You can use click that icon from your desktop or execute the following to run Yakala:
+Installation script (first method) will automatically create a desktop icon for you. You can use that icon or execute the following to run Yakala:
 
 ```bash
 cd <yakala-dir>/build
@@ -24,7 +32,9 @@ sudo ./yakala
 
 Here are some of the screenshots:
 
-![alt text](https://raw.githubusercontent.com/mozcelikors/yakala/master/docs/img/Selection_006.png)
+![alt text](https://raw.githubusercontent.com/mozcelikors/yakala/master/docs/img/peek.gif)
+
+![alt text](https://raw.githubusercontent.com/mozcelikors/yakala/master/docs/img/Selection_005.png)
 
 ![alt text](https://raw.githubusercontent.com/mozcelikors/yakala/master/docs/img/Selection_004.png)
 
