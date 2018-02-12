@@ -18,6 +18,8 @@
 
 #include <pthread.h>
 
+void *Thread_NetworkSearch (void *arg);
+void *Thread_FileSearch (void *arg);
 void *Thread_SystemInfo (void * arg);
 
 #endif // THREAD_SYSTEMINFO_H

@@ -25,6 +25,9 @@
         <file>../gui/icon2.ico</file>
      </qresource>
      <qresource>
+        <file>../gui/anim.gif</file>
+     </qresource>
+     <qresource>
         <file>../gui/Ubuntu-R.ttf</file>
      </qresource>
      <qresource>

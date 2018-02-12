@@ -20,7 +20,49 @@
 #include <stdio.h>
 #include "mainwindow.h"
 #include <main.h>
+#include <filesearch.h>
+#include <QDebug>
 
+void *Thread_NetworkSearch (void *arg)
+{
+	switch (myNetworkSearch.filter_type_)
+	{
+		case FILTERTYPE_ALL_:
+			n.readNetworkAll(myNetworkSearch.networkstart_);
+			break;
+		case FILTERTYPE_HOSTNAME_:
+			n.readNetworkFilterHostname(myNetworkSearch.networkstart_, myNetworkSearch.filter_text_);
+			break;
+		case FILTERTYPE_IP_:
+			n.readNetworkFilterIP(myNetworkSearch.networkstart_, myNetworkSearch.filter_text_);
+			break;
+		case FILTERTYPE_MAC_:
+			n.readNetworkFilterMAC(myNetworkSearch.networkstart_, myNetworkSearch.filter_text_);
+			break;
+		case FILTERTYPE_COMPANY_:
+			n.readNetworkFilterCompany(myNetworkSearch.networkstart_, myNetworkSearch.filter_text_);
+			break;
+		default:
+			break;
+	}
+
+	myNetworkSearch.finished_ = 1;
+
+	pthread_exit(NULL);
+	return NULL;
+}
+
+void *Thread_FileSearch (void *arg)
+{
+	if (myFileSearch.file_or_library_ == 0)
+		f.fileSearch(myFileSearch.text_);
+	else
+		f.librarySearch(myFileSearch.text_);
+	myFileSearch.finished_ = 1;
+	//qDebug() <<  f.getResult();
+	pthread_exit(NULL);
+	return NULL;
+}
 
 void *Thread_SystemInfo (void *arg)
 {
@@ -34,7 +76,6 @@ void *Thread_SystemInfo (void *arg)
 	s.readHostname();
 	a.readAliasesList();
 	s.readDiskTotal();
-
 
 	while (1)
 	{

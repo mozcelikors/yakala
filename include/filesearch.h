@@ -18,6 +18,16 @@
 
 #include <QString>
 
+#define FILESEARCH_ 0
+#define LIBSEARCH_  1
+
+typedef struct
+{
+	int finished_ = 0;  // 0-unfinished 1-finished
+	int file_or_library_ = 0; // 0-file 1-library
+	QString text_;
+} FileSearch_t;
+
 class FileSearch
 {
 private:

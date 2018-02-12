@@ -21,6 +21,20 @@
 
 #define MAX_NETWORKSEARCH_BUFSIZE 4096
 
+#define FILTERTYPE_ALL_      0
+#define FILTERTYPE_HOSTNAME_ 1
+#define FILTERTYPE_IP_       2
+#define FILTERTYPE_MAC_      3
+#define FILTERTYPE_COMPANY_  4
+
+typedef struct
+{
+	int finished_ = 0;  // 0-unfinished 1-finished
+	int filter_type_ = 0;
+	QString networkstart_;
+	QString filter_text_;
+} NetworkSearch_t;
+
 class NetworkSearch
 {
 private:

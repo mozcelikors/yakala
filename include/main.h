@@ -21,12 +21,20 @@
 #include <networksearch.h>
 #include <environment.h>
 #include <processes.h>
+#include <mainwindow.h>
+#include <filesearch.h>
 
 extern Processes p;
 extern SystemInfo s;
 extern Aliases a;
 extern NetworkSearch n;
 extern Environment e;
+extern FileSearch f;
+
+extern MainWindow *w;
+
+extern FileSearch_t myFileSearch;
+extern NetworkSearch_t myNetworkSearch;
 
 #endif // MAIN_H
 

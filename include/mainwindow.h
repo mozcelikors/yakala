@@ -35,6 +35,9 @@ public:
 	void yakalaUpdateEnvironmentTable (void);
 	void yakalaUpdateProcessTable (void);
 
+	void loadingAnimStart (void);
+	void loadingAnimStop (void);
+
 
 	~MainWindow();
 

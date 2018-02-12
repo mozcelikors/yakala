@@ -1070,10 +1070,10 @@
    <widget class="QProgressBar" name="loading_progressBar">
     <property name="geometry">
      <rect>
-      <x>280</x>
-      <y>30</y>
-      <width>291</width>
-      <height>23</height>
+      <x>480</x>
+      <y>580</y>
+      <width>321</width>
+      <height>9</height>
      </rect>
     </property>
     <property name="value">
@@ -1094,7 +1094,7 @@
     </property>
     <property name="font">
      <font>
-      <pointsize>12</pointsize>
+      <pointsize>9</pointsize>
       <weight>50</weight>
       <italic>false</italic>
       <bold>false</bold>
@@ -1112,6 +1112,19 @@
       <width>51</width>
       <height>21</height>
      </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_animationloading">
+    <property name="geometry">
+     <rect>
+      <x>510</x>
+      <y>10</y>
+      <width>67</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>ANIM</string>
     </property>
    </widget>
   </widget>
@@ -1133,7 +1146,6 @@
     <bool>false</bool>
    </attribute>
   </widget>
-  <widget class="QStatusBar" name="statusBar"/>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <tabstops>

@@ -25,12 +25,17 @@
 #include <networksearch.h>
 #include <environment.h>
 #include <processes.h>
+#include <filesearch.h>
 
 SystemInfo s;
 Aliases a;
 NetworkSearch n;
 Environment e;
 Processes p;
+FileSearch f;
+
+FileSearch_t myFileSearch;
+NetworkSearch_t myNetworkSearch;
 
 int main(int argc, char *argv[])
 {

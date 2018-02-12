@@ -27,6 +27,7 @@
 #include <QShortcut>
 #include <QTableWidget>
 #include <QHeaderView>
+#include <QMovie>
 
 #include <filesearch.h>
 
@@ -54,6 +55,30 @@ MainWindow::MainWindow(QWidget *parent) :
 	this->ui->groupBox_11->hide();
 }
 
+void MainWindow::loadingAnimStart(void)
+{
+	QMovie *loading_anim = new QMovie(":/gui/anim.gif");
+	ui->label_animationloading->setVisible(true);
+	ui->label_animationloading->setMovie(loading_anim);
+	ui->label_animationloading->setGeometry(480,580,320,9);
+	loading_anim->start();
+	ui->label_animationloading->repaint();
+
+	/* Adjustments to loadingText */
+	this->ui->label_loadingText->move(400,570);
+	this->ui->label_loadingText->show();
+	/* Update GUI element loadingText*/
+	this->ui->label_loadingText->repaint();
+}
+
+void MainWindow::loadingAnimStop(void)
+{
+	ui->label_animationloading->setVisible(false);
+	ui->label_animationloading->repaint();
+
+	this->ui->label_loadingText->hide();
+	this->ui->label_loadingText->repaint();
+}
 
 void MainWindow::yakalaUpdateProcessTable (void)
 {
@@ -188,7 +213,6 @@ void MainWindow::yakalaUiManipulations(void)
 	ui->tabWidget->tabBar()->setCursor(Qt::PointingHandCursor);
 
 	/* Set fixed size for main window - make it unresizable */
-	ui->statusBar->setSizeGripEnabled(false);
 	this->setFixedSize(QSize(850, 610));
 
 	/* Add the logo*/
@@ -251,6 +275,15 @@ void MainWindow::yakalaUiManipulations(void)
 	/* Process part UI manipulations */
 	this->ui->pushButton_killproc->setStyleSheet("QPushButton { color:white; background-color:red;} QPushButton::hover{color:black; background-color:white;}");
 
+	/* Disable loading animation in the beginning */
+	this->loadingAnimStop();
+
+	/* Only load loading text */
+	this->ui->label_loadingText->move(400,570);
+	this->ui->label_loadingText->show();
+	/* Update GUI element loadingText*/
+	this->ui->label_loadingText->repaint();
+
 	/*********** CONNECT and TIMERs ***************/
 
 	/* Tab bar signal-slot */
@@ -293,14 +326,7 @@ void MainWindow::yakalaUiManipulations(void)
 
 	/* Process table clicked */
 	connect(ui->tableWidget_proc, SIGNAL(cellClicked(int,int)), this, SLOT(handleProcessTableClicked(int,int)));
-
-
-
 }
-
-
-
-
 
 MainWindow::~MainWindow()
 {
@@ -361,29 +387,36 @@ void MainWindow::handleEnvTableClicked (int row, int col)
 
 void MainWindow::handleSearchButton()
 {
-	FileSearch f = FileSearch();
+	//FileSearch f = FileSearch();
 
-	/* Adjustments to loadingText */
-	this->ui->label_loadingText->move(280,20);
-	this->ui->label_loadingText->show();
-
-	/* Update GUI element loadingText*/
-	this->ui->label_loadingText->repaint();
+	this->loadingAnimStart();
 
 	if (this->ui->label_loadingText->isHidden() == false)
 	{
 		if (this->ui->lineEdit_filesearch->text().length() > 0)
 		{
-			f.fileSearch(this->ui->lineEdit_filesearch->text());
+			//f.fileSearch(this->ui->lineEdit_filesearch->text());
+			myFileSearch.text_ = this->ui->lineEdit_filesearch->text();
+			myFileSearch.file_or_library_ = FILESEARCH_;
 		}
 		else
 		{
-			f.librarySearch(this->ui->lineEdit_librarysearch->text());
+			//f.librarySearch(this->ui->lineEdit_librarysearch->text());
+			myFileSearch.text_ = this->ui->lineEdit_filesearch->text();
+			myFileSearch.file_or_library_ = LIBSEARCH_;
 		}
-		this->ui->label_loadingText->hide();
-	}
 
-	ui->textEdit_filesearch->setText(f.getResult().toUtf8().constData());
+		/* Create file search thread */
+		pthread_t filesearch_thread;
+		pthread_attr_t attrs;
+		pthread_attr_init(&attrs);
+		pthread_attr_setdetachstate(&attrs, PTHREAD_CREATE_JOINABLE);
+
+		if(pthread_create(&filesearch_thread, &attrs, Thread_FileSearch, NULL))
+		{
+			fprintf(stderr, "Error creating thread\n");
+		}
+	}
 }
 
 void MainWindow::tabSelected()
@@ -499,6 +532,20 @@ void MainWindow::timerSystemInfoUpdate(void)
 		this->ui->loading_progressBar->setValue(this->load_ctr*50);
 	}
 
+	if (myFileSearch.finished_ == 1)
+	{
+		this->loadingAnimStop();
+		ui->textEdit_filesearch->setText(f.getResult().toUtf8().constData());
+		myFileSearch.finished_ = 0;
+	}
+
+	if (myNetworkSearch.finished_ == 1)
+	{
+		this->loadingAnimStop();
+		this->yakalaUpdateNetworkTable();
+		myNetworkSearch.finished_ = 0;
+	}
+
 }
 
 void MainWindow::handleNetworkComboBox (int idx)
@@ -515,81 +562,89 @@ void MainWindow::handleNetworkComboBox (int idx)
 
 void MainWindow::handleNetworkSearchButton (void)
 {
+	pthread_t networksearch_thread;
+	pthread_attr_t attrs;
+	pthread_attr_init(&attrs);
+	pthread_attr_setdetachstate(&attrs, PTHREAD_CREATE_JOINABLE);
+
 	switch (ui->comboBox_searchnetwork->currentIndex())
 	{
 		case 0: /* Search Everything */
 			/* Loading */
-			this->ui->label_loadingText->move(280,20);
-			this->ui->label_loadingText->show();
-			this->ui->label_loadingText->repaint();
+			this->loadingAnimStart();
 
 			/* Do the search-update */
-			n.readNetworkAll(ui->lineEdit_networkstart->text());
-			this->yakalaUpdateNetworkTable();
+			//n.readNetworkAll(ui->lineEdit_networkstart->text());
+			/* Create network search thread */
 
-			/* Loading finished */
-			this->ui->label_loadingText->hide();
-			this->ui->label_loadingText->repaint();
+			myNetworkSearch.filter_type_ = FILTERTYPE_ALL_;
+			myNetworkSearch.networkstart_ = ui->lineEdit_networkstart->text();
+
+			if(pthread_create(&networksearch_thread, &attrs, Thread_NetworkSearch, NULL))
+			{
+				fprintf(stderr, "Error creating thread\n");
+			}
+
 			break;
 
 		case 1: /* Filter Hostname */
 			/* Loading */
-			this->ui->label_loadingText->move(280,20);
-			this->ui->label_loadingText->show();
-			this->ui->label_loadingText->repaint();
+			this->loadingAnimStart();
 
-			/* Do the search-update */
-			n.readNetworkFilterHostname(ui->lineEdit_networkstart->text(), ui->lineEdit_networksearch->text());
-			this->yakalaUpdateNetworkTable();
+			myNetworkSearch.filter_type_ = FILTERTYPE_HOSTNAME_;
+			myNetworkSearch.networkstart_ = ui->lineEdit_networkstart->text();
+			myNetworkSearch.filter_text_ = ui->lineEdit_networksearch->text();
 
-			/* Loading finished */
-			this->ui->label_loadingText->hide();
-			this->ui->label_loadingText->repaint();
+			if(pthread_create(&networksearch_thread, &attrs, Thread_NetworkSearch, NULL))
+			{
+				fprintf(stderr, "Error creating thread\n");
+			}
+
 			break;
 
 		case 2: /* Filter IP */
 			/* Loading */
-			this->ui->label_loadingText->move(280,20);
-			this->ui->label_loadingText->show();
-			this->ui->label_loadingText->repaint();
+			this->loadingAnimStart();
 
-			/* Do the search-update */
-			n.readNetworkFilterIP(ui->lineEdit_networkstart->text(), ui->lineEdit_networksearch->text());
-			this->yakalaUpdateNetworkTable();
+			myNetworkSearch.filter_type_ = FILTERTYPE_IP_;
+			myNetworkSearch.networkstart_ = ui->lineEdit_networkstart->text();
+			myNetworkSearch.filter_text_ = ui->lineEdit_networksearch->text();
 
-			/* Loading finished */
-			this->ui->label_loadingText->hide();
-			this->ui->label_loadingText->repaint();
+			if(pthread_create(&networksearch_thread, &attrs, Thread_NetworkSearch, NULL))
+			{
+				fprintf(stderr, "Error creating thread\n");
+			}
+
 			break;
 
 		case 3: /* Filter MAC */
 			/* Loading */
-			this->ui->label_loadingText->move(280,20);
-			this->ui->label_loadingText->show();
-			this->ui->label_loadingText->repaint();
+			this->loadingAnimStart();
 
-			/* Do the search-update */
-			n.readNetworkFilterMAC(ui->lineEdit_networkstart->text(), ui->lineEdit_networksearch->text());
-			this->yakalaUpdateNetworkTable();
+			myNetworkSearch.filter_type_ = FILTERTYPE_MAC_;
+			myNetworkSearch.networkstart_ = ui->lineEdit_networkstart->text();
+			myNetworkSearch.filter_text_ = ui->lineEdit_networksearch->text();
 
-			/* Loading finished */
-			this->ui->label_loadingText->hide();
-			this->ui->label_loadingText->repaint();
+			if(pthread_create(&networksearch_thread, &attrs, Thread_NetworkSearch, NULL))
+			{
+				fprintf(stderr, "Error creating thread\n");
+			}
+
 			break;
 
 		case 4: /* Filter Company */
 			/* Loading */
-			this->ui->label_loadingText->move(280,20);
-			this->ui->label_loadingText->show();
-			this->ui->label_loadingText->repaint();
+			this->loadingAnimStart();
 
-			/* Do the search-update */
-			n.readNetworkFilterCompany(ui->lineEdit_networkstart->text(), ui->lineEdit_networksearch->text());
-			this->yakalaUpdateNetworkTable();
+			myNetworkSearch.filter_type_ = FILTERTYPE_COMPANY_;
+			myNetworkSearch.networkstart_ = ui->lineEdit_networkstart->text();
+			myNetworkSearch.filter_text_ = ui->lineEdit_networksearch->text();
 
-			/* Loading finished */
-			this->ui->label_loadingText->hide();
-			this->ui->label_loadingText->repaint();
+			if(pthread_create(&networksearch_thread, &attrs, Thread_NetworkSearch, NULL))
+			{
+				fprintf(stderr, "Error creating thread\n");
+			}
+
 			break;
 		default:
 			break;

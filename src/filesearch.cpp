@@ -20,6 +20,8 @@
 #include <QProcess>
 #include <cstdio>
 #include <iostream>
+#include <QDirIterator>
+#include <QtDebug>
 
 FileSearch::FileSearch()
 {
@@ -28,20 +30,36 @@ FileSearch::FileSearch()
 
 void FileSearch::fileSearch (QString needle)
 {
-	QProcess file_search_process;
-	QString exec = "/usr/bin/find";
+	this->result = "";
+
+	/*QProcess file_search_process;
+	QString exec = "locate";
 	QStringList params;
-	 params << "/" << "-name" << "*"+needle+"*";
+	 params << needle;
 	file_search_process.start(exec,params);
 	file_search_process.waitForFinished();
-	QByteArray newData=file_search_process.readAll();
+	QByteArray newData=file_search_process.readAllStandardOutput();
 	this->result = QString::fromLocal8Bit(newData);
-	//std::cout << this->result.toUtf8().constData() << std::endl;
+	//std::cout << this->result.toUtf8().constData() << std::endl;*/
+
+	QDirIterator dirIt("/",QDirIterator::Subdirectories);
+	while (dirIt.hasNext()) {
+		dirIt.next();
+		if (QFileInfo(dirIt.filePath()).isFile())
+			if(dirIt.filePath().contains(needle, Qt::CaseInsensitive))
+			{
+				//qDebug()<<dirIt.filePath();
+				this->result.append(dirIt.filePath()+"\n");
+			}
+
+	}
 }
 
 void FileSearch::librarySearch (QString needle)
 {
-	QProcess file_search_process;
+	this->result = "";
+
+	/*QProcess file_search_process;
 	QString exec = "/usr/bin/find";
 	QStringList params;
 	 params << "/" << "-name" << "*lib"+needle+".*";
@@ -49,7 +67,28 @@ void FileSearch::librarySearch (QString needle)
 	file_search_process.waitForFinished();
 	QByteArray newData=file_search_process.readAll();
 	this->result = QString::fromLocal8Bit(newData);
-	//std::cout << this->result.toUtf8().constData() << std::endl;
+	//std::cout << this->result.toUtf8().constData() << std::endl;*/
+
+	QDirIterator dirIt("/",QDirIterator::Subdirectories);
+	while (dirIt.hasNext()) {
+		dirIt.next();
+		if (QFileInfo(dirIt.filePath()).isFile())
+			if(dirIt.filePath().contains(needle+".a", Qt::CaseInsensitive))
+			{
+				//qDebug()<<dirIt.filePath();
+				this->result.append(dirIt.filePath()+"\n");
+			}
+			if(dirIt.filePath().contains(needle+".so", Qt::CaseInsensitive))
+			{
+				//qDebug()<<dirIt.filePath();
+				this->result.append(dirIt.filePath()+"\n");
+			}
+			if(dirIt.filePath().contains(needle+".o", Qt::CaseInsensitive))
+			{
+				//qDebug()<<dirIt.filePath();
+				this->result.append(dirIt.filePath()+"\n");
+			}
+	}
 }
 
 QString FileSearch::getResult (void)
