@@ -38,14 +38,14 @@ public:
 	void loadingAnimStart (void);
 	void loadingAnimStop (void);
 
-
 	~MainWindow();
+
+protected:
+	 bool eventFilter(QObject *obj, QEvent *event);
 
 private:
 	Ui::MainWindow *ui;
 	int load_ctr;
-
-
 
 signals:
 

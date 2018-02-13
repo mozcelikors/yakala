@@ -28,6 +28,8 @@
 #include <QTableWidget>
 #include <QHeaderView>
 #include <QMovie>
+#include <QKeyEvent>
+#include <QDebug>
 
 #include <filesearch.h>
 
@@ -39,6 +41,9 @@ MainWindow::MainWindow(QWidget *parent) :
 	/* UI */
 	ui->setupUi(this);
 	this->yakalaUiManipulations();
+
+	/* Install event filter for keypress and so on */
+	qApp->installEventFilter(this); //Use eventFilter function
 
 	/* Threads */
 	pthread_t systeminfo_thread;
@@ -53,6 +58,51 @@ MainWindow::MainWindow(QWidget *parent) :
 
 	// HIDE THE ENVIRONMENT ADD/RM/SEARCH FEATURE FOR NOW
 	this->ui->groupBox_11->hide();
+}
+
+bool MainWindow::eventFilter(QObject *obj, QEvent *event)
+{
+	QKeyEvent *keyEvent;
+
+	if (event->type() == QEvent::KeyRelease)
+	{
+		if(obj == ui->centralWidget)
+		{
+			keyEvent = static_cast<QKeyEvent *>(event);
+
+			if(keyEvent->key() == Qt::Key_Return)
+			{
+				/* Determine where exactly the Return is pressed */
+				switch (ui->tabWidget->currentIndex())
+				{
+					case 0: /* System */
+						break;
+					case 1: /* Network */
+						this->handleNetworkSearchButton();
+						break;
+					case 2: /* File */
+						this->handleSearchButton();
+						break;
+					case 3: /* Commands And Processes */
+						switch (ui->tabWidget_commands->currentIndex())
+						{
+							case 0: /* Processes */
+								break;
+							case 1: /* Aliases */
+								break;
+							case 2: /* Environment variables */
+							default:
+								break;
+						}
+						break;
+					default:
+						break;
+				}
+				return true;
+			}
+		}
+	}
+	return QObject::eventFilter(obj, event);
 }
 
 void MainWindow::loadingAnimStart(void)
@@ -452,12 +502,6 @@ void MainWindow::tabSelected()
 
 		/* Set focus */
 		this->ui->lineEdit_filesearch->setFocus();
-
-		/* Set ENTER key binding to Search button */
-		QShortcut *returnShortcut = new QShortcut(QKeySequence("Return"), ui->searchButton);
-		QObject::connect(returnShortcut, SIGNAL(activated()), this, SLOT(handleSearchButton()));
-
-
 	}
 	else
 	{
