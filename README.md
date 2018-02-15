@@ -1,5 +1,26 @@
 # yakala
-A visual helper tool for GNU/Linux: Show system statistics, search for files, search for networks, SSH into networks, see active TCP/UDP sockets, modify your aliases, search and kill processes, edit environment variables...
+A visual helper tool for GNU/Linux. Made with love.
+
+## Features 
+
+* Show system statistics: CPU, Memory, Disk stats and system information
+* Search for files
+* Search for networks
+* SSH into networks
+* See active TCP/UDP sockets
+* Modify your aliases
+* Search and kill processes
+* List environment variables
+
+New features involve (as of Feb 15, 2018):
+
+* SSHing into networks
+* Listing activeTCP/UDP sockets
+
+## Animation
+
+![alt text](https://raw.githubusercontent.com/mozcelikors/yakala/master/docs/img/peek.gif)
+
 ## Compiling
 
 ```bash
@@ -26,17 +47,6 @@ Installation script (first method) will automatically create a desktop icon for 
 cd <yakala-dir>/build
 sudo ./yakala
 ```
-
-## New Features
-
-New features involve:
-
-* SSHing into networks
-* Listing activeTCP/UDP sockets
-
-## Animation
-
-![alt text](https://raw.githubusercontent.com/mozcelikors/yakala/master/docs/img/peek.gif)
 
 ## Screenshots
 
