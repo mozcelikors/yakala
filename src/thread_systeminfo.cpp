@@ -56,9 +56,7 @@ void *Thread_NetworkSearch (void *arg)
 void *Thread_FileSearch (void *arg)
 {
 	if (myFileSearch.file_or_library_ == 0)
-		f.fileSearch(myFileSearch.text_);
-	else
-		f.librarySearch(myFileSearch.text_);
+		f.fileSearch(myFileSearch.text_, myFileSearch.folder_);
 	myFileSearch.finished_ = 1;
 	//qDebug() <<  f.getResult();
 	pthread_exit(NULL);

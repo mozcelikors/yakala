@@ -747,7 +747,7 @@
          <x>10</x>
          <y>30</y>
          <width>231</width>
-         <height>51</height>
+         <height>41</height>
         </rect>
        </property>
       </widget>
@@ -762,16 +762,35 @@
        </rect>
       </property>
       <property name="title">
-       <string>Library Search</string>
+       <string>In Folder:</string>
       </property>
-      <widget class="QLineEdit" name="lineEdit_librarysearch">
+      <widget class="QLineEdit" name="lineEdit_searchfolder">
        <property name="geometry">
         <rect>
          <x>10</x>
          <y>30</y>
-         <width>251</width>
-         <height>51</height>
+         <width>151</width>
+         <height>41</height>
         </rect>
+       </property>
+       <property name="text">
+        <string>/home</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="pushButton_browsefolder">
+       <property name="geometry">
+        <rect>
+         <x>170</x>
+         <y>30</y>
+         <width>101</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
+       </property>
+       <property name="text">
+        <string>Browse</string>
        </property>
       </widget>
      </widget>
@@ -1327,7 +1346,7 @@
   <tabstop>lineEdit_networksearch</tabstop>
   <tabstop>pushButton_networksearch</tabstop>
   <tabstop>lineEdit_filesearch</tabstop>
-  <tabstop>lineEdit_librarysearch</tabstop>
+  <tabstop>lineEdit_searchfolder</tabstop>
   <tabstop>searchButton</tabstop>
   <tabstop>tabWidget_commands</tabstop>
   <tabstop>lineEdit_filterproc</tabstop>

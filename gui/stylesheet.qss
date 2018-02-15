@@ -245,6 +245,10 @@ QWidget#tab {
 
 }
 
+QFileDialog QWidget {
+    background-color:#333;
+}
+
 
 
 QTextEdit, QLineEdit, QTableWidget, QComboBox{
@@ -404,4 +408,7 @@ QGroupBox::title
     color:#3D7848;
 }
 
-
+QFileDialog
+{
+    background:#333;
+}

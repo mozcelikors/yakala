@@ -25,6 +25,7 @@ typedef struct
 {
 	int finished_ = 0;  // 0-unfinished 1-finished
 	int file_or_library_ = 0; // 0-file 1-library
+	QString folder_;
 	QString text_;
 } FileSearch_t;
 
@@ -34,7 +35,7 @@ private:
 	QString result;
 public:
 	FileSearch();
-	void fileSearch (QString needle);
+	void fileSearch (QString needle, QString folder);
 	void librarySearch (QString needle);
 	QString getResult (void);
 };

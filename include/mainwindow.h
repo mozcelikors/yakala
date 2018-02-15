@@ -77,6 +77,7 @@ private slots:
 	void yakalaCloseEvent (void);
 	void inputProcessChanged (void);
 	void handleSSHButtons (void);
+	void handleBrowseFolderButton (void);
 
 };
 

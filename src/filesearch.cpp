@@ -28,7 +28,7 @@ FileSearch::FileSearch()
 
 }
 
-void FileSearch::fileSearch (QString needle)
+void FileSearch::fileSearch (QString needle, QString folder)
 {
 	this->result = "";
 
@@ -42,7 +42,7 @@ void FileSearch::fileSearch (QString needle)
 	this->result = QString::fromLocal8Bit(newData);
 	//std::cout << this->result.toUtf8().constData() << std::endl;*/
 
-	QDirIterator dirIt("/",QDirIterator::Subdirectories);
+	QDirIterator dirIt(folder,QDirIterator::Subdirectories);
 	while (dirIt.hasNext()) {
 		dirIt.next();
 		if (QFileInfo(dirIt.filePath()).isFile())

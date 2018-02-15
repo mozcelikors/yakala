@@ -31,6 +31,7 @@
 #include <QKeyEvent>
 #include <QDebug>
 #include <QVector>
+#include <QFileDialog>
 
 #include <qcustomplot.h>
 
@@ -220,7 +221,6 @@ void MainWindow::graphMEMUtil (void)
 	customPlot->xAxis->setLabelColor(Qt::white);
 	customPlot->yAxis->setLabelColor(Qt::white);
 }
-
 
 bool MainWindow::eventFilter(QObject *obj, QEvent *event)
 {
@@ -528,7 +528,7 @@ void MainWindow::yakalaUiManipulations(void)
 	this->ui->pushButton_removeenv->setStyleSheet("QPushButton::hover, QPushButton::focus{color:white; background-color:red;}");
 
 	/* FileSearch part UI manipulations */
-	this->ui->textEdit_filesearch->setText("Please enter file or library name to search..");
+	this->ui->textEdit_filesearch->setText("Please enter file to be searched and folder.");
 	this->ui->textEdit_filesearch->setStyleSheet("font-family:'Courier New'; font-size:14px;");
 
 	/* Network part UI manipulations */
@@ -613,6 +613,9 @@ void MainWindow::yakalaUiManipulations(void)
 
 	/* Process table clicked */
 	connect(ui->tableWidget_proc, SIGNAL(cellClicked(int,int)), this, SLOT(handleProcessTableClicked(int,int)));
+
+	/* File search button signal-slot */
+	connect(ui->pushButton_browsefolder, SIGNAL(released()), this, SLOT (handleBrowseFolderButton()));
 }
 
 MainWindow::~MainWindow()
@@ -621,6 +624,17 @@ MainWindow::~MainWindow()
 }
 
 /**************** SLOTS *******************/
+
+void MainWindow::handleBrowseFolderButton (void)
+{
+	QFileDialog *file_dialog = new QFileDialog;
+	QString dir = file_dialog->getExistingDirectory(this, tr("Open Directory"),
+												 "/home",
+												 QFileDialog::ShowDirsOnly
+												 | QFileDialog::DontResolveSymlinks);
+	if (dir.length()>0)
+		this->ui->lineEdit_searchfolder->setText(dir);
+}
 
 void MainWindow::handleProcessTableClicked (int row, int col)
 {
@@ -685,12 +699,7 @@ void MainWindow::handleSearchButton()
 			//f.fileSearch(this->ui->lineEdit_filesearch->text());
 			myFileSearch.text_ = this->ui->lineEdit_filesearch->text();
 			myFileSearch.file_or_library_ = FILESEARCH_;
-		}
-		else
-		{
-			//f.librarySearch(this->ui->lineEdit_librarysearch->text());
-			myFileSearch.text_ = this->ui->lineEdit_filesearch->text();
-			myFileSearch.file_or_library_ = LIBSEARCH_;
+			myFileSearch.folder_ = this->ui->lineEdit_searchfolder->text();
 		}
 
 		/* Create file search thread */
