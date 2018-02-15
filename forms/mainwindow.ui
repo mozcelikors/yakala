@@ -765,6 +765,9 @@
        <string>In Folder:</string>
       </property>
       <widget class="QLineEdit" name="lineEdit_searchfolder">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="geometry">
         <rect>
          <x>10</x>
