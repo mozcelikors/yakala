@@ -51,6 +51,8 @@ public:
 	void readNetworkFilterMAC (QString networkstart, QString mac);
 	void readNetworkFilterCompany (QString networkstart, QString company);
 
+	void sshInto (int list_index, QString user_override);
+
 	QStringList getHostnames(void);
 	QStringList getIPs (void);
 	QStringList getCompanies (void);

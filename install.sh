@@ -71,6 +71,15 @@ if [ "" == "$PKG_OK" ]; then
   sudo apt-get --force-yes --yes install gksu
 fi
 
+## Check for xterm
+PKG_OK=$(dpkg-query -W --showformat='${Status}\n' 'xterm' | grep "install ok installed")
+echo "Checking for xterm: $PKG_OK"
+if [ "" == "$PKG_OK" ]; then
+  echo "No xterm. Setting up xterm."
+  sudo apt-get --force-yes --yes install xterm
+fi
+
+
 ## Make
 echo "Compiling yakala..."
 qmake yakala.pro 

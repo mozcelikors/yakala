@@ -236,16 +236,16 @@ void MainWindow::yakalaUpdateEnvironmentTable (void)
 void MainWindow::yakalaUpdateNetworkTable (void)
 {
 	/* Load table widget for Network section */
-	ui->tableWidget_network->setColumnCount(4);
+	ui->tableWidget_network->setColumnCount(5);
 	ui->tableWidget_network->setRowCount(n.getHostnames().size());
 	QStringList  TableHeader;
-	TableHeader<<"Hostname"<<"IP Address"<<"MAC"<<"Company";
+	TableHeader<<"Hostname"<<"IP Address"<<"MAC"<<"Company" << "SSH";
 	ui->tableWidget_network->setHorizontalHeaderLabels(TableHeader);
 
-	ui->tableWidget_network->setColumnWidth(0, 150);
-	ui->tableWidget_network->setColumnWidth(1, 120);
-	ui->tableWidget_network->setColumnWidth(2, 150);
-
+	ui->tableWidget_network->setColumnWidth(0, 95);
+	ui->tableWidget_network->setColumnWidth(1, 124);
+	ui->tableWidget_network->setColumnWidth(2, 130);
+	ui->tableWidget_network->setColumnWidth(3, 160);
 	ui->tableWidget_network->horizontalHeader()->setStretchLastSection(true);
 
 	//printf ("a%d\n", n.getHostnames().size());
@@ -272,10 +272,26 @@ void MainWindow::yakalaUpdateNetworkTable (void)
 			item4->setFlags(item4->flags() ^ Qt::ItemIsEditable);
 			ui->tableWidget_network->setItem(i, 3, item4);
 		}
+
+		/* Add SSH button for the row */
+		QPushButton *sshButton = new QPushButton;
+		sshButton->setText("SSH INTO");
+		sshButton->setObjectName(QString::number(i).toLatin1());
+		//qDebug()<<QString(i).toLatin1();
+		sshButton->setCursor(Qt::PointingHandCursor);
+		ui->tableWidget_network->setCellWidget(i,4, sshButton);
+		connect(sshButton, SIGNAL(released()), this, SLOT (handleSSHButtons()));
 	}
 }
 
-
+void MainWindow::handleSSHButtons(void)
+{
+	QObject *senderObj = sender(); // This will give Sender object
+	QString senderObjName = senderObj->objectName();
+	int senderID = senderObjName.toInt();
+	//qDebug()<<senderID<<senderObjName;
+	n.sshInto(senderID,ui->lineEdit_SSHUser->text());
+}
 
 void MainWindow::yakalaUpdateAliasTable (void)
 {
@@ -360,6 +376,7 @@ void MainWindow::yakalaUiManipulations(void)
 	this->ui->comboBox_searchnetwork->addItem("Search MAC Address");
 	this->ui->comboBox_searchnetwork->addItem("Search Company");
 	this->ui->lineEdit_networksearch->setEnabled(false);
+	this->ui->label_sshuser->setStyleSheet("color:#3D7848;");
 
 	/* Set cursor at the tabwidget commands tab bar */
 	ui->tabWidget_commands->tabBar()->setCursor(Qt::PointingHandCursor);
@@ -371,6 +388,7 @@ void MainWindow::yakalaUiManipulations(void)
 
 	/* Process part UI manipulations */
 	this->ui->pushButton_killproc->setStyleSheet("QPushButton { color:white; background-color:red;} QPushButton::hover{color:black; background-color:white;}");
+
 
 	/* Disable loading animation in the beginning */
 	this->loadingAnimStop();

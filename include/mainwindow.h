@@ -64,6 +64,7 @@ private slots:
 	void handleNetworkSearchButton (void);
 	void yakalaCloseEvent (void);
 	void inputProcessChanged (void);
+	void handleSSHButtons (void);
 
 };
 

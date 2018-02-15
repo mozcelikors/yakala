@@ -460,15 +460,15 @@
       </property>
       <widget class="QWidget" name="tab_8">
        <attribute name="title">
-        <string>Network Search</string>
+        <string>Network Search / SSHing</string>
        </attribute>
        <widget class="QGroupBox" name="groupBox_9">
         <property name="geometry">
          <rect>
           <x>10</x>
-          <y>150</y>
+          <y>160</y>
           <width>661</width>
-          <height>271</height>
+          <height>261</height>
          </rect>
         </property>
         <property name="title">
@@ -480,7 +480,7 @@
            <x>10</x>
            <y>20</y>
            <width>641</width>
-           <height>241</height>
+           <height>231</height>
           </rect>
          </property>
         </widget>
@@ -503,7 +503,7 @@
            <x>120</x>
            <y>20</y>
            <width>441</width>
-           <height>51</height>
+           <height>31</height>
           </rect>
          </property>
          <property name="text">
@@ -514,7 +514,7 @@
          <property name="geometry">
           <rect>
            <x>10</x>
-           <y>30</y>
+           <y>20</y>
            <width>131</width>
            <height>31</height>
           </rect>
@@ -527,9 +527,9 @@
          <property name="geometry">
           <rect>
            <x>120</x>
-           <y>80</y>
+           <y>60</y>
            <width>161</width>
-           <height>51</height>
+           <height>31</height>
           </rect>
          </property>
          <property name="cursor">
@@ -540,9 +540,9 @@
          <property name="geometry">
           <rect>
            <x>290</x>
-           <y>80</y>
+           <y>60</y>
            <width>271</width>
-           <height>51</height>
+           <height>31</height>
           </rect>
          </property>
         </widget>
@@ -550,7 +550,7 @@
          <property name="geometry">
           <rect>
            <x>10</x>
-           <y>90</y>
+           <y>60</y>
            <width>101</width>
            <height>31</height>
           </rect>
@@ -565,7 +565,7 @@
            <x>570</x>
            <y>20</y>
            <width>81</width>
-           <height>111</height>
+           <height>71</height>
           </rect>
          </property>
          <property name="cursor">
@@ -575,11 +575,30 @@
           <string>Search</string>
          </property>
         </widget>
+        <widget class="QLabel" name="label_sshuser">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>110</y>
+           <width>221</width>
+           <height>17</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>SSH User (for SSHing, optional)</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEdit_SSHUser">
+         <property name="geometry">
+          <rect>
+           <x>230</x>
+           <y>100</y>
+           <width>161</width>
+           <height>29</height>
+          </rect>
+         </property>
+        </widget>
        </widget>
-       <zorder>groupBox_8</zorder>
-       <zorder>groupBox_9</zorder>
-       <zorder>groupBox_9</zorder>
-       <zorder>groupBox_8</zorder>
       </widget>
       <widget class="QWidget" name="tab_9">
        <attribute name="title">
