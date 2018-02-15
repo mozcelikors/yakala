@@ -23,6 +23,7 @@
 #include <processes.h>
 #include <mainwindow.h>
 #include <filesearch.h>
+#include <sockets.h>
 
 extern Processes p;
 extern SystemInfo s;
@@ -30,6 +31,7 @@ extern Aliases a;
 extern NetworkSearch n;
 extern Environment e;
 extern FileSearch f;
+extern Sockets so;
 
 extern MainWindow *w;
 

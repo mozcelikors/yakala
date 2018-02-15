@@ -26,6 +26,7 @@
 #include <environment.h>
 #include <processes.h>
 #include <filesearch.h>
+#include <sockets.h>
 
 SystemInfo s;
 Aliases a;
@@ -33,6 +34,7 @@ NetworkSearch n;
 Environment e;
 Processes p;
 FileSearch f;
+Sockets so;
 
 FileSearch_t myFileSearch;
 NetworkSearch_t myNetworkSearch;

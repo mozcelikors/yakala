@@ -446,118 +446,168 @@
      <attribute name="title">
       <string>Network</string>
      </attribute>
-     <widget class="QGroupBox" name="groupBox_8">
+     <widget class="QTabWidget" name="tabWidget_network">
       <property name="geometry">
        <rect>
         <x>10</x>
         <y>10</y>
         <width>681</width>
-        <height>151</height>
+        <height>471</height>
        </rect>
       </property>
-      <property name="title">
-       <string>Network Scan</string>
+      <property name="currentIndex">
+       <number>0</number>
       </property>
-      <widget class="QLineEdit" name="lineEdit_networkstart">
-       <property name="geometry">
-        <rect>
-         <x>120</x>
-         <y>30</y>
-         <width>441</width>
-         <height>51</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>192.168.1.0</string>
-       </property>
+      <widget class="QWidget" name="tab_8">
+       <attribute name="title">
+        <string>Network Search</string>
+       </attribute>
+       <widget class="QGroupBox" name="groupBox_9">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>150</y>
+          <width>661</width>
+          <height>271</height>
+         </rect>
+        </property>
+        <property name="title">
+         <string>Results</string>
+        </property>
+        <widget class="QTableWidget" name="tableWidget_network">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>20</y>
+           <width>641</width>
+           <height>241</height>
+          </rect>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QGroupBox" name="groupBox_8">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>10</y>
+          <width>661</width>
+          <height>141</height>
+         </rect>
+        </property>
+        <property name="title">
+         <string>Network Scan</string>
+        </property>
+        <widget class="QLineEdit" name="lineEdit_networkstart">
+         <property name="geometry">
+          <rect>
+           <x>120</x>
+           <y>20</y>
+           <width>441</width>
+           <height>51</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>192.168.1.0</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_14">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>30</y>
+           <width>131</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Network Start</string>
+         </property>
+        </widget>
+        <widget class="QComboBox" name="comboBox_searchnetwork">
+         <property name="geometry">
+          <rect>
+           <x>120</x>
+           <y>80</y>
+           <width>161</width>
+           <height>51</height>
+          </rect>
+         </property>
+         <property name="cursor">
+          <cursorShape>PointingHandCursor</cursorShape>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEdit_networksearch">
+         <property name="geometry">
+          <rect>
+           <x>290</x>
+           <y>80</y>
+           <width>271</width>
+           <height>51</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_15">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>90</y>
+           <width>101</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Filter Results</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="pushButton_networksearch">
+         <property name="geometry">
+          <rect>
+           <x>570</x>
+           <y>20</y>
+           <width>81</width>
+           <height>111</height>
+          </rect>
+         </property>
+         <property name="cursor">
+          <cursorShape>PointingHandCursor</cursorShape>
+         </property>
+         <property name="text">
+          <string>Search</string>
+         </property>
+        </widget>
+       </widget>
+       <zorder>groupBox_8</zorder>
+       <zorder>groupBox_9</zorder>
+       <zorder>groupBox_9</zorder>
+       <zorder>groupBox_8</zorder>
       </widget>
-      <widget class="QLabel" name="label_14">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>40</y>
-         <width>131</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Network Start</string>
-       </property>
-      </widget>
-      <widget class="QComboBox" name="comboBox_searchnetwork">
-       <property name="geometry">
-        <rect>
-         <x>120</x>
-         <y>90</y>
-         <width>161</width>
-         <height>51</height>
-        </rect>
-       </property>
-       <property name="cursor">
-        <cursorShape>PointingHandCursor</cursorShape>
-       </property>
-      </widget>
-      <widget class="QLineEdit" name="lineEdit_networksearch">
-       <property name="geometry">
-        <rect>
-         <x>290</x>
-         <y>90</y>
-         <width>271</width>
-         <height>51</height>
-        </rect>
-       </property>
-      </widget>
-      <widget class="QLabel" name="label_15">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>100</y>
-         <width>101</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Filter Results</string>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="pushButton_networksearch">
-       <property name="geometry">
-        <rect>
-         <x>570</x>
-         <y>30</y>
-         <width>91</width>
-         <height>111</height>
-        </rect>
-       </property>
-       <property name="cursor">
-        <cursorShape>PointingHandCursor</cursorShape>
-       </property>
-       <property name="text">
-        <string>Search</string>
-       </property>
-      </widget>
-     </widget>
-     <widget class="QGroupBox" name="groupBox_9">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>170</y>
-        <width>681</width>
-        <height>301</height>
-       </rect>
-      </property>
-      <property name="title">
-       <string>Results</string>
-      </property>
-      <widget class="QTableWidget" name="tableWidget_network">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>20</y>
-         <width>661</width>
-         <height>271</height>
-        </rect>
-       </property>
+      <widget class="QWidget" name="tab_9">
+       <attribute name="title">
+        <string>Active TCP/UDP Sockets</string>
+       </attribute>
+       <widget class="QGroupBox" name="groupBox_13">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>10</y>
+          <width>661</width>
+          <height>411</height>
+         </rect>
+        </property>
+        <property name="title">
+         <string>Active TCP/UDP Sockets</string>
+        </property>
+        <widget class="QTableWidget" name="tableWidget_sockets">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>20</y>
+           <width>641</width>
+           <height>381</height>
+          </rect>
+         </property>
+        </widget>
+       </widget>
       </widget>
      </widget>
     </widget>
@@ -1134,7 +1184,7 @@
      <x>0</x>
      <y>0</y>
      <width>848</width>
-     <height>25</height>
+     <height>23</height>
     </rect>
    </property>
   </widget>

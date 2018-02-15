@@ -21,7 +21,8 @@ SOURCES +=  src/aliases.cpp \
             src/systeminfo.cpp \
             src/thread_systeminfo.cpp \
             src/environment.cpp \
-            src/processes.cpp
+            src/processes.cpp \
+            src/sockets.cpp
 
 HEADERS  += include/aliases.h \
             include/filesearch.h \
@@ -31,7 +32,8 @@ HEADERS  += include/aliases.h \
             include/systeminfo.h \
             include/thread_systeminfo.h \
             include/environment.h \
-            include/processes.h
+            include/processes.h \
+            include/sockets.h
 
 FORMS    += forms/mainwindow.ui
 

@@ -34,6 +34,7 @@ public:
 	void yakalaUpdateNetworkTable (void);
 	void yakalaUpdateEnvironmentTable (void);
 	void yakalaUpdateProcessTable (void);
+	void yakalaUpdateSocketsTable (void);
 
 	void loadingAnimStart (void);
 	void loadingAnimStop (void);

@@ -130,6 +130,49 @@ void MainWindow::loadingAnimStop(void)
 	this->ui->label_loadingText->repaint();
 }
 
+void MainWindow::yakalaUpdateSocketsTable (void)
+{
+	ui->tableWidget_sockets->setColumnCount(6);
+	ui->tableWidget_sockets->setRowCount(so.getProtos().count());
+	QStringList TableHeader;
+	TableHeader << "Type" << "RecvQ" << "SendQ" << "Local Address" << "Foreign Address" << "State";
+	ui->tableWidget_sockets->setColumnWidth(0, 50);
+	ui->tableWidget_sockets->setColumnWidth(1, 50);
+	ui->tableWidget_sockets->setColumnWidth(2, 50);
+	ui->tableWidget_sockets->setColumnWidth(3, 180);
+	ui->tableWidget_sockets->setColumnWidth(4, 170);
+	ui->tableWidget_sockets->setColumnWidth(5, 80);
+	ui->tableWidget_sockets->setHorizontalHeaderLabels(TableHeader);
+	ui->tableWidget_sockets->horizontalHeader()->setStretchLastSection(true);
+
+	for (int i = 0; i < so.getProtos().count(); i++)
+	{
+		QTableWidgetItem *item = new QTableWidgetItem(so.getProtos().at(i));
+		item->setFlags(item->flags() ^ Qt::ItemIsEditable);
+		ui->tableWidget_sockets->setItem(i, 0, item);
+
+		QTableWidgetItem *item2 = new QTableWidgetItem(so.getRecvQs().at(i));
+		item2->setFlags(item2->flags() ^ Qt::ItemIsEditable);
+		ui->tableWidget_sockets->setItem(i, 1, item2);
+
+		QTableWidgetItem *item3 = new QTableWidgetItem(so.getSendQs().at(i));
+		item3->setFlags(item3->flags() ^ Qt::ItemIsEditable);
+		ui->tableWidget_sockets->setItem(i, 2, item3);
+
+		QTableWidgetItem *item4 = new QTableWidgetItem(so.getLocalAddrs().at(i));
+		item4->setFlags(item4->flags() ^ Qt::ItemIsEditable);
+		ui->tableWidget_sockets->setItem(i, 3, item4);
+
+		QTableWidgetItem *item5 = new QTableWidgetItem(so.getForeignAddrs().at(i));
+		item5->setFlags(item5->flags() ^ Qt::ItemIsEditable);
+		ui->tableWidget_sockets->setItem(i, 4, item5);
+
+		QTableWidgetItem *item6 = new QTableWidgetItem(so.getStates().at(i));
+		item6->setFlags(item6->flags() ^ Qt::ItemIsEditable);
+		ui->tableWidget_sockets->setItem(i, 5, item6);
+	}
+}
+
 void MainWindow::yakalaUpdateProcessTable (void)
 {
 	/* Load table widget for Aliases section */
@@ -321,6 +364,10 @@ void MainWindow::yakalaUiManipulations(void)
 	/* Set cursor at the tabwidget commands tab bar */
 	ui->tabWidget_commands->tabBar()->setCursor(Qt::PointingHandCursor);
 	ui->tabWidget_commands->tabBar()->setStyleSheet("QTabBar::tab {border-top-left-radius:5px; border-top-right-radius:5px; border-bottom-left-radius:0px; } QTabBar::tab:selected, QTabBar::tab:selected::hover { background: #93C83E; border-bottom-right-radius:0px; color:black; }");
+
+	/* tabWidget network */
+	ui->tabWidget_network->tabBar()->setCursor(Qt::PointingHandCursor);
+	ui->tabWidget_network->tabBar()->setStyleSheet("QTabBar::tab {border-top-left-radius:5px; border-top-right-radius:5px; border-bottom-left-radius:0px; } QTabBar::tab:selected, QTabBar::tab:selected::hover { background: #93C83E; border-bottom-right-radius:0px; color:black; }");
 
 	/* Process part UI manipulations */
 	this->ui->pushButton_killproc->setStyleSheet("QPushButton { color:white; background-color:red;} QPushButton::hover{color:black; background-color:white;}");
@@ -564,6 +611,9 @@ void MainWindow::timerSystemInfoUpdate(void)
 
 	e.readEnvList();
 	this->yakalaUpdateEnvironmentTable();
+
+	so.readSocketList();
+	this->yakalaUpdateSocketsTable();
 
 	if (this->ui->loading_progressBar->isHidden() == false && this->load_ctr >2)
 	{

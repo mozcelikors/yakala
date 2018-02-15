@@ -21,6 +21,7 @@
 #include "mainwindow.h"
 #include <main.h>
 #include <filesearch.h>
+#include <sockets.h>
 #include <QDebug>
 
 void *Thread_NetworkSearch (void *arg)
@@ -91,6 +92,7 @@ void *Thread_SystemInfo (void *arg)
 
 		s.readIP();
 		usleep(1* 250000);
+
 	}
 
 	return NULL;
