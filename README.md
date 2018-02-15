@@ -15,6 +15,7 @@ A visual helper tool for GNU/Linux. Made with love.
 
 New features involve (as of Feb 15, 2018):
 
+* File browsing
 * Visualize recent CPU and Memory activity
 * SSHing into networks
 * Listing activeTCP/UDP sockets
