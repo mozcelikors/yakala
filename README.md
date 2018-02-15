@@ -1,5 +1,5 @@
 # yakala
-A visual helper tool for GNU/Linux: Show system statistics, search for files, search for networks, see active TCP/UDP sockets, modify your aliases, search and kill processes, edit environment variables...
+A visual helper tool for GNU/Linux: Show system statistics, search for files, search for networks, SSH into networks, see active TCP/UDP sockets, modify your aliases, search and kill processes, edit environment variables...
 ## Compiling
 
 ```bash
