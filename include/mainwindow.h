@@ -17,6 +17,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QVector>
 
 namespace Ui {
 	class MainWindow;
@@ -39,6 +40,9 @@ public:
 	void loadingAnimStart (void);
 	void loadingAnimStop (void);
 
+	void graphCPUUtil (void);
+	void graphMEMUtil (void);
+
 	~MainWindow();
 
 protected:
@@ -48,6 +52,13 @@ private:
 	Ui::MainWindow *ui;
 	int load_ctr;
 
+	// Related to Graphs
+	QVector<double> plotTime;
+	QVector<double> plotCPU;
+	QVector<double> plotMEM;
+	void configureGraphs (void);
+
+
 signals:
 
 private slots:
@@ -56,6 +67,7 @@ private slots:
 	void handleSearchButton();
 	void tabSelected();
 	void timerSystemInfoUpdate(void);
+	void timerGraphUpdate (void);
 	void handleAliasTableClicked (int row, int col);
 	void handleEnvTableClicked (int row, int col);
 	void handleAddAliasButtonClicked (void);

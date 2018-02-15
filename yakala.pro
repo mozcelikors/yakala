@@ -6,7 +6,7 @@
 
 QT       += core gui
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
 
 TARGET = yakala
 TEMPLATE = app
@@ -22,7 +22,8 @@ SOURCES +=  src/aliases.cpp \
             src/thread_systeminfo.cpp \
             src/environment.cpp \
             src/processes.cpp \
-            src/sockets.cpp
+            src/sockets.cpp \
+            src/qcustomplot.cpp
 
 HEADERS  += include/aliases.h \
             include/filesearch.h \
@@ -33,7 +34,8 @@ HEADERS  += include/aliases.h \
             include/thread_systeminfo.h \
             include/environment.h \
             include/processes.h \
-            include/sockets.h
+            include/sockets.h \
+            include/qcustomplot.h
 
 FORMS    += forms/mainwindow.ui
 

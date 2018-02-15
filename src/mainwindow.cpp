@@ -30,6 +30,9 @@
 #include <QMovie>
 #include <QKeyEvent>
 #include <QDebug>
+#include <QVector>
+
+#include <qcustomplot.h>
 
 #include <filesearch.h>
 
@@ -59,6 +62,165 @@ MainWindow::MainWindow(QWidget *parent) :
 	// HIDE THE ENVIRONMENT ADD/RM/SEARCH FEATURE FOR NOW
 	this->ui->groupBox_11->hide();
 }
+
+void MainWindow::timerGraphUpdate (void)
+{
+	/* Shift old data */
+	for (int i = 0; i<plotCPU.size(); i++)
+	{
+		if (i>0)
+		{
+			plotCPU[i-1] = plotCPU[i];
+			plotMEM[i-1] = plotMEM[i];
+		}
+	}
+
+	/* Get new data */
+	plotCPU[plotCPU.size()-1] = s.getCpuUsage();
+	plotMEM[plotMEM.size()-1] = s.getMemoryPercentage();
+
+	/* Plot repaint */
+	ui->customPlot_CPUUtil->graph(0)->setData(plotTime, plotCPU);
+	ui->customPlot_CPUUtil->graph(1)->setData(plotTime, plotCPU);
+	ui->customPlot_CPUUtil->replot();
+
+	ui->customPlot_MEMUtil->graph(0)->setData(plotTime, plotMEM);
+	ui->customPlot_MEMUtil->graph(1)->setData(plotTime, plotMEM);
+	ui->customPlot_MEMUtil->replot();
+}
+
+void MainWindow::configureGraphs (void)
+{
+	plotCPU.resize(100);
+	plotMEM.resize(100);
+	plotTime.resize(100);
+	//qDebug() << plotCPU.size();
+	plotCPU.fill(0.0);
+	plotMEM.fill(0.0);
+	plotTime.fill(0.0);
+	for (int i=0; i<plotTime.size(); i++)
+	{
+		plotTime[i] = i;
+	}
+	this->graphCPUUtil();
+	this->graphMEMUtil();
+}
+
+void MainWindow::graphCPUUtil (void)
+{
+	// create and configure plottables:
+	QCustomPlot *customPlot;
+	customPlot = ui->customPlot_CPUUtil;
+	QCPGraph *graph1 = customPlot->addGraph();
+	graph1->setData(plotTime, plotCPU);
+	graph1->setScatterStyle(QCPScatterStyle(QCPScatterStyle::ssCircle, QPen(Qt::black, 1.5), QBrush(Qt::yellow), 9));
+	graph1->setPen(QPen(Qt::white, 2));
+
+	QCPGraph *graph2 = customPlot->addGraph();
+	graph2->setData(plotTime, plotCPU);
+	graph2->setPen(Qt::NoPen);
+	graph2->setBrush(QColor(200, 200, 200, 20));
+	graph2->setChannelFillGraph(graph1);
+
+	// set some pens, brushes and backgrounds:
+	customPlot->xAxis->setBasePen(QPen(Qt::white, 1));
+	customPlot->yAxis->setBasePen(QPen(Qt::white, 1));
+	customPlot->xAxis->setTickPen(QPen(Qt::white, 1));
+	customPlot->yAxis->setTickPen(QPen(Qt::white, 1));
+	customPlot->xAxis->setSubTickPen(QPen(Qt::white, 1));
+	customPlot->yAxis->setSubTickPen(QPen(Qt::white, 1));
+	customPlot->xAxis->setTickLabelColor(Qt::white);
+	customPlot->yAxis->setTickLabelColor(Qt::white);
+	customPlot->xAxis->grid()->setPen(QPen(QColor(140, 140, 140), 1, Qt::DotLine));
+	customPlot->yAxis->grid()->setPen(QPen(QColor(140, 140, 140), 1, Qt::DotLine));
+	customPlot->xAxis->grid()->setSubGridPen(QPen(QColor(80, 80, 80), 1, Qt::DotLine));
+	customPlot->yAxis->grid()->setSubGridPen(QPen(QColor(80, 80, 80), 1, Qt::DotLine));
+	customPlot->xAxis->grid()->setSubGridVisible(true);
+	customPlot->yAxis->grid()->setSubGridVisible(true);
+	customPlot->xAxis->grid()->setZeroLinePen(Qt::NoPen);
+	customPlot->yAxis->grid()->setZeroLinePen(Qt::NoPen);
+	customPlot->xAxis->setUpperEnding(QCPLineEnding::esSpikeArrow);
+	customPlot->yAxis->setUpperEnding(QCPLineEnding::esSpikeArrow);
+	QLinearGradient plotGradient;
+	plotGradient.setStart(0, 0);
+	plotGradient.setFinalStop(0, 350);
+	plotGradient.setColorAt(0, QColor(80, 80, 80));
+	plotGradient.setColorAt(1, QColor(50, 50, 50));
+	customPlot->setBackground(plotGradient);
+	QLinearGradient axisRectGradient;
+	axisRectGradient.setStart(0, 0);
+	axisRectGradient.setFinalStop(0, 350);
+	axisRectGradient.setColorAt(0, QColor(80, 80, 80));
+	axisRectGradient.setColorAt(1, QColor(30, 30, 30));
+	customPlot->axisRect()->setBackground(axisRectGradient);
+
+	customPlot->rescaleAxes();
+	customPlot->xAxis->setRange(0, 100);
+	customPlot->yAxis->setRange(0, 100);
+	customPlot->xAxis->setLabel("Time [last 100 seconds]");
+	customPlot->yAxis->setLabel("CPU Usage [%]");
+	customPlot->xAxis->setLabelColor(Qt::white);
+	customPlot->yAxis->setLabelColor(Qt::white);
+}
+
+void MainWindow::graphMEMUtil (void)
+{
+	// create and configure plottables:
+	QCustomPlot *customPlot;
+	customPlot = ui->customPlot_MEMUtil;
+	QCPGraph *graph1 = customPlot->addGraph();
+	graph1->setData(plotTime, plotMEM);
+	graph1->setScatterStyle(QCPScatterStyle(QCPScatterStyle::ssCircle, QPen(Qt::black, 1.5), QBrush(Qt::yellow), 9));
+	graph1->setPen(QPen(Qt::white, 2));
+
+	QCPGraph *graph2 = customPlot->addGraph();
+	graph2->setData(plotMEM, plotMEM);
+	graph2->setPen(Qt::NoPen);
+	graph2->setBrush(QColor(200, 200, 200, 20));
+	graph2->setChannelFillGraph(graph1);
+
+	// set some pens, brushes and backgrounds:
+	customPlot->xAxis->setBasePen(QPen(Qt::white, 1));
+	customPlot->yAxis->setBasePen(QPen(Qt::white, 1));
+	customPlot->xAxis->setTickPen(QPen(Qt::white, 1));
+	customPlot->yAxis->setTickPen(QPen(Qt::white, 1));
+	customPlot->xAxis->setSubTickPen(QPen(Qt::white, 1));
+	customPlot->yAxis->setSubTickPen(QPen(Qt::white, 1));
+	customPlot->xAxis->setTickLabelColor(Qt::white);
+	customPlot->yAxis->setTickLabelColor(Qt::white);
+	customPlot->xAxis->grid()->setPen(QPen(QColor(140, 140, 140), 1, Qt::DotLine));
+	customPlot->yAxis->grid()->setPen(QPen(QColor(140, 140, 140), 1, Qt::DotLine));
+	customPlot->xAxis->grid()->setSubGridPen(QPen(QColor(80, 80, 80), 1, Qt::DotLine));
+	customPlot->yAxis->grid()->setSubGridPen(QPen(QColor(80, 80, 80), 1, Qt::DotLine));
+	customPlot->xAxis->grid()->setSubGridVisible(true);
+	customPlot->yAxis->grid()->setSubGridVisible(true);
+	customPlot->xAxis->grid()->setZeroLinePen(Qt::NoPen);
+	customPlot->yAxis->grid()->setZeroLinePen(Qt::NoPen);
+	customPlot->xAxis->setUpperEnding(QCPLineEnding::esSpikeArrow);
+	customPlot->yAxis->setUpperEnding(QCPLineEnding::esSpikeArrow);
+	QLinearGradient plotGradient;
+	plotGradient.setStart(0, 0);
+	plotGradient.setFinalStop(0, 350);
+	plotGradient.setColorAt(0, QColor(80, 80, 80));
+	plotGradient.setColorAt(1, QColor(50, 50, 50));
+	customPlot->setBackground(plotGradient);
+	QLinearGradient axisRectGradient;
+	axisRectGradient.setStart(0, 0);
+	axisRectGradient.setFinalStop(0, 350);
+	axisRectGradient.setColorAt(0, QColor(80, 80, 80));
+	axisRectGradient.setColorAt(1, QColor(30, 30, 30));
+	customPlot->axisRect()->setBackground(axisRectGradient);
+
+	customPlot->rescaleAxes();
+	customPlot->xAxis->setRange(0, 100);
+	customPlot->yAxis->setRange(0, 100);
+
+	customPlot->xAxis->setLabel("Time [last 100 seconds]");
+	customPlot->yAxis->setLabel("Memory Usage [%]");
+	customPlot->xAxis->setLabelColor(Qt::white);
+	customPlot->yAxis->setLabelColor(Qt::white);
+}
+
 
 bool MainWindow::eventFilter(QObject *obj, QEvent *event)
 {
@@ -388,6 +550,9 @@ void MainWindow::yakalaUiManipulations(void)
 	/* Process part UI manipulations */
 	this->ui->pushButton_killproc->setStyleSheet("QPushButton { color:white; background-color:red;} QPushButton::hover{color:black; background-color:white;}");
 
+	/* tabWidget system */
+	ui->tabWidget_system->tabBar()->setCursor(Qt::PointingHandCursor);
+	ui->tabWidget_system->tabBar()->setStyleSheet("QTabBar::tab {border-top-left-radius:5px; border-top-right-radius:5px; border-bottom-left-radius:0px; } QTabBar::tab:selected, QTabBar::tab:selected::hover { background: #93C83E; border-bottom-right-radius:0px; color:black; }");
 
 	/* Disable loading animation in the beginning */
 	this->loadingAnimStop();
@@ -398,6 +563,9 @@ void MainWindow::yakalaUiManipulations(void)
 	/* Update GUI element loadingText*/
 	this->ui->label_loadingText->repaint();
 
+	/* Configure graphs */
+	this->configureGraphs ();
+
 	/*********** CONNECT and TIMERs ***************/
 
 	/* Tab bar signal-slot */
@@ -407,6 +575,11 @@ void MainWindow::yakalaUiManipulations(void)
 	QTimer *timer_systeminfoupdate = new QTimer(this);
 	connect(timer_systeminfoupdate, SIGNAL(timeout()), this, SLOT(timerSystemInfoUpdate()));
 	timer_systeminfoupdate->start(1000);
+
+	/* Timer event for graph update */
+	QTimer *timer_graphupdate = new QTimer(this);
+	connect(timer_graphupdate, SIGNAL(timeout()), this, SLOT(timerGraphUpdate()));
+	timer_graphupdate->start(1000);
 
 	/* Signal-slot for searchButton in File Search*/
 	connect(ui->searchButton, SIGNAL(released()), this, SLOT (handleSearchButton()));

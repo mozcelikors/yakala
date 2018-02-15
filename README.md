@@ -4,6 +4,7 @@ A visual helper tool for GNU/Linux. Made with love.
 ## Features 
 
 * Show system statistics: CPU, Memory, Disk stats and system information
+* Visualize recent CPU and Memory activity
 * Search for files
 * Search for networks
 * SSH into networks
@@ -14,12 +15,16 @@ A visual helper tool for GNU/Linux. Made with love.
 
 New features involve (as of Feb 15, 2018):
 
+* Visualize recent CPU and Memory activity
 * SSHing into networks
 * Listing activeTCP/UDP sockets
 
-## Animation
+## Animations
 
 ![alt text](https://raw.githubusercontent.com/mozcelikors/yakala/master/docs/img/peek.gif)
+
+![alt text](https://raw.githubusercontent.com/mozcelikors/yakala/master/docs/img/peek2.gif)
+
 
 ## Compiling
 
