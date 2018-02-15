@@ -21,10 +21,23 @@ New features involve (as of Feb 15, 2018):
 
 ## Animations
 
-![alt text](https://raw.githubusercontent.com/mozcelikors/yakala/master/docs/img/peek.gif)
+### System Information:
+
+![alt text](https://raw.githubusercontent.com/mozcelikors/yakala/master/docs/img/peekx1.gif)
 
 ![alt text](https://raw.githubusercontent.com/mozcelikors/yakala/master/docs/img/peek2.gif)
 
+### Network:
+
+![alt text](https://raw.githubusercontent.com/mozcelikors/yakala/master/docs/img/peekx2.gif)
+
+### File Searching:
+
+![alt text](https://raw.githubusercontent.com/mozcelikors/yakala/master/docs/img/peekx3.gif)
+
+### Processes, Aliases, Variables:
+
+![alt text](https://raw.githubusercontent.com/mozcelikors/yakala/master/docs/img/peekx4.gif)
 
 ## Compiling
 
@@ -52,21 +65,6 @@ Installation script (first method) will automatically create a desktop icon for 
 cd <yakala-dir>/build
 sudo ./yakala
 ```
-
-## Screenshots
-
-Here are some of the screenshots:
-
-![alt text](https://raw.githubusercontent.com/mozcelikors/yakala/master/docs/img/Selection_005.png)
-
-![alt text](https://raw.githubusercontent.com/mozcelikors/yakala/master/docs/img/Selection_004.png)
-
-![alt text](https://raw.githubusercontent.com/mozcelikors/yakala/master/docs/img/image916.png)
-
-![alt text](https://raw.githubusercontent.com/mozcelikors/yakala/master/docs/img/image2022.png)
-
-![alt text](https://raw.githubusercontent.com/mozcelikors/yakala/master/docs/img/image2575.png)
-
 
 ## Contributions
 
