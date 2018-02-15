@@ -1105,9 +1105,9 @@
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>600</x>
+      <x>570</x>
       <y>20</y>
-      <width>201</width>
+      <width>231</width>
       <height>31</height>
      </rect>
     </property>
@@ -1119,7 +1119,7 @@
      </font>
     </property>
     <property name="text">
-     <string>System Helper Tool for Linux</string>
+     <string>System Helper Tool for GNU/Linux</string>
     </property>
    </widget>
    <widget class="QGraphicsView" name="graphicsView_2">

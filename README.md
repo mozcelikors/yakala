@@ -27,11 +27,20 @@ cd <yakala-dir>/build
 sudo ./yakala
 ```
 
+## New Features
+
+New features involve:
+
+* SSHing into networks
+* Listing activeTCP/UDP sockets
+
+## Animation
+
+![alt text](https://raw.githubusercontent.com/mozcelikors/yakala/master/docs/img/peek.gif)
+
 ## Screenshots
 
 Here are some of the screenshots:
-
-![alt text](https://raw.githubusercontent.com/mozcelikors/yakala/master/docs/img/peek.gif)
 
 ![alt text](https://raw.githubusercontent.com/mozcelikors/yakala/master/docs/img/Selection_005.png)
 
