@@ -216,9 +216,9 @@ void NetworkSearch::sshInto (int list_index, QString user_override)
 {
 	FILE *fp;
 	if (user_override.length() > 1)
-		system ("xterm -e \"ssh "+user_override.toLocal8Bit()+"@"+QString(this->getIPs().at(list_index)).toLocal8Bit()+"\" &");
+		system ("xterm -fa 'Monospace' -fs 12 -e \"ssh "+user_override.toLocal8Bit()+"@"+QString(this->getIPs().at(list_index)).toLocal8Bit()+"\" &");
 	else
-		system (QString("xterm -e \"ssh ").toLocal8Bit()+QString("root@").toLocal8Bit()+QString(this->getIPs().at(list_index)).toLocal8Bit()+"\" &");
+		system (QString("xterm -fa 'Monospace' -fs 12 -e \"ssh ").toLocal8Bit()+QString("root@").toLocal8Bit()+QString(this->getIPs().at(list_index)).toLocal8Bit()+"\" &");
 }
 
 QStringList NetworkSearch::getHostnames (void)

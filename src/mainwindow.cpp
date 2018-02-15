@@ -376,7 +376,6 @@ void MainWindow::yakalaUiManipulations(void)
 	this->ui->comboBox_searchnetwork->addItem("Search MAC Address");
 	this->ui->comboBox_searchnetwork->addItem("Search Company");
 	this->ui->lineEdit_networksearch->setEnabled(false);
-	this->ui->label_sshuser->setStyleSheet("color:#3D7848;");
 
 	/* Set cursor at the tabwidget commands tab bar */
 	ui->tabWidget_commands->tabBar()->setCursor(Qt::PointingHandCursor);

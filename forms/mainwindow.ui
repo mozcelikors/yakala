@@ -466,9 +466,9 @@
         <property name="geometry">
          <rect>
           <x>10</x>
-          <y>160</y>
+          <y>190</y>
           <width>661</width>
-          <height>261</height>
+          <height>221</height>
          </rect>
         </property>
         <property name="title">
@@ -480,7 +480,7 @@
            <x>10</x>
            <y>20</y>
            <width>641</width>
-           <height>231</height>
+           <height>201</height>
           </rect>
          </property>
         </widget>
@@ -491,7 +491,7 @@
           <x>10</x>
           <y>10</y>
           <width>661</width>
-          <height>141</height>
+          <height>101</height>
          </rect>
         </property>
         <property name="title">
@@ -575,27 +575,53 @@
           <string>Search</string>
          </property>
         </widget>
-        <widget class="QLabel" name="label_sshuser">
+       </widget>
+       <widget class="QGroupBox" name="groupBox_14">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>120</y>
+          <width>651</width>
+          <height>61</height>
+         </rect>
+        </property>
+        <property name="title">
+         <string>SSHing Settings</string>
+        </property>
+        <widget class="QLineEdit" name="lineEdit_SSHUser">
          <property name="geometry">
           <rect>
-           <x>10</x>
-           <y>110</y>
-           <width>221</width>
+           <x>120</x>
+           <y>20</y>
+           <width>161</width>
+           <height>29</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_22">
+         <property name="geometry">
+          <rect>
+           <x>40</x>
+           <y>30</y>
+           <width>81</width>
            <height>17</height>
           </rect>
          </property>
          <property name="text">
-          <string>SSH User (for SSHing, optional)</string>
+          <string>Username</string>
          </property>
         </widget>
-        <widget class="QLineEdit" name="lineEdit_SSHUser">
+        <widget class="QLabel" name="label_23">
          <property name="geometry">
           <rect>
-           <x>230</x>
-           <y>100</y>
-           <width>161</width>
-           <height>29</height>
+           <x>300</x>
+           <y>30</y>
+           <width>101</width>
+           <height>17</height>
           </rect>
+         </property>
+         <property name="text">
+          <string>(default: root)</string>
          </property>
         </widget>
        </widget>
