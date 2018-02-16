@@ -1,3 +1,18 @@
+/*
+ * Copyright (c) 2018 Mustafa Ozcelikors
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the GNU General Public License
+ * which accompanies this distribution, and is available at
+ * http://www.gnu.org/licenses/
+ *
+ * Description:
+ *     YAKALA project
+ *
+ * Author:
+ *    M.Ozcelikors <mozcelikors@gmail.com>
+ *
+ */
+
 #include "sockets.h"
 
 #include <QString>
