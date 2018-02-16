@@ -541,27 +541,21 @@ void MainWindow::yakalaUiManipulations(void)
 
 	/* Set cursor at the tabwidget commands tab bar */
 	ui->tabWidget_commands->tabBar()->setCursor(Qt::PointingHandCursor);
-	ui->tabWidget_commands->tabBar()->setStyleSheet("QTabBar::tab {border-top-left-radius:5px; border-top-right-radius:5px; border-bottom-left-radius:0px; } QTabBar::tab:selected, QTabBar::tab:selected::hover { background: #93C83E; border-bottom-right-radius:0px; color:black; }");
+	ui->tabWidget_commands->tabBar()->setStyleSheet("QTabBar::tab {border-top-left-radius:5px; border-top-right-radius:5px; border-bottom-left-radius:0px; } QTabBar::tab:selected, QTabBar::tab:selected::hover { background: #93C83E; border-bottom-right-radius:0px; color:#333; }");
 
 	/* tabWidget network */
 	ui->tabWidget_network->tabBar()->setCursor(Qt::PointingHandCursor);
-	ui->tabWidget_network->tabBar()->setStyleSheet("QTabBar::tab {border-top-left-radius:5px; border-top-right-radius:5px; border-bottom-left-radius:0px; } QTabBar::tab:selected, QTabBar::tab:selected::hover { background: #93C83E; border-bottom-right-radius:0px; color:black; }");
+	ui->tabWidget_network->tabBar()->setStyleSheet("QTabBar::tab {border-top-left-radius:5px; border-top-right-radius:5px; border-bottom-left-radius:0px; } QTabBar::tab:selected, QTabBar::tab:selected::hover { background: #93C83E; border-bottom-right-radius:0px; color:#333; }");
+
+	/* tabWidget system */
+	ui->tabWidget_system->tabBar()->setCursor(Qt::PointingHandCursor);
+	ui->tabWidget_system->tabBar()->setStyleSheet("QTabBar::tab {border-top-left-radius:5px; border-top-right-radius:5px; border-bottom-left-radius:0px; } QTabBar::tab:selected, QTabBar::tab:selected::hover { background: #93C83E; border-bottom-right-radius:0px; color:#333; }");
 
 	/* Process part UI manipulations */
 	this->ui->pushButton_killproc->setStyleSheet("QPushButton { color:white; background-color:red;} QPushButton::hover{color:black; background-color:white;}");
 
-	/* tabWidget system */
-	ui->tabWidget_system->tabBar()->setCursor(Qt::PointingHandCursor);
-	ui->tabWidget_system->tabBar()->setStyleSheet("QTabBar::tab {border-top-left-radius:5px; border-top-right-radius:5px; border-bottom-left-radius:0px; } QTabBar::tab:selected, QTabBar::tab:selected::hover { background: #93C83E; border-bottom-right-radius:0px; color:black; }");
-
-	/* Disable loading animation in the beginning */
-	this->loadingAnimStop();
-
-	/* Only load loading text */
-	this->ui->label_loadingText->move(400,570);
-	this->ui->label_loadingText->show();
-	/* Update GUI element loadingText*/
-	this->ui->label_loadingText->repaint();
+	/* Enable loading animation in the beginning */
+	this->loadingAnimStart();
 
 	/* Configure graphs */
 	this->configureGraphs ();
@@ -814,15 +808,10 @@ void MainWindow::timerSystemInfoUpdate(void)
 	so.readSocketList();
 	this->yakalaUpdateSocketsTable();
 
-	if (this->ui->loading_progressBar->isHidden() == false && this->load_ctr >2)
+	if (this->ui->label_animationloading->isHidden() == false && this->load_ctr >2)
 	{
-		this->ui->loading_progressBar->hide();
-		this->ui->label_loadingText->hide();
+		this->loadingAnimStop();
 		this->load_ctr = 0;
-	}
-	else
-	{
-		this->ui->loading_progressBar->setValue(this->load_ctr*50);
 	}
 
 	if (myFileSearch.finished_ == 1)

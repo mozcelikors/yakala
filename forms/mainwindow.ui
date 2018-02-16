@@ -1253,22 +1253,6 @@
      </rect>
     </property>
    </widget>
-   <widget class="QProgressBar" name="loading_progressBar">
-    <property name="geometry">
-     <rect>
-      <x>480</x>
-      <y>580</y>
-      <width>321</width>
-      <height>9</height>
-     </rect>
-    </property>
-    <property name="value">
-     <number>0</number>
-    </property>
-    <property name="invertedAppearance">
-     <bool>false</bool>
-    </property>
-   </widget>
    <widget class="QLabel" name="label_loadingText">
     <property name="geometry">
      <rect>

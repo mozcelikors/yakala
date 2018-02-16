@@ -25,7 +25,7 @@ QMainWindow
     /* Default font family and font size */
 
 
-    background: #191919;
+    background: #191919;/*#1b1f26;*/
 }
 
 QWidget::item:selected {
@@ -245,11 +245,15 @@ QWidget#tab {
 
 }
 
+QFileDialog
+{
+    background:#333;
+    border:1px solid white;
+}
+
 QFileDialog QWidget {
     background-color:#333;
 }
-
-
 
 QTextEdit, QLineEdit, QTableWidget, QComboBox{
         border-radius:3px;
@@ -408,7 +412,4 @@ QGroupBox::title
     color:#3D7848;
 }
 
-QFileDialog
-{
-    background:#333;
-}
+
