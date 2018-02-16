@@ -628,8 +628,8 @@ MainWindow::~MainWindow()
 void MainWindow::handleBrowseFolderButton (void)
 {
 	QFileDialog *file_dialog = new QFileDialog;
-	QString dir = file_dialog->getExistingDirectory(this, tr("Open Directory"),
-												 "/home",
+	QString dir = file_dialog->getExistingDirectory(this, tr("Browse for Directory to Search"),
+												 this->ui->lineEdit_searchfolder->text(),
 												 QFileDialog::ShowDirsOnly
 												 | QFileDialog::DontResolveSymlinks);
 	if (dir.length()>0)
