@@ -21,7 +21,7 @@ New features involve (as of Feb 15, 2018):
 * Listing activeTCP/UDP sockets
 
 ## Download Stable Release 0.2-1 using Debian/Ubuntu PPA:
-
+https://launchpad.net/~mozcelikors/+archive/ubuntu/yakala
 ```bash
 sudo add-apt-repository ppa:mozcelikors/yakala
 sudo apt-get update
