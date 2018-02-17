@@ -555,7 +555,7 @@ void MainWindow::yakalaUiManipulations(void)
 	this->ui->pushButton_killproc->setStyleSheet("QPushButton { color:white; background-color:red;} QPushButton::hover{color:black; background-color:white;}");
 
 	/* Enable loading animation in the beginning */
-	this->loadingAnimStart();
+	this->loadingAnimStop();
 
 	/* Configure graphs */
 	this->configureGraphs ();
