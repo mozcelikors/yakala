@@ -20,12 +20,19 @@ New features involve (as of Feb 15, 2018):
 * SSHing into networks
 * Listing activeTCP/UDP sockets
 
-## Download using Debian/Ubuntu PPA:
+## Download Stable Release 0.1 using Debian/Ubuntu PPA:
 
 ```bash
 sudo add-apt-repository ppa:mozcelikors/yakala
 sudo apt-get update
 sudo apt-get install yakala
+```
+
+## Compiling from Source / Git VC:
+
+```bash
+git clone https://github.com/mozcelikors/yakala
+cd yakala && ./install.sh
 ```
 
 ## Animations
@@ -48,12 +55,6 @@ sudo apt-get install yakala
 
 ![alt text](https://raw.githubusercontent.com/mozcelikors/yakala/master/docs/img/peekx4.gif)
 
-## Compiling from Source
-
-```bash
-git clone https://github.com/mozcelikors/yakala
-cd yakala && ./install.sh
-```
 
 ## Running
 
