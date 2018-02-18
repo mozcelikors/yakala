@@ -32,7 +32,7 @@ sudo apt-get install yakala
 
 ```bash
 git clone https://github.com/mozcelikors/yakala
-cd yakala && ./install.sh
+cd yakala && sudo ./install.sh
 ```
 
 ## Animations
