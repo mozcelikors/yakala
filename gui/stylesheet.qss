@@ -412,5 +412,27 @@ QGroupBox::title
 {
     color:#3D7848;
 }
+/*
+QMenuBar {
+    background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                                      stop:0 #1f2530, stop:1 #1a1f28);
+    padding-top:7px;
+    padding-bottom:7px;
+    color:white;
+}
 
+QMenuBar::item {
+    spacing: 3px;
+    padding: 1px 4px;
+    background: transparent;
+    border-radius: 4px;
+}
 
+QMenuBar::item:selected {
+    background: #a8a8a8;
+}
+
+QMenuBar::item:pressed {
+    background: #888888;
+}
+*/

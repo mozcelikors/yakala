@@ -1316,6 +1316,46 @@
     <bool>false</bool>
    </attribute>
   </widget>
+  <action name="actionSystem">
+   <property name="text">
+    <string>System</string>
+   </property>
+  </action>
+  <action name="actionGraphs">
+   <property name="text">
+    <string>Graphs</string>
+   </property>
+  </action>
+  <action name="actionNetwork_Search_SSHing">
+   <property name="text">
+    <string>Network Search / SSHing</string>
+   </property>
+  </action>
+  <action name="actionTCP_UDP_Sockets">
+   <property name="text">
+    <string>TCP/UDP Sockets</string>
+   </property>
+  </action>
+  <action name="actionFile_Search">
+   <property name="text">
+    <string>File Search</string>
+   </property>
+  </action>
+  <action name="actionProcesses">
+   <property name="text">
+    <string>Processes</string>
+   </property>
+  </action>
+  <action name="actionAliases">
+   <property name="text">
+    <string>Aliases</string>
+   </property>
+  </action>
+  <action name="actionEnvironment_Variables">
+   <property name="text">
+    <string>Environment Variables</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>

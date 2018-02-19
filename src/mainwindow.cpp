@@ -333,6 +333,7 @@ void MainWindow::yakalaUpdateSocketsTable (void)
 		item6->setFlags(item6->flags() ^ Qt::ItemIsEditable);
 		ui->tableWidget_sockets->setItem(i, 5, item6);
 	}
+	this->ui->tableWidget_sockets->repaint();
 }
 
 void MainWindow::yakalaUpdateProcessTable (void)
@@ -370,6 +371,7 @@ void MainWindow::yakalaUpdateProcessTable (void)
 		item4->setFlags(item4->flags() ^ Qt::ItemIsEditable);
 		ui->tableWidget_proc->setItem(i, 3, item4);
 	}
+	this->ui->tableWidget_proc->repaint();
 }
 
 void MainWindow::yakalaUpdateEnvironmentTable (void)
@@ -393,6 +395,7 @@ void MainWindow::yakalaUpdateEnvironmentTable (void)
 		item2->setFlags(item2->flags() ^ Qt::ItemIsEditable);
 		ui->tableWidget_env->setItem(i, 1, item2);
 	}
+	ui->tableWidget_env->repaint();
 }
 
 void MainWindow::yakalaUpdateNetworkTable (void)
@@ -444,6 +447,7 @@ void MainWindow::yakalaUpdateNetworkTable (void)
 		ui->tableWidget_network->setCellWidget(i,4, sshButton);
 		connect(sshButton, SIGNAL(released()), this, SLOT (handleSSHButtons()));
 	}
+	ui->tableWidget_network->repaint();
 }
 
 void MainWindow::handleSSHButtons(void)
@@ -814,20 +818,19 @@ void MainWindow::timerSystemInfoUpdate(void)
 		this->load_ctr = 0;
 	}
 
-	if (myFileSearch.finished_ == 1)
-	{
-		this->loadingAnimStop();
-		ui->textEdit_filesearch->setText(f.getResult().toUtf8().constData());
-		myFileSearch.finished_ = 0;
-	}
-
 	if (myNetworkSearch.finished_ == 1)
 	{
-		this->loadingAnimStop();
 		this->yakalaUpdateNetworkTable();
+		this->loadingAnimStop();
 		myNetworkSearch.finished_ = 0;
 	}
 
+	if (myFileSearch.finished_ == 1)
+	{
+		ui->textEdit_filesearch->setText(f.getResult().toUtf8().constData());
+		this->loadingAnimStop();
+		myFileSearch.finished_ = 0;
+	}
 }
 
 void MainWindow::handleNetworkComboBox (int idx)
