@@ -812,12 +812,6 @@ void MainWindow::timerSystemInfoUpdate(void)
 	so.readSocketList();
 	this->yakalaUpdateSocketsTable();
 
-	if (this->ui->label_animationloading->isHidden() == false && this->load_ctr >2)
-	{
-		this->loadingAnimStop();
-		this->load_ctr = 0;
-	}
-
 	if (myNetworkSearch.finished_ == 1)
 	{
 		this->yakalaUpdateNetworkTable();
