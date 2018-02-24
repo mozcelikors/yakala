@@ -32,6 +32,7 @@
 #include <QDebug>
 #include <QVector>
 #include <QFileDialog>
+#include <QMessageBox>
 
 #include <qcustomplot.h>
 
@@ -413,41 +414,47 @@ void MainWindow::yakalaUpdateNetworkTable (void)
 	ui->tableWidget_network->setColumnWidth(3, 160);
 	ui->tableWidget_network->horizontalHeader()->setStretchLastSection(true);
 
-	//printf ("a%d\n", n.getHostnames().size());
-	//printf ("b%d\n", n.getIPs().size());
-	//printf ("c%d\n", n.getMACs().size());
-	//printf ("d%d\n", n.getCompanies().size());
-	for (int i = 0; i < n.getHostnames().size(); i++)
+	try
 	{
-		QTableWidgetItem *item = new QTableWidgetItem(n.getHostnames().at(i));
-		item->setFlags(item->flags() ^ Qt::ItemIsEditable);
-		ui->tableWidget_network->setItem(i, 0, item);
 
-		QTableWidgetItem *item2 = new QTableWidgetItem(n.getIPs().at(i));
-		item2->setFlags(item2->flags() ^ Qt::ItemIsEditable);
-		ui->tableWidget_network->setItem(i, 1, item2);
-
-		if (n.getMACs().size() == n.getHostnames().size())
+		for (int i = 0; i < n.getHostnames().size(); i++)
 		{
-			QTableWidgetItem *item3 = new QTableWidgetItem(n.getMACs().at(i));
-			item3->setFlags(item3->flags() ^ Qt::ItemIsEditable);
-			ui->tableWidget_network->setItem(i, 2, item3);
+			QTableWidgetItem *item = new QTableWidgetItem(n.getHostnames().at(i));
+			item->setFlags(item->flags() ^ Qt::ItemIsEditable);
+			ui->tableWidget_network->setItem(i, 0, item);
 
-			QTableWidgetItem *item4 = new QTableWidgetItem(n.getCompanies().at(i));
-			item4->setFlags(item4->flags() ^ Qt::ItemIsEditable);
-			ui->tableWidget_network->setItem(i, 3, item4);
+			QTableWidgetItem *item2 = new QTableWidgetItem(n.getIPs().at(i));
+			item2->setFlags(item2->flags() ^ Qt::ItemIsEditable);
+			ui->tableWidget_network->setItem(i, 1, item2);
+
+			if (n.getMACs().size() == n.getHostnames().size())
+			{
+				QTableWidgetItem *item3 = new QTableWidgetItem(n.getMACs().at(i));
+				item3->setFlags(item3->flags() ^ Qt::ItemIsEditable);
+				ui->tableWidget_network->setItem(i, 2, item3);
+
+				QTableWidgetItem *item4 = new QTableWidgetItem(n.getCompanies().at(i));
+				item4->setFlags(item4->flags() ^ Qt::ItemIsEditable);
+				ui->tableWidget_network->setItem(i, 3, item4);
+			}
+
+			/* Add SSH button for the row */
+			QPushButton *sshButton = new QPushButton;
+			sshButton->setText("SSH INTO");
+			sshButton->setObjectName(QString::number(i).toLatin1());
+			//qDebug()<<QString(i).toLatin1();
+			sshButton->setCursor(Qt::PointingHandCursor);
+			ui->tableWidget_network->setCellWidget(i,4, sshButton);
+			connect(sshButton, SIGNAL(released()), this, SLOT (handleSSHButtons()));
 		}
-
-		/* Add SSH button for the row */
-		QPushButton *sshButton = new QPushButton;
-		sshButton->setText("SSH INTO");
-		sshButton->setObjectName(QString::number(i).toLatin1());
-		//qDebug()<<QString(i).toLatin1();
-		sshButton->setCursor(Qt::PointingHandCursor);
-		ui->tableWidget_network->setCellWidget(i,4, sshButton);
-		connect(sshButton, SIGNAL(released()), this, SLOT (handleSSHButtons()));
+		ui->tableWidget_network->repaint();
 	}
-	ui->tableWidget_network->repaint();
+	catch (...)
+	{
+		QMessageBox msgBox;
+		msgBox.setText("A problem has been occurred. Your configuration might not be supported.");
+		msgBox.exec();
+	}
 }
 
 void MainWindow::handleSSHButtons(void)

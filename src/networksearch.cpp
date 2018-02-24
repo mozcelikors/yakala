@@ -23,6 +23,7 @@
 #include <cstdio>
 #include <QSettings>
 #include <QFile>
+#include <QMessageBox>
 
 // TODO: Network Searching multiple entries found.
 
@@ -33,6 +34,7 @@ NetworkSearch::NetworkSearch()
 
 void NetworkSearch::readNetworkAll (QString networkstart)
 {
+	int exception = 0;
 	this->hostnames.clear();
 	this->ips.clear();
 	this->macs.clear();
@@ -40,110 +42,103 @@ void NetworkSearch::readNetworkAll (QString networkstart)
 
 	FILE *fp, *fp2;
 
-	/* Open and filter networks using NMAP tool*/
-	fp = popen ((QString("sudo timeout 60 nmap -T5 -sP ")+networkstart+QString("-255 >/tmp/yakala.network.cache && cat /tmp/yakala.network.cache | grep 'Nmap scan report' | sed -e ':1' -e 's/^Nmap scan report for //;t1' | sed 's|[(),]||g' | sed 's/ /=/g'  > /tmp/yakala.network.1 ")+(QString("&& cat /tmp/yakala.network.cache | grep 'MAC Address' | sed -e ':1' -e 's/^MAC Address: //;t1' | sed 's|[(),]||g' | sed 's/ /=/'  > /tmp/yakala.network.2 "))).toLocal8Bit(),"r");
-
-	if (fp != NULL)
+	if (!networkstart.contains("127.0.0.1"))
 	{
 
-	}
-	else
-	{
+		/* Open and filter networks using NMAP tool*/
+		fp = popen ((QString("sudo timeout 60 nmap -sn ")+networkstart+QString("/24 >/tmp/yakala.network.cache && cat /tmp/yakala.network.cache | grep 'Nmap scan report' | sed -e ':1' -e 's/^Nmap scan report for //;t1' | sed 's|[(),]||g' | sed 's/ /=/g'  > /tmp/yakala.network.1 ")+(QString("&& cat /tmp/yakala.network.cache | grep 'MAC Address' | sed -e ':1' -e 's/^MAC Address: //;t1' | sed 's|[(),]||g' | sed 's/ /=/'  > /tmp/yakala.network.2 "))).toLocal8Bit(),"r");
 
-	}
-	fclose(fp);
-
-	/* Check if file contains '=' ,which is ini format */
-	QFile MyFile("/tmp/yakala.network.1");
-	MyFile.open(QIODevice::ReadWrite);
-	QString searchString("=");
-	bool ini_format = false;
-
-	QTextStream in (&MyFile);
-	QString line;
-	do {
-		line = in.readLine();
-		if (line.contains(searchString, Qt::CaseSensitive)) {
-			ini_format = true;
-			break;
-		}
-	} while (!line.isNull());
-	MyFile.close();
-
-	if (networkstart.contains("192.168.") ||
-			networkstart.contains("172.16.") ||
-			networkstart.contains("172.17.") ||
-			networkstart.contains("172.18.") ||
-			networkstart.contains("172.19.") ||
-			networkstart.contains("172.20.") ||
-			networkstart.contains("172.21.") ||
-			networkstart.contains("172.22.") ||
-			networkstart.contains("172.23.") ||
-			networkstart.contains("172.24.") ||
-			networkstart.contains("172.25.") ||
-			networkstart.contains("172.26.") ||
-			networkstart.contains("172.27.") ||
-			networkstart.contains("172.28.") ||
-			networkstart.contains("172.29.") ||
-			networkstart.contains("172.30.") ||
-			networkstart.contains("172.31."))
-	{
-		if (ini_format) /* Ini format */
+		if (fp != NULL)
 		{
-			QFile MyFile2("/tmp/yakala.network.1");
-			if (MyFile2.open(QIODevice::ReadWrite))
-			{
-				QTextStream in2 (&MyFile2);
-				QString line2;
-				while (!in2.atEnd())
-				{
-					line2 = in2.readLine();
-					QStringList splittext = line2.split("=");
-					this->hostnames.append(splittext.at(0));
-					this->ips.append(splittext.at(1));
-				}
-				MyFile2.close();
-			}
+
 		}
 		else
 		{
-			QFile MyFile2("/tmp/yakala.network.1");
-			if (MyFile2.open(QIODevice::ReadWrite))
+			exception = 1;
+		}
+		fclose(fp);
+
+		/* Check if file contains '=' ,which is ini format */
+		QFile MyFile("/tmp/yakala.network.1");
+		MyFile.open(QIODevice::ReadWrite);
+		QString searchString("=");
+		bool ini_format = false;
+
+		QTextStream in (&MyFile);
+		QString line;
+		do {
+			line = in.readLine();
+			if (line.contains(searchString, Qt::CaseSensitive)) {
+				ini_format = true;
+				break;
+			}
+		} while (!line.isNull());
+		MyFile.close();
+
+
+		try
+		{
+			if (ini_format) /* Ini format */
 			{
-				QTextStream in2 (&MyFile2);
-				QString line2;
-				while (!in2.atEnd())
+				QFile MyFile2("/tmp/yakala.network.1");
+				if (MyFile2.open(QIODevice::ReadWrite))
 				{
-					line2 = in2.readLine();
-
-					this->hostnames.append(" ");
-					this->ips.append(line2);
-
+					QTextStream in2 (&MyFile2);
+					QString line2;
+					while (!in2.atEnd())
+					{
+						line2 = in2.readLine();
+						QStringList splittext = line2.split("=");
+						this->hostnames.append(splittext.at(0));
+						this->ips.append(splittext.at(1));
+					}
+					MyFile2.close();
 				}
-				MyFile2.close();
+			}
+			else
+			{
+				QFile MyFile2("/tmp/yakala.network.1");
+				if (MyFile2.open(QIODevice::ReadWrite))
+				{
+					QTextStream in2 (&MyFile2);
+					QString line2;
+					while (!in2.atEnd())
+					{
+						line2 = in2.readLine();
+
+						this->hostnames.append(" ");
+						this->ips.append(line2);
+
+					}
+					MyFile2.close();
+				}
+			}
+
+			QFile MyFile3("/tmp/yakala.network.2");
+			if (MyFile3.open(QIODevice::ReadWrite))
+			{
+				QTextStream in3 (&MyFile3);
+				QString line3;
+				while (!in3.atEnd())
+				{
+					line3 = in3.readLine();
+					QStringList splittext = line3.split("=");
+					this->macs.append(splittext.at(0));
+					this->companies.append(splittext.at(1));
+				}
+				this->macs.append("YOUR NETWORK");
+				this->companies.append("YOUR NETWORK");
+				MyFile3.close();
 			}
 		}
-
-		QFile MyFile3("/tmp/yakala.network.2");
-		if (MyFile3.open(QIODevice::ReadWrite))
+		catch (...)
 		{
-			QTextStream in3 (&MyFile3);
-			QString line3;
-			while (!in3.atEnd())
-			{
-				line3 = in3.readLine();
-				QStringList splittext = line3.split("=");
-				this->macs.append(splittext.at(0));
-				this->companies.append(splittext.at(1));
-			}
-			this->macs.append("YOUR NETWORK");
-			this->companies.append("YOUR NETWORK");
-			MyFile3.close();
+			exception = 1;
 		}
 	}
 	else
 	{
-
+		exception = 1;
 	}
 }
 
