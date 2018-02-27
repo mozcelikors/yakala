@@ -23,7 +23,8 @@ SOURCES +=  src/aliases.cpp \
             src/environment.cpp \
             src/processes.cpp \
             src/sockets.cpp \
-            src/qcustomplot.cpp
+            src/qcustomplot.cpp \
+            src/packages.cpp
 
 HEADERS  += include/aliases.h \
             include/filesearch.h \
@@ -35,7 +36,8 @@ HEADERS  += include/aliases.h \
             include/environment.h \
             include/processes.h \
             include/sockets.h \
-            include/qcustomplot.h
+            include/qcustomplot.h \
+            include/packages.h
 
 FORMS    += forms/mainwindow.ui
 

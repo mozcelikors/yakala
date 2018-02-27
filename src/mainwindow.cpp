@@ -37,6 +37,7 @@
 #include <qcustomplot.h>
 
 #include <filesearch.h>
+#include <packages.h>
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -375,6 +376,25 @@ void MainWindow::yakalaUpdateProcessTable (void)
 	this->ui->tableWidget_proc->repaint();
 }
 
+void MainWindow::yakalaUpdatePackagesTable (void)
+{
+	/* Load table widget for Aliases section */
+	ui->tableWidget_packages->setColumnCount(1);
+	ui->tableWidget_packages->setRowCount(pa.getNames().count());
+	QStringList  TableHeader;
+	TableHeader<<"Package";
+	ui->tableWidget_packages->setHorizontalHeaderLabels(TableHeader);
+	ui->tableWidget_packages->horizontalHeader()->setStretchLastSection(true);
+
+	for (int i = 0; i < pa.getNames().count(); i++)
+	{
+		QTableWidgetItem *item = new QTableWidgetItem(pa.getNames().at(i));
+		item->setFlags(item->flags() ^ Qt::ItemIsEditable);
+		ui->tableWidget_packages->setItem(i, 0, item);
+	}
+	this->ui->tableWidget_packages->repaint();
+}
+
 void MainWindow::yakalaUpdateEnvironmentTable (void)
 {
 	/* Load table widget for Aliases section */
@@ -565,6 +585,9 @@ void MainWindow::yakalaUiManipulations(void)
 	/* Process part UI manipulations */
 	this->ui->pushButton_killproc->setStyleSheet("QPushButton { color:white; background-color:red;} QPushButton::hover{color:black; background-color:white;}");
 
+	/* Package part UI manipulations */
+	this->ui->pushButton_uninstallpackage->setStyleSheet("QPushButton { color:white; background-color:red;} QPushButton::hover{color:black; background-color:white;}");
+
 	/* Enable loading animation in the beginning */
 	this->loadingAnimStop();
 
@@ -619,6 +642,11 @@ void MainWindow::yakalaUiManipulations(void)
 	/* Process table clicked */
 	connect(ui->tableWidget_proc, SIGNAL(cellClicked(int,int)), this, SLOT(handleProcessTableClicked(int,int)));
 
+	/* Packages table clicked */
+	connect(ui->tableWidget_packages, SIGNAL(cellClicked(int,int)), this, SLOT(handlePackagesTableClicked(int,int)));
+	connect(ui->pushButton_uninstallpackage, SIGNAL(released()), this, SLOT (handlePackageUninstallButton()));
+	connect(ui->lineEdit_searchpackage, SIGNAL(textChanged(const QString &)), this, SLOT(inputPackageChanged()));
+
 	/* File search button signal-slot */
 	connect(ui->pushButton_browsefolder, SIGNAL(released()), this, SLOT (handleBrowseFolderButton()));
 }
@@ -646,10 +674,21 @@ void MainWindow::handleProcessTableClicked (int row, int col)
 	p.setKillPID(this->ui->tableWidget_proc->item(row, 0)->text());
 }
 
+void MainWindow::handlePackagesTableClicked (int row, int col)
+{
+	pa.setUninstallPackage(this->ui->tableWidget_packages->item(row, 0)->text());
+}
+
 void MainWindow::handleProcessKillButton (void)
 {
 	if (QString::compare(p.getKillPID(),QString("0")) != 0)
 		p.killProcess();
+}
+
+void MainWindow::handlePackageUninstallButton(void)
+{
+	if (QString::compare(pa.getUninstallPackage(),QString("0")) != 0)
+		pa.uninstallPackage();
 }
 
 void MainWindow::handleAddAliasButtonClicked (void)
@@ -676,6 +715,13 @@ void MainWindow::inputProcessChanged(void)
 {
 	p.searchProcess(this->ui->lineEdit_filterproc->text());
 	this->yakalaUpdateProcessTable();
+}
+
+void MainWindow::inputPackageChanged(void)
+{
+	pa.searchPackages(this->ui->lineEdit_searchpackage->text());
+	// Updated automatically within the timer
+	//this->yakalaUpdatePackagesTable();
 }
 
 void MainWindow::handleAliasTableClicked (int row, int col)
@@ -809,6 +855,8 @@ void MainWindow::timerSystemInfoUpdate(void)
 	// Real-time process display
 	p.searchProcess(this->ui->lineEdit_filterproc->text());
 	this->yakalaUpdateProcessTable();
+
+	this->yakalaUpdatePackagesTable();
 
 	a.readAliasesList();
 	this->yakalaUpdateAliasTable();

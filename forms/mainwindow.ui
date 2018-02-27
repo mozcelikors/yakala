@@ -1180,6 +1180,73 @@
         </widget>
        </widget>
       </widget>
+      <widget class="QWidget" name="tab_12">
+       <attribute name="title">
+        <string>List / Uninstall Packages</string>
+       </attribute>
+       <widget class="QGroupBox" name="groupBox_17">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>10</y>
+          <width>661</width>
+          <height>411</height>
+         </rect>
+        </property>
+        <property name="title">
+         <string>List / Uninstall Packages</string>
+        </property>
+        <widget class="QPushButton" name="pushButton_uninstallpackage">
+         <property name="geometry">
+          <rect>
+           <x>500</x>
+           <y>30</y>
+           <width>151</width>
+           <height>41</height>
+          </rect>
+         </property>
+         <property name="cursor">
+          <cursorShape>PointingHandCursor</cursorShape>
+         </property>
+         <property name="text">
+          <string>Uninstall Selected</string>
+         </property>
+        </widget>
+        <widget class="QTableWidget" name="tableWidget_packages">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>80</y>
+           <width>641</width>
+           <height>321</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEdit_searchpackage">
+         <property name="geometry">
+          <rect>
+           <x>140</x>
+           <y>30</y>
+           <width>351</width>
+           <height>41</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_24">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>30</y>
+           <width>121</width>
+           <height>41</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Filter Packages:</string>
+         </property>
+        </widget>
+       </widget>
+      </widget>
      </widget>
     </widget>
    </widget>
@@ -1304,7 +1371,7 @@
      <x>0</x>
      <y>0</y>
      <width>848</width>
-     <height>23</height>
+     <height>22</height>
     </rect>
    </property>
   </widget>

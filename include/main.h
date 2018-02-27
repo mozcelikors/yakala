@@ -24,6 +24,8 @@
 #include <mainwindow.h>
 #include <filesearch.h>
 #include <sockets.h>
+#include <packages.h>
+
 
 extern Processes p;
 extern SystemInfo s;
@@ -32,6 +34,7 @@ extern NetworkSearch n;
 extern Environment e;
 extern FileSearch f;
 extern Sockets so;
+extern Packages pa;
 
 extern MainWindow *w;
 

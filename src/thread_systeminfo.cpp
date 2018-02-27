@@ -23,6 +23,7 @@
 #include <filesearch.h>
 #include <sockets.h>
 #include <QDebug>
+#include <packages.h>
 
 void *Thread_NetworkSearch (void *arg)
 {
@@ -75,6 +76,7 @@ void *Thread_SystemInfo (void *arg)
 	s.readHostname();
 	a.readAliasesList();
 	s.readDiskTotal();
+	pa.readPackageList();
 
 	while (1)
 	{
