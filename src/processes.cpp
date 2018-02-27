@@ -41,7 +41,7 @@ void Processes::readProcessesList (void)
 	FILE *fp;
 
 	/* Process retrieval */
-	fp = popen ("timeout 5 ps -aux | awk '{print $2\"=\"$11\"=\"$3\"=\"$4}' > /tmp/yakala.procs ","w");
+	fp = popen ("timeout 5 ps -aux --sort=-pcpu | awk '{print $2\"=\"$11\"=\"$3\"=\"$4}' > /tmp/yakala.procs ","w");
 
 	if (fp != NULL)
 	{
