@@ -12,15 +12,21 @@ A visual helper tool for GNU/Linux. Made with love.
 * Modify your aliases
 * Search and kill processes
 * List environment variables
+* View system logs
+* View driver messages
+* View network interface messages
+* Search for installed packages / uninstall them
+* Search for available packages in apt cache
 
-New features involve (as of Feb 15, 2018):
+New features involve (as of March 1st, 2018):
 
-* File browsing
-* Visualize recent CPU and Memory activity
-* SSHing into networks
-* Listing activeTCP/UDP sockets
+* View system logs
+* View driver messages
+* View network interface messages
+* Search for installed packages / uninstall them
+* Search for available packages in apt cache
 
-## Download Stable Release 0.4 using Debian/Ubuntu PPA:
+## Download Stable Release 0.8 using Debian/Ubuntu PPA:
 https://launchpad.net/~mozcelikors/+archive/ubuntu/yakala
 ```bash
 sudo add-apt-repository ppa:mozcelikors/yakala
@@ -43,6 +49,10 @@ cd yakala && sudo ./install.sh
 
 ![alt text](https://raw.githubusercontent.com/mozcelikors/yakala/master/docs/img/peek2.gif)
 
+### System Logs:
+
+![alt text](https://raw.githubusercontent.com/mozcelikors/yakala/master/docs/img/systemlogs.gif)
+
 ### Network:
 
 ![alt text](https://raw.githubusercontent.com/mozcelikors/yakala/master/docs/img/peekx2.gif)
@@ -54,6 +64,10 @@ cd yakala && sudo ./install.sh
 ### Processes, Aliases, Variables:
 
 ![alt text](https://raw.githubusercontent.com/mozcelikors/yakala/master/docs/img/peekx4.gif)
+
+### Installed package Searching, Package cache searching
+
+![alt text](https://raw.githubusercontent.com/mozcelikors/yakala/master/docs/img/aptcache.gif)
 
 
 ## Running
