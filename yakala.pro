@@ -10,34 +10,35 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
 
 TARGET = yakala
 TEMPLATE = app
+
 INCLUDEPATH += include/
+INCLUDEPATH += include/systemmanager
 
-
-SOURCES +=  src/aliases.cpp \
-            src/filesearch.cpp \
-            src/main.cpp \
+SOURCES +=  src/main.cpp \
             src/mainwindow.cpp \
-            src/networksearch.cpp \
-            src/systeminfo.cpp \
             src/thread_systeminfo.cpp \
-            src/environment.cpp \
-            src/processes.cpp \
-            src/sockets.cpp \
             src/qcustomplot.cpp \
-            src/packages.cpp
+            src/systemmanager/aliases.cpp \
+            src/systemmanager/filesearch.cpp \
+            src/systemmanager/networksearch.cpp \
+            src/systemmanager/systeminfo.cpp \
+            src/systemmanager/environment.cpp \
+            src/systemmanager/processes.cpp \
+            src/systemmanager/sockets.cpp \
+            src/systemmanager/packages.cpp
 
-HEADERS  += include/aliases.h \
-            include/filesearch.h \
-            include/main.h \
+HEADERS  += include/main.h \
             include/mainwindow.h \
-            include/networksearch.h \
-            include/systeminfo.h \
             include/thread_systeminfo.h \
-            include/environment.h \
-            include/processes.h \
-            include/sockets.h \
             include/qcustomplot.h \
-            include/packages.h
+            include/systemmanager/aliases.h \
+            include/systemmanager/filesearch.h \
+            include/systemmanager/networksearch.h \
+            include/systemmanager/systeminfo.h \
+            include/systemmanager/environment.h \
+            include/systemmanager/processes.h \
+            include/systemmanager/sockets.h \
+            include/systemmanager/packages.h
 
 FORMS    += forms/mainwindow.ui
 

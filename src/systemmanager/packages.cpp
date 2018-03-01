@@ -31,6 +31,52 @@ Packages::Packages ()
 	this->uninstallpackage = QString("0");
 }
 
+void Packages::searchAptcache (QString needle)
+{
+	this->aptcachename.clear();
+
+	FILE *fp;
+
+	/* Process retrieval */
+	fp = popen ((QString("timeout 30 apt-cache search ") +needle+ QString(" 2>/dev/null | sed 's/\ -.*//' > /tmp/yakala.aptcache && apt-cache search ")+needle+QString(" 2>/dev/null | sed 's/.*- //' > /tmp/yakala.aptcache2")).toLocal8Bit(),"w");
+
+	if (fp != NULL)
+	{
+
+	}
+	else
+	{
+
+	}
+	fclose(fp);
+
+	QFile MyFile3("/tmp/yakala.aptcache");
+	if (MyFile3.open(QIODevice::ReadWrite))
+	{
+		QTextStream in3 (&MyFile3);
+		QString line3;
+		while (!in3.atEnd())
+		{
+			line3 = in3.readLine();
+			this->aptcachename.append(line3);
+		}
+		MyFile3.close();
+	}
+
+	QFile MyFile4("/tmp/yakala.aptcache2");
+	if (MyFile4.open(QIODevice::ReadWrite))
+	{
+		QTextStream in4 (&MyFile4);
+		QString line4;
+		while (!in4.atEnd())
+		{
+			line4 = in4.readLine();
+			this->aptcachedescription.append(line4);
+		}
+		MyFile4.close();
+	}
+}
+
 void Packages::readPackageList (void)
 {
 	this->names.clear();
@@ -89,12 +135,43 @@ QStringList Packages::getNames (void)
 	return this->names;
 }
 
+QStringList Packages::getAptcachenames (void)
+{
+	return this->aptcachename;
+}
+
+QStringList Packages::getAptcachedescription (void)
+{
+	return this->aptcachedescription;
+}
+
 void Packages::uninstallPackage (void)
 {
 	FILE *fp;
 
 	/* Process retrieval */
 	fp = popen ((QString("echo 'Y' | sudo apt-get remove ")+this->uninstallpackage+QString(" 1>/dev/null 2>/dev/null")).toLocal8Bit(), "w");
+
+	if (fp != NULL)
+	{
+
+	}
+	else
+	{
+
+	}
+	fclose(fp);
+
+	/* Package list update */
+	this->readPackageList();
+}
+
+void Packages::removeUnusedPackages (void)
+{
+	FILE *fp;
+
+	/* Process retrieval */
+	fp = popen ((QString("echo 'Y' | sudo apt-get autoremove ")+QString(" 1>/dev/null 2>/dev/null")).toLocal8Bit(), "w");
 
 	if (fp != NULL)
 	{

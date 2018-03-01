@@ -71,6 +71,14 @@ if [ "" == "$PKG_OK" ]; then
   sudo apt-get --force-yes --yes install gksu
 fi
 
+## Check for usbutils
+PKG_OK=$(dpkg-query -W --showformat='${Status}\n' 'usbutils' | grep "install ok installed")
+echo "Checking for usbutils: $PKG_OK"
+if [ "" == "$PKG_OK" ]; then
+  echo "No usbutils. Setting up usbutils."
+  sudo apt-get --force-yes --yes install usbutils
+fi
+
 ## Check for xterm
 PKG_OK=$(dpkg-query -W --showformat='${Status}\n' 'xterm' | grep "install ok installed")
 echo "Checking for xterm: $PKG_OK"

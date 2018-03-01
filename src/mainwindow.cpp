@@ -419,6 +419,34 @@ void MainWindow::yakalaUpdateEnvironmentTable (void)
 	ui->tableWidget_env->repaint();
 }
 
+void MainWindow::yakalaUpdateAptCacheTable (void)
+{
+	/* Load table widget for Aliases section */
+	ui->tableWidget_aptcache->setColumnCount(2);
+	ui->tableWidget_aptcache->setRowCount(pa.getAptcachenames().count());
+	QStringList  TableHeader;
+	TableHeader<<"Package" << "Description";
+	ui->tableWidget_aptcache->setColumnWidth(0, 200);
+	ui->tableWidget_aptcache->setHorizontalHeaderLabels(TableHeader);
+	ui->tableWidget_aptcache->horizontalHeader()->setStretchLastSection(true);
+
+	if (pa.getAptcachedescription().count() == pa.getAptcachenames().count())
+	{
+		for (int i = 0; i < pa.getAptcachenames().count(); i++)
+		{
+			QTableWidgetItem *item = new QTableWidgetItem(pa.getAptcachenames().at(i));
+			item->setFlags(item->flags() ^ Qt::ItemIsEditable);
+			ui->tableWidget_aptcache->setItem(i, 0, item);
+
+			QTableWidgetItem *item2 = new QTableWidgetItem(pa.getAptcachedescription().at(i));
+			item2->setFlags(item2->flags() ^ Qt::ItemIsEditable);
+			ui->tableWidget_aptcache->setItem(i, 1, item2);
+		}
+	}
+
+	this->ui->tableWidget_aptcache->repaint();
+}
+
 void MainWindow::yakalaUpdateNetworkTable (void)
 {
 	/* Load table widget for Network section */
@@ -582,6 +610,11 @@ void MainWindow::yakalaUiManipulations(void)
 	ui->tabWidget_system->tabBar()->setCursor(Qt::PointingHandCursor);
 	ui->tabWidget_system->tabBar()->setStyleSheet("QTabBar::tab {border-top-left-radius:5px; border-top-right-radius:5px; border-bottom-left-radius:0px; } QTabBar::tab:selected, QTabBar::tab:selected::hover { background: #93C83E; border-bottom-right-radius:0px; color:#333; }");
 
+	/* tabWidget system log and messages */
+	ui->tabWidget_systemlogs->tabBar()->setCursor(Qt::PointingHandCursor);
+	ui->tabWidget_systemlogs->tabBar()->setStyleSheet("QTabBar::tab {border-top-left-radius:5px; border-top-right-radius:5px; border-bottom-left-radius:0px; } QTabBar::tab:selected, QTabBar::tab:selected::hover { background: #ffe100; border-bottom-right-radius:0px; color:#333; }");
+
+
 	/* Process part UI manipulations */
 	this->ui->pushButton_killproc->setStyleSheet("QPushButton { color:white; background-color:red;} QPushButton::hover{color:black; background-color:white;}");
 
@@ -593,6 +626,17 @@ void MainWindow::yakalaUiManipulations(void)
 
 	/* Configure graphs */
 	this->configureGraphs ();
+
+	/* System logs */
+	s.readSysLogs();
+	this->ui->textEdit_driver->setStyleSheet("font-family:'Courier New'; font-size:14px;");
+	this->ui->textEdit_interfaces->setStyleSheet("font-family:'Courier New'; font-size:14px;");
+	this->ui->textEdit_systemlogs->setStyleSheet("font-family:'Courier New'; font-size:14px;");
+	this->ui->textEdit_usb->setStyleSheet("font-family:'Courier New'; font-size:14px;");
+	this->ui->textEdit_driver->setText(s.getDmesgOut());
+	this->ui->textEdit_interfaces->setText(s.getIfconfigOut());
+	this->ui->textEdit_systemlogs->setText(s.getSysLogOut());
+	this->ui->textEdit_usb->setText(s.getLsusbOut());
 
 	/*********** CONNECT and TIMERs ***************/
 
@@ -646,9 +690,12 @@ void MainWindow::yakalaUiManipulations(void)
 	connect(ui->tableWidget_packages, SIGNAL(cellClicked(int,int)), this, SLOT(handlePackagesTableClicked(int,int)));
 	connect(ui->pushButton_uninstallpackage, SIGNAL(released()), this, SLOT (handlePackageUninstallButton()));
 	connect(ui->lineEdit_searchpackage, SIGNAL(textChanged(const QString &)), this, SLOT(inputPackageChanged()));
+	connect(ui->pushButton_aptcache, SIGNAL(released()), this, SLOT (handlePackageAptCacheButton()));
 
 	/* File search button signal-slot */
 	connect(ui->pushButton_browsefolder, SIGNAL(released()), this, SLOT (handleBrowseFolderButton()));
+
+	connect(ui->pushButton_autoremove, SIGNAL(released()), this, SLOT (handleAutoremovePackageButton()));
 }
 
 MainWindow::~MainWindow()
@@ -657,6 +704,17 @@ MainWindow::~MainWindow()
 }
 
 /**************** SLOTS *******************/
+
+void MainWindow::handlePackageAptCacheButton (void)
+{
+	pa.searchAptcache(this->ui->lineEdit_searchaptcache->text());
+	this->yakalaUpdateAptCacheTable();
+}
+
+void MainWindow::handleAutoremovePackageButton (void)
+{
+	pa.removeUnusedPackages();
+}
 
 void MainWindow::handleBrowseFolderButton (void)
 {

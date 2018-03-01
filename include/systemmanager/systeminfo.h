@@ -48,6 +48,11 @@ private:
 
 	char mac_addr[MAX_BUFSIZE];
 
+	QString ifconfig_out;
+	QString lsusb_out;
+	QString syslog_out;
+	QString dmesg_out;
+
 public:
 	SystemInfo();
 	void readMemoryTotal();
@@ -91,6 +96,12 @@ public:
 
 	void readMACAddress(QString ip_addr);
 	QString getMACAddress (void);
+
+	void readSysLogs (void);
+	QString getSysLogOut (void);
+	QString getDmesgOut (void);
+	QString getIfconfigOut (void);
+	QString getLsusbOut (void);
 };
 
 #endif // SYSTEMINFO_H

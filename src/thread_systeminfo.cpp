@@ -78,6 +78,7 @@ void *Thread_SystemInfo (void *arg)
 	s.readDiskTotal();
 	pa.readPackageList();
 
+
 	while (1)
 	{
 		/* Get Periodic System Details*/

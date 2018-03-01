@@ -18,6 +18,9 @@
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
+#include <QString>
+#include <QFile>
+#include <QTextStream>
 
 // To debug, uncomment below, and run 'valgrind -v ./yakala'
 //#define DEBUG 1
@@ -488,4 +491,102 @@ int SystemInfo::getDiskPercentage (void)
 	return this->disk_percentage;
 }
 
+void SystemInfo::readSysLogs (void)
+{
+	this->syslog_out.clear();
+	this->lsusb_out.clear();
+	this->dmesg_out.clear();
+	this->ifconfig_out.clear();
 
+	/* Syslog */
+	QFile MyFile3("/var/log/syslog");
+	if (MyFile3.open(QIODevice::ReadWrite))
+	{
+		QTextStream in3 (&MyFile3);
+		QString line3;
+		while (!in3.atEnd())
+		{
+			line3 = in3.readLine();
+			this->syslog_out.append(line3);
+			this->syslog_out.append("\n");
+		}
+		MyFile3.close();
+	}
+
+	/* Dmesg */
+	FILE *fp;
+	fp = popen ("timeout 5 dmesg > /tmp/yakala.dmesg ","w");
+	fclose(fp);
+
+	QFile MyFile4("/tmp/yakala.dmesg");
+	if (MyFile4.open(QIODevice::ReadWrite))
+	{
+		QTextStream in3 (&MyFile4);
+		QString line3;
+		while (!in3.atEnd())
+		{
+			line3 = in3.readLine();
+			this->dmesg_out.append(line3);
+			this->dmesg_out.append("\n");
+		}
+		MyFile4.close();
+	}
+
+	/* Ifconfig */
+	FILE *fp2;
+	fp2 = popen ("timeout 5 ifconfig > /tmp/yakala.ifconfig ","w");
+	fclose(fp2);
+
+	QFile MyFile5("/tmp/yakala.ifconfig");
+	if (MyFile5.open(QIODevice::ReadWrite))
+	{
+		QTextStream in3 (&MyFile5);
+		QString line3;
+		while (!in3.atEnd())
+		{
+			line3 = in3.readLine();
+			this->ifconfig_out.append(line3);
+			this->ifconfig_out.append("\n");
+		}
+		MyFile5.close();
+	}
+
+	/* Lsusb */
+	FILE *fp3;
+	fp3 = popen ("timeout 5 lsusb > /tmp/yakala.lsusb ","w");
+	fclose(fp3);
+
+	QFile MyFile6("/tmp/yakala.lsusb");
+	if (MyFile6.open(QIODevice::ReadWrite))
+	{
+		QTextStream in3 (&MyFile6);
+		QString line3;
+		while (!in3.atEnd())
+		{
+			line3 = in3.readLine();
+			this->lsusb_out.append(line3);
+			this->lsusb_out.append("\n");
+		}
+		MyFile6.close();
+	}
+}
+
+QString SystemInfo::getSysLogOut (void)
+{
+	return this->syslog_out;
+}
+
+QString SystemInfo::getDmesgOut (void)
+{
+	return this->dmesg_out;
+}
+
+QString SystemInfo::getIfconfigOut (void)
+{
+	return this->ifconfig_out;
+}
+
+QString SystemInfo::getLsusbOut (void)
+{
+	return this->lsusb_out;
+}

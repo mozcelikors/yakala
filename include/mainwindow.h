@@ -37,6 +37,7 @@ public:
 	void yakalaUpdateProcessTable (void);
 	void yakalaUpdateSocketsTable (void);
 	void yakalaUpdatePackagesTable (void);
+	void yakalaUpdateAptCacheTable (void);
 
 	void loadingAnimStart (void);
 	void loadingAnimStop (void);
@@ -82,6 +83,8 @@ private slots:
 	void handlePackagesTableClicked (int row, int col);
 	void handlePackageUninstallButton(void);
 	void inputPackageChanged (void);
+	void handleAutoremovePackageButton (void);
+	void handlePackageAptCacheButton (void);
 
 };
 

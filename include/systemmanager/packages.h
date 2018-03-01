@@ -23,6 +23,8 @@ class Packages
 {
 private:
 	QStringList names;
+	QStringList aptcachename;
+	QStringList aptcachedescription;
 	QString uninstallpackage;
 
 public:
@@ -32,9 +34,14 @@ public:
 	QStringList getNames (void);
 	void setUninstallPackage (QString packagename);
 	void searchPackages (QString needle);
+	void removeUnusedPackages (void);
 
 	void uninstallPackage (void);
 	QString getUninstallPackage (void);
+
+	void searchAptcache (QString needle);
+	QStringList getAptcachenames (void);
+	QStringList getAptcachedescription (void);
 };
 
 
