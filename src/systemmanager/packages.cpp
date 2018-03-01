@@ -34,6 +34,7 @@ Packages::Packages ()
 void Packages::searchAptcache (QString needle)
 {
 	this->aptcachename.clear();
+	this->aptcachedescription.clear();
 
 	FILE *fp;
 
