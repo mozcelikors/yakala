@@ -75,7 +75,6 @@ void NetworkSearch::readNetworkAll (QString networkstart)
 		} while (!line.isNull());
 		MyFile.close();
 
-
 		try
 		{
 			if (ini_format) /* Ini format */
@@ -89,11 +88,20 @@ void NetworkSearch::readNetworkAll (QString networkstart)
 					{
 						line2 = in2.readLine();
 						QStringList splittext = line2.split("=");
-						this->hostnames.append(splittext.at(0));
-						this->ips.append(splittext.at(1));
+						if (splittext.count() == 2)
+						{
+							this->hostnames.append(splittext.at(0));
+							this->ips.append(splittext.at(1));
+						}
+						else
+						{
+							this->hostnames.append("unknown");
+							this->ips.append(splittext.at(0));
+						}
 					}
 					MyFile2.close();
 				}
+
 			}
 			else
 			{
@@ -106,7 +114,7 @@ void NetworkSearch::readNetworkAll (QString networkstart)
 					{
 						line2 = in2.readLine();
 
-						this->hostnames.append(" ");
+						this->hostnames.append("unknown");
 						this->ips.append(line2);
 
 					}
@@ -130,6 +138,9 @@ void NetworkSearch::readNetworkAll (QString networkstart)
 				this->companies.append("YOUR NETWORK");
 				MyFile3.close();
 			}
+#ifdef DEBUG
+			qDebug() << this->macs.count() << this->hostnames.count() << this->companies.count() << this->ips.count() ;
+#endif
 		}
 		catch (...)
 		{
