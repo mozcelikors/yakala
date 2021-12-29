@@ -26,19 +26,20 @@ New features involve (as of March 1st, 2018):
 * Search for installed packages / uninstall them
 * Search for available packages in apt cache
 
-## Download Stable Release 0.8 using Debian/Ubuntu PPA:
-https://launchpad.net/~mozcelikors/+archive/ubuntu/yakala
-```bash
-sudo add-apt-repository ppa:mozcelikors/yakala
-sudo apt-get update
-sudo apt-get install yakala
-```
-
-## Compiling from Source / Git VC:
+## Compiling from Source (Works for Ubuntu 16.04, 18.04):
 
 ```bash
 git clone https://github.com/mozcelikors/yakala
 cd yakala && sudo ./install.sh
+```
+
+## Running
+
+Installation script will automatically create a desktop icon for you. You can use that icon or execute the following to run Yakala:
+
+```bash
+cd <yakala-dir>/build
+sudo ./yakala
 ```
 
 ## Animations
@@ -69,15 +70,6 @@ cd yakala && sudo ./install.sh
 
 ![alt text](https://raw.githubusercontent.com/mozcelikors/yakala/master/docs/img/aptcache.gif)
 
-
-## Running
-
-Installation script will automatically create a desktop icon for you. You can use that icon or execute the following to run Yakala:
-
-```bash
-cd <yakala-dir>/build
-sudo ./yakala
-```
 
 ## Contributions
 
